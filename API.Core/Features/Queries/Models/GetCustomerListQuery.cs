@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using API.Core.Features.Queries.Responses;
+using API.Core.Bases;
 
 namespace API.Core.Features.Queries.Models
-{
-    public class GetCustomerListQuery : IRequest<List<GetCustomersResponse>>
+{                                               //vImp
+    public class GetCustomerListQuery : IRequest<Response<List<GetCustomersResponse>>>
     {
     }
 }

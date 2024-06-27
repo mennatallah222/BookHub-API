@@ -1,4 +1,5 @@
-﻿using API.Core.Features.Queries.Models;
+﻿using API.Core.Bases;
+using API.Core.Features.Queries.Models;
 using API.Core.Features.Queries.Responses;
 using API.Service.Interfaces;
 using AutoMapper;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace API.Core.Features.Queries.Handlers
 {
-    public class CustomerHandler : IRequestHandler<GetCustomerListQuery, List<GetCustomersResponse>>
+    public class CustomerHandler : Response_Handler, IRequestHandler<GetCustomerListQuery, Response<List<GetCustomersResponse>>>
     {
         private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
@@ -22,11 +23,11 @@ namespace API.Core.Features.Queries.Handlers
             _customerService = customerService;
             _mapper = mapper;
         }
-        public async Task<List<GetCustomersResponse>> Handle(GetCustomerListQuery request, CancellationToken cancellationToken)
+        public async Task<Response<List<GetCustomersResponse>>> Handle(GetCustomerListQuery request, CancellationToken cancellationToken)
         {
             var src= await _customerService.GetAll();
             var customerListMapped = _mapper.Map<List<GetCustomersResponse>>(src);
-            return customerListMapped;
+            return Success(customerListMapped);
         }
     }
 }
