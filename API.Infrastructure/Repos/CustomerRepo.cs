@@ -18,8 +18,8 @@ namespace API.Infrastructure.Repos
             _dBContext= dBContext;
         }
         public async Task<List<Customer>> GetCustomerListAsync()
-        {
-            return await _dBContext.Customers.ToListAsync();
+        {                                                        //eagerly loading products, when fetching customers
+            return await _dBContext.Customers.Include(x=>x.Orders).ThenInclude(o=>o.Products).ToListAsync();
         }
     }
 }

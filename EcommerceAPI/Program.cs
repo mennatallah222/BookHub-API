@@ -2,6 +2,7 @@
 using API.Infrastructure.Data;
 using API.Infrastructure;
 using API.Service;
+using API.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceAPI
@@ -28,8 +29,9 @@ namespace EcommerceAPI
 
             #region DEPENDENCY INJECTION
 
-            builder.Services.AddInfrastructureDependencies();
-            builder.Services.AddServiceDependencies();
+            builder.Services.AddInfrastructureDependencies()
+                            .AddServiceDependencies()
+                            .AddCoreDependencies();
 
             #endregion
 
