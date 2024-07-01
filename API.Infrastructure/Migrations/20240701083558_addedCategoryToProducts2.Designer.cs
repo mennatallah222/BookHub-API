@@ -4,6 +4,7 @@ using API.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240701083558_addedCategoryToProducts2")]
+    partial class addedCategoryToProducts2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Category", b =>
@@ -57,7 +60,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Customer", b =>
@@ -86,7 +89,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Order", b =>
@@ -133,7 +136,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.OrderItem", b =>
@@ -165,7 +168,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Payment", b =>
@@ -203,7 +206,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Payment", (string)null);
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", b =>
@@ -250,7 +253,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Review", b =>
@@ -282,7 +285,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Shipping", b =>
@@ -311,7 +314,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("ShippingMethodId");
 
-                    b.ToTable("Shippings", (string)null);
+                    b.ToTable("Shippings");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.ShippingMethod", b =>
@@ -332,7 +335,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("ShippingMethodId");
 
-                    b.ToTable("ShippingMethods", (string)null);
+                    b.ToTable("ShippingMethods");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Vendor", b =>
@@ -354,7 +357,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("VendorId");
 
-                    b.ToTable("Vendors", (string)null);
+                    b.ToTable("Vendors");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Wishlist", b =>
@@ -377,7 +380,7 @@ namespace API.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Wishlists", (string)null);
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", b =>

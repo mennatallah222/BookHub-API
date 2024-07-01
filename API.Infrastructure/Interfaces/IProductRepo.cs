@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace API.Infrastructure.Interfaces
 {
-    public interface ICustomer : IGenericRepo<Customer>
+    public interface IProductRepo: IGenericRepo<Product>
     {
-        public Task<List<Customer>> GetCustomerListAsync();
-        public Task<Customer> GetCustomerByID(int id);
+        public Task<List<Product>> GetProductListAsync();
+        public Task<Product> GetProductByIdAsync(int id);
     }
 }

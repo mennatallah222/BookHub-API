@@ -19,7 +19,11 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public decimal TotalAmount { get; set; }
         public string Status { get; set; } = "Pending";
         public DateTime OrderDate { get; set; }
-        
+        public string ShippingAddress { get; set; }
+        public string PaymentStatus { get; set; }
+        public string PaymentMethod { get; set; }
+        public string TrackingNumber { get; set; }
+        public DateTime CreatedAt { get; set; }
         [ForeignKey("CustomerId")]
         //[InverseProperty("OrderId")]
         public virtual Customer Customer { get; set; }

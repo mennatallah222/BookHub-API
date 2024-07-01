@@ -15,6 +15,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         [Key]
         public int CustomerId { get; set; }
         public string Name { get; set; }
+        [Required, EmailAddress]
         public string Email { get; set; }
         [StringLength(500)]
         public string Address { get; set; }

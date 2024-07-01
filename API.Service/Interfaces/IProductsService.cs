@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace API.Service.Interfaces
 {
-    public interface ICustomerService
+    public interface IProductsService
     {
-        public Task<List<Customer>> GetAll();
-        public Task<Customer> GetByIdAsync(int id);
+         Task<List<Product>> GetAllProductsAsync();
+         Task<Product> GetProductByIdAsync(int id);
     }
 }

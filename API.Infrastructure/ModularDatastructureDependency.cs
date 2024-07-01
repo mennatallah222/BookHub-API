@@ -10,6 +10,7 @@ namespace API.Infrastructure
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
         {
             services.AddTransient<ICustomer, CustomerRepo>();
+            services.AddTransient<IProductRepo, ProductRepo>();
 
             //config for generic repo
             services.AddTransient(typeof(IGenericRepo<>), typeof(GenericRepo<>));

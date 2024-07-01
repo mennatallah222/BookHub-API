@@ -11,13 +11,19 @@ using System.Threading.Tasks;
 
 namespace API.Infrastructure.Repos
 {
-    public class CustomerRepo :GenericRepo<Customer>, ICustomer
+    public class CustomerRepo : GenericRepo<Customer>, ICustomer
     {
         private readonly DbSet<Customer> _customers;
         public CustomerRepo(ApplicationDBContext dBContext) :base(dBContext) 
         {
             _customers= dBContext.Set<Customer>();
         }
+
+        public async Task<Customer> GetCustomerByID(int id)
+        {
+            return await _customers.FirstOrDefaultAsync(x => x.CustomerId == id);
+        }
+
         public async Task<List<Customer>> GetCustomerListAsync()
         {                                                        //eagerly loading products, when fetching customers
             return await _customers.Include(x=>x.Orders).ThenInclude(o=>o.Products).ToListAsync();

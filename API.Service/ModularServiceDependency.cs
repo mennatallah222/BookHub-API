@@ -11,6 +11,7 @@ namespace API.Service
         public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
         {
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IProductsService, ProductService>();
             return services;
         }
     }
