@@ -1,8 +1,9 @@
 
-using API.Infrastructure.Data;
-using API.Infrastructure;
-using API.Service;
 using API.Core;
+using API.Core.Middleware;
+using API.Infrastructure;
+using API.Infrastructure.Data;
+using API.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceAPI
@@ -51,6 +52,14 @@ namespace EcommerceAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
+
+
 
             app.UseHttpsRedirection();
 
