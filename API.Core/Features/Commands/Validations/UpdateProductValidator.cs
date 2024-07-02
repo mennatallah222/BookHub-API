@@ -4,14 +4,14 @@ using FluentValidation;
 
 namespace API.Core.Features.Commands.Validations
 {
-    public class CreateProductValidator : AbstractValidator<CreateProductCommand>
+    public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
     {
         #region ATTRIBUTES
         private readonly IProductsService _productsService;
         #endregion
 
         #region CTOR
-        public CreateProductValidator(IProductsService productsService)
+        public UpdateProductValidator(IProductsService productsService)
         {
             _productsService = productsService;
             ApplyValidationRules();
@@ -23,16 +23,17 @@ namespace API.Core.Features.Commands.Validations
 
         public void ApplyValidationRules()
         {
-            RuleFor(x => x.Name).NotNull().WithMessage("Name must not be null!")
+            RuleFor(x => (x as UpdateProductCommand).Name).NotNull().WithMessage("Name must not be null!")
                                 .NotEmpty().WithMessage("Name must not be empty!")
-                              .MaximumLength(100).WithMessage("Name must be less than 100 characters!")
-                              .MinimumLength(5).WithMessage("Name must be more than 5 characters!");
-            RuleFor(z => z.Price).NotNull().WithMessage("Price must not be null!")
+                                .MaximumLength(100).WithMessage("Name must be less than 100 characters!")
+                                .MinimumLength(5).WithMessage("Name must be more than 5 characters!");
+
+            RuleFor(x => (x as UpdateProductCommand).Price).NotNull().WithMessage("Price must not be null!")
                                  .GreaterThanOrEqualTo(0).WithMessage("Price must be greater than or equal to 0")
                                  .NotEmpty().WithMessage("Price must not be empty!");
-            RuleFor(x => x.Quantity).NotNull().WithMessage("Quantity must not be null!")
-                                 .GreaterThanOrEqualTo(0).WithMessage("Quantity must be greater than or equal to 0")
-                                 ;
+
+            RuleFor(x => (x as UpdateProductCommand).Quantity).NotNull().WithMessage("Quantity must not be null!")
+                                 .GreaterThanOrEqualTo(0).WithMessage("Quantity must be greater than or equal to 0");
         }
 
         public void ApplyCustomeValidationRules()

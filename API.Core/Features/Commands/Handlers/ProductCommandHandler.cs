@@ -8,7 +8,8 @@ using MediatR;
 namespace API.Core.Features.Commands.Handlers
 {
     public class ProductCommandHandler : Response_Handler,
-        IRequestHandler<CreateProductCommand, Response<string>>
+        IRequestHandler<CreateProductCommand, Response<string>>,
+        IRequestHandler<UpdateProductCommand, Response<string>>
     {
         private readonly IProductsService _productsService;
         private readonly IMapper _mapper;
@@ -31,6 +32,18 @@ namespace API.Core.Features.Commands.Handlers
             return Created("Added!");
             // else
             //   return BadRequest<string>("An unknown error occurred");
+        }
+
+        public async Task<Response<string>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        {
+            var product = await _productsService.GetProductByIdAsync(request.Id);
+            if (product == null)
+            {
+                return NotFound<string>("Product is not found!");
+            }
+            _mapper.Map(request, product);
+            await _productsService.UpdateProductAsync(product);
+            return Success("product updated successfully!");
         }
     }
 }

@@ -45,18 +45,25 @@ namespace API.Service.Implementations
             {
                 return "Product already exists!";
             }
-
             await _repo.AddProduct(product);
             await _dbContext.SaveChangesAsync();
             return "Success";
 
         }
+        public async Task<Product> UpdateProductAsync(Product p)
+        {
 
+            await _repo.UpdateAsync(p);
+            await _dbContext.SaveChangesAsync();
+            return p;
+        }
         public async Task<bool> IsNameExist(string name)
         {
             var res = _repo.GetTableNoTrasking().Where(x => x.Name.Equals(name)).FirstOrDefault();
             if (res != null) return true;
             return false;
         }
+
+
     }
 }

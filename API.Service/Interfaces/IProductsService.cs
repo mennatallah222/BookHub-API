@@ -8,5 +8,6 @@ namespace API.Service.Interfaces
         Task<List<Product>> GetAllProductsAsync();
         Task<Product> GetProductByIdAsync(int id);
         Task<bool> IsNameExist(string name);
+        Task<Product> UpdateProductAsync(Product p);
     }
 }

@@ -9,6 +9,6 @@ namespace API.Infrastructure.Interfaces
         public Task<Product> GetProductByIdAsync(int id);
         Task<Product> AddProduct(Product product);
         Task SaveChangesAsync();
-
+        Task UpdateAsync(Product product);
     }
 }
