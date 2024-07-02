@@ -25,10 +25,8 @@ namespace API.Service.Implementations
         public async Task<Customer> GetByIdAsync(int id)
         {
             //var customer= await _customerRepo.GetIDAsync(id);
-            var customer = await _customerRepo.GetTableNoTrasking()
-                                .Include(x=>x.Address)
-                                .Include(x=>x.Orders)
-                                .FirstOrDefaultAsync(x=>x.CustomerId==id);
+            var customer = await _customerRepo
+                                .GetCustomerByID(id);
             return customer;
         }
     }

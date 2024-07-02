@@ -16,6 +16,10 @@ namespace API.Core.Mapping.CustomerMapping
             CreateMap<Customer, GetCustomersResponse>()
                 .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.First().Status))
                 .ForMember(dest=> dest.Products, opt=> opt.MapFrom(src=>src.Orders.SelectMany(o=>o.Products.Select(p=>p.Name)).ToList()));
+            CreateMap<Customer, GetSingleCustomerResponse>()
+                .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.FirstOrDefault().Status))
+                .ForMember(dest=>dest.Address, opt=>opt.MapFrom(src=>src.Address))
+                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Orders.SelectMany(o => o.Products.Select(p => p.Name)).ToList()));
         }
     }
 }

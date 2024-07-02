@@ -35,7 +35,7 @@ namespace API.Core.Features.Queries.Handlers
 
         public async Task<Response<GetSingleCustomerResponse>> Handle(GetCustomerByID request, CancellationToken cancellationToken)
         {
-            var customer = _customerService.GetByIdAsync(request.Id);
+            var customer =await _customerService.GetByIdAsync(request.Id);
             if(customer==null) return NotFound<GetSingleCustomerResponse>("object not found!!");
             var result=_mapper.Map<GetSingleCustomerResponse>(customer);
             return Success(result);

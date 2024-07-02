@@ -5,16 +5,12 @@ using API.Service.Implementations;
 using API.Service.Interfaces;
 using AutoMapper;
 using MediatR;
-using MediatR.Wrappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Core.Features.Queries.Handlers
 {
-    public class ProductsHandler : Response_Handler, IRequestHandler<GetAllProductsQuery, Response<List<GetAllProductsResponses>>>
+    public class ProductsHandler : Response_Handler, IRequestHandler<GetAllProductsQuery, Response<List<GetAllProductsResponses>>>,
+                                   IRequestHandler<GetProductByIdQuery, Response<GetAllProductsResponses>>
+
     {
         private readonly IProductsService _productService;
         private readonly IMapper _mapper;
@@ -29,9 +25,12 @@ namespace API.Core.Features.Queries.Handlers
             var productsMapped=_mapper.Map<List<GetAllProductsResponses>>(src);
             return Success(productsMapped);
         }
-        /*public async Task<Response<GetSingleProductResponses>> Handle()
+        public async Task<Response<GetAllProductsResponses>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-
-        }*/
+            var src = await _productService.GetProductByIdAsync(request.Id);
+            if (src == null) return NotFound<GetAllProductsResponses>("Product is not found!");
+            var result=_mapper.Map<GetAllProductsResponses>(src);
+            return Success(result);
+        }
     }
 }

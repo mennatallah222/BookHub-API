@@ -14,8 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Commands\Validations\" />
-    <Folder Include="Features\Commands\Models\" />
-    <Folder Include="Features\Commands\Handlers\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,12 +18,10 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public int ProductId { get; set; }
         [Required]
         public string Name { get; set; }
-
         public Product(string name)
         {
             Name = name;
         }
-
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string? Description { get; set; }

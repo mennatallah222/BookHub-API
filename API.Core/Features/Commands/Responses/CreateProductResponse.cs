@@ -1,28 +1,23 @@
-﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
+﻿using API.Core.Bases;
+using MediatR;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Core.Features.Queries.Responses
+namespace API.Core.Features.Commands.Responses
 {
-    public class GetAllProductsResponses
+    public class CreateProductResponse
     {
-        //public int ProductId { get; set; }
+        [Required]
         public string Name { get; set; }
 
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string? Description { get; set; }
-        //public bool IsDeleted { get; set; }
-        //public int? OrderId { get; set; }
-
-        public string CategoryName { get; set; }
+        public string? CategoryName { get; set; }
         public string? Image { get; set; }
-
-
     }
 }

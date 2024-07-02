@@ -21,5 +21,12 @@ namespace EcommerceAPI.Controllers
             var response = await _mediator.Send(new GetCustomerListQuery());
             return Ok(response);
         }
+
+        [HttpGet("/Customer/{id}")]
+        public async Task<IActionResult> GetCustomerById(int id)
+        {
+            var response = await _mediator.Send(new GetCustomerByID { Id=id});
+            return Ok(response);
+        }
     }
 }

@@ -21,7 +21,8 @@ namespace API.Infrastructure.Repos
 
         public async Task<Customer> GetCustomerByID(int id)
         {
-            return await _customers.FirstOrDefaultAsync(x => x.CustomerId == id);
+            return await _customers.Include(x => x.Orders).ThenInclude(o => o.Products).FirstOrDefaultAsync(i=>i.CustomerId==id);
+
         }
 
         public async Task<List<Customer>> GetCustomerListAsync()

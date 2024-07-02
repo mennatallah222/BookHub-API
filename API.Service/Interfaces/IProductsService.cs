@@ -9,7 +9,8 @@ namespace API.Service.Interfaces
 {
     public interface IProductsService
     {
-         Task<List<Product>> GetAllProductsAsync();
+        Task<string> AddProductAsync(Product p);
+        Task<List<Product>> GetAllProductsAsync();
          Task<Product> GetProductByIdAsync(int id);
     }
 }
