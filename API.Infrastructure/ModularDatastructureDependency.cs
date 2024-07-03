@@ -11,7 +11,7 @@ namespace API.Infrastructure
         {
             services.AddTransient<ICustomer, CustomerRepo>();
             services.AddTransient<IProductRepo, ProductRepo>();
-
+            services.AddTransient<IOrderRepo, OrderRepo>();
             //config for generic repo
             services.AddTransient(typeof(IGenericRepo<>), typeof(GenericRepo<>));
 

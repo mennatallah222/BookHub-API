@@ -18,7 +18,7 @@ namespace API.Infrastructure.Repos
 
         public async Task<Product> AddProduct(Product product)
         {
-            _products.Add(product);
+            _dbContext.Products.Add(product);
             await _dbContext.SaveChangesAsync();
             return product;
         }
@@ -31,7 +31,7 @@ namespace API.Infrastructure.Repos
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _products.Include(p => p.Reviews)
+            return await _dbContext.Products.Include(p => p.Reviews)
                                   .Include(p => p.Category)
                                   .FirstOrDefaultAsync(p => p.ProductId == id);
         }
@@ -41,5 +41,24 @@ namespace API.Infrastructure.Repos
             return await _products.Include(cn => cn.Category).ToListAsync();
         }
 
+        public async Task<List<Product>> GetProductsByNames(List<string> names)
+        {
+            return await _dbContext.Products.Where(p => names.Contains(p.Name)).ToListAsync();
+        }
+
+        public async Task UpadteRangeAsync(List<Product> entities)
+        {
+            _products.UpdateRange(entities);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Product>> GetProductsByIDS(List<int> entities)
+        {
+            using (var context = new ApplicationDBContext())
+            {
+                return await _products.Where(p => entities.Contains(p.ProductId))
+            .ToListAsync();
+            }
+        }
     }
 }

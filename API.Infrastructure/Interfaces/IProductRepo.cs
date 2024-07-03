@@ -10,5 +10,10 @@ namespace API.Infrastructure.Interfaces
         Task<Product> AddProduct(Product product);
         Task SaveChangesAsync();
         Task UpdateAsync(Product product);
+        Task<List<Product>> GetProductsByNames(List<string> products);
+
+        Task UpadteRangeAsync(List<Product> entities);
+        Task<List<Product>> GetProductsByIDS(List<int> entities);
+
     }
 }

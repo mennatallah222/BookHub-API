@@ -1,6 +1,4 @@
-﻿using API.Infrastructure.Interfaces;
-using API.Infrastructure.Repos;
-using API.Service.Implementations;
+﻿using API.Service.Implementations;
 using API.Service.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +10,7 @@ namespace API.Service
         {
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IProductsService, ProductService>();
+            services.AddTransient<IOrederService, OrderService>();
             return services;
         }
     }

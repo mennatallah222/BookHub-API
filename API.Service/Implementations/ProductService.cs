@@ -39,7 +39,7 @@ namespace API.Service.Implementations
             {
                 _dbContext.Categories.Add(product.Category);
             }
-            var prod = _repo.GetTableNoTrasking().Where(x => x.Name.Equals(product.Name)).FirstOrDefault();
+            var prod = await _repo.GetTableNoTrasking().FirstOrDefaultAsync(x => x.Name.Equals(product.Name));
 
             if (prod != null)
             {

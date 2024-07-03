@@ -1,25 +1,55 @@
 ﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Infrastructure.Data
 {
-    public class ApplicationDBContext:DbContext
+    public class ApplicationDBContext : DbContext
     {
         public ApplicationDBContext()
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            /*modelBuilder.Entity<OrderItem>()
+                .Property(o => o.PriceAtOrder)
+                .HasPrecision(18, 2); // Adjust precision and scale as per your requirements
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(o => o.UnitPrice)
+                .HasPrecision(18, 2);
+            */
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalAmount)
+                .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.TotalAmount)
+                      .HasColumnType("decimal(18,2)");
+
+                entity.Property(e => e.PaymentMethod)
+                      .IsRequired(); // Ensure PaymentMethod is required
+            });
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Payment> Payment { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
+        //public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Payment> Payments { get; set; }
