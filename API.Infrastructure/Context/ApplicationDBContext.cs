@@ -40,6 +40,10 @@ namespace API.Infrastructure.Data
                 entity.Property(e => e.PaymentMethod)
                       .IsRequired(); // Ensure PaymentMethod is required
             });
+            modelBuilder.Entity<OrderItem>()
+            .ToTable("OrderItems") // Ensure the correct table name
+            .Property(o => o.Price)
+            .HasColumnType("decimal(18,2)");
 
             base.OnModelCreating(modelBuilder);
         }
@@ -49,7 +53,7 @@ namespace API.Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Payment> Payment { get; set; }
-        //public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -58,7 +62,7 @@ namespace API.Infrastructure.Data
         public DbSet<ShippingMethod> ShippingMethods { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
-
+        public DbSet<CartItem> CartItems { get; set; }
     }
 
 }

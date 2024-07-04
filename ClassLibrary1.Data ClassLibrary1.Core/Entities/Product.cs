@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
 {
@@ -26,11 +21,11 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public int Quantity { get; set; }
         public string? Description { get; set; }
         public bool IsDeleted { get; set; }
-        public int? OrderId { get; set; }
-        [ForeignKey("OrderId")]
-       //( [InverseProperty("ProductId")]
-        public virtual Order? Order {  get; set; }
-        
+        //public int? OrderId { get; set; }
+        //[ForeignKey("OrderId")]
+        //( [InverseProperty("ProductId")]
+        //public virtual Order? Order {  get; set; }
+
         public int? CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Category? Category { get; set; }

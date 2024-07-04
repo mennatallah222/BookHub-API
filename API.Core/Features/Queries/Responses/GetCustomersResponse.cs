@@ -10,7 +10,9 @@ namespace API.Core.Features.Queries.Responses
         public string Name { get; set; }
         public string Address { get; set; }
 
-        public string? OrderStatus { get; set; }
+        // public string? OrderStatus { get; set; }
         public List<OrderDTOs>? Orders { get; set; }
+        public List<CartItemDto> CartItems { get; set; }
+
     }
 }

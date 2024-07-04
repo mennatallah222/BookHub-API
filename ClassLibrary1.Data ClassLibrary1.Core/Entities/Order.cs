@@ -7,7 +7,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
     {
         public Order()
         {
-            Products = new HashSet<Product>();
+            OrderItems = new HashSet<OrderItem>();
         }
         [Key]
         public int OrderId { get; set; }
@@ -21,10 +21,9 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public string TrackingNumber { get; set; } = "";
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         [ForeignKey("CustomerId")]
-        //[InverseProperty("OrderId")]
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
 
     }
 }

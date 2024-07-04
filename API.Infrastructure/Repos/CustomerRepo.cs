@@ -16,13 +16,17 @@ namespace API.Infrastructure.Repos
 
         public async Task<Customer> GetCustomerByID(int id)
         {
-            return await _customers.Include(x => x.Orders).ThenInclude(o => o.Products).ThenInclude(n => n.Name).FirstOrDefaultAsync(i => i.CustomerId == id);
+            return await _customers.Include(x => x.Orders).ThenInclude(o => o.OrderItems)
+                                   .Include(c => c.Cart).ThenInclude(ci => ci.CartItems).ThenInclude(p => p.Product)
+                                   .FirstOrDefaultAsync(i => i.CustomerId == id);
 
         }
 
         public async Task<List<Customer>> GetCustomerListAsync()
         {                                                        //eagerly loading products, when fetching customers
-            return await _customers.Include(x => x.Orders).ThenInclude(o => o.Products).ToListAsync();
+            return await _customers.Include(x => x.Orders).ThenInclude(o => o.OrderItems).ThenInclude(oi => oi.Product)
+                                   .Include(c => c.Cart).ThenInclude(ci => ci.CartItems).ThenInclude(p => p.Product)
+                                   .ToListAsync();
         }
     }
 }

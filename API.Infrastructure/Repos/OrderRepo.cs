@@ -25,11 +25,11 @@ namespace API.Infrastructure.Repos
 
         public async Task<List<Order>> GetListAsync()
         {
-            return await _orders.Include(x => x.Customer).Include(s => s.Products).ToListAsync();
+            return await _orders.Include(x => x.Customer).Include(s => s.OrderItems).ToListAsync();
         }
         public async Task<Order> GetByIdAsync(int id)
         {
-            return await _orders.Include(x => x.Products).FirstOrDefaultAsync(i => i.OrderId.Equals(id));
+            return await _orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.OrderId.Equals(id));
         }
 
         public async Task SaveChangesAsync()

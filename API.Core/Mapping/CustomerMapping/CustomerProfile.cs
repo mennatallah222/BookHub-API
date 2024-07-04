@@ -10,18 +10,31 @@ namespace API.Core.Mapping.CustomerMapping
         public CustomerProfile()
         {
             CreateMap<Customer, GetCustomersResponse>()
-                .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.First().Status))
-                .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders));
+                .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
+                                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.Cart.CartItems));
+
+
+            CreateMap<Product, ProductDto>();
+            CreateMap<Product, CartItemDto>()
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name));
+            CreateMap<CartItem, CartItemDto>()
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.Price));
+
+            CreateMap<Cart, GetCustomersResponse>()
+                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartItems));
+
+
+
 
             CreateMap<Order, OrderDTOs>();
             CreateMap<Product, CustomersOrdersDTO>();
 
-            /*CreateMap<Order, GetCustomersResponse>()
-                .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.OrderId));*/
             CreateMap<Customer, GetSingleCustomerResponse>()
-                .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.FirstOrDefault().Status))
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Orders.SelectMany(o => o.Products.Select(p => p.Name)).ToList()));
+                //.ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.FirstOrDefault().Status))
+                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.Cart.CartItems))
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
         }
+
     }
 }

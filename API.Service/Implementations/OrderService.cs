@@ -22,7 +22,7 @@ namespace API.Service.Implementations
         {
             var customer = await _customerRepo.GetCustomerByID(o.Customer.CustomerId);
             var products = new List<Product>();
-            foreach (var pid in o.Products)
+            foreach (var pid in o.OrderItems)/////////////////////////////////////to be chnanged
             {
                 var p = await _productRepo.GetProductByIdAsync(pid.ProductId);
 
@@ -33,7 +33,7 @@ namespace API.Service.Implementations
             var order = new Order
             {
                 CustomerId = customer.CustomerId,
-                Products = products,
+                ////////////////////////////////// OrderItems = products,
                 PaymentMethod = o.PaymentMethod,
                 Status = "Pending",
                 ShippingAddress = customer.Address,

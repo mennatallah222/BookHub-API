@@ -11,6 +11,8 @@ namespace API.Service
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IProductsService, ProductService>();
             services.AddTransient<IOrederService, OrderService>();
+            services.AddTransient<ICartService, CartService>();
+
             return services;
         }
     }

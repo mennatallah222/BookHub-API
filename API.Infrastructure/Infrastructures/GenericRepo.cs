@@ -1,11 +1,6 @@
 ﻿using API.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Infrastructure.Infrastructures
 {
@@ -43,7 +38,7 @@ namespace API.Infrastructure.Infrastructures
 
         public void Commit()
         {
-             _dbContext.Database.CommitTransaction();
+            _dbContext.Database.CommitTransaction();
         }
 
         public virtual async Task DeleteAsync(T entity)
@@ -54,7 +49,7 @@ namespace API.Infrastructure.Infrastructures
 
         public virtual async Task DeleteRangeAsync(ICollection<T> entities)
         {
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
                 _dbContext.Entry(entity).State = EntityState.Deleted;
             }
@@ -68,13 +63,13 @@ namespace API.Infrastructure.Infrastructures
 
         public IQueryable<T> GetTableAsTrasking()
         {
-            return  _dbContext.Set<T>().AsQueryable();
+            return _dbContext.Set<T>().AsQueryable();
 
         }
 
         public IQueryable<T> GetTableNoTrasking()
         {
-            return  _dbContext.Set<T>().AsNoTracking().AsQueryable();
+            return _dbContext.Set<T>().AsNoTracking().AsQueryable();
 
         }
 
@@ -86,7 +81,7 @@ namespace API.Infrastructure.Infrastructures
 
         public async Task SaveChangesAsync()
         {
-           await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
         }
 
         public virtual async Task UpadteRangeAsync(ICollection<T> entities)
@@ -103,6 +98,6 @@ namespace API.Infrastructure.Infrastructures
         #endregion
 
 
-        
+
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
 {
@@ -12,17 +7,15 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
     {
         public Cart()
         {
-            Products = new HashSet<Product>();
+            CartItems = new HashSet<CartItem>();
         }
-
-
         [Key]
         public int Id { get; set; }
-        [Required]
+        // public decimal TotalAmount { get; set; }
         public int CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
     }
 }
