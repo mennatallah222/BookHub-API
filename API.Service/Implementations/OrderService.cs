@@ -10,13 +10,15 @@ namespace API.Service.Implementations
         private readonly IOrderRepo _repo;
         private readonly ICustomer _customerRepo;
         private readonly IProductRepo _productRepo;
+        private readonly ICartRepo _cartRepo;
         private readonly ApplicationDBContext _dbContext;
-        public OrderService(IOrderRepo orderRepo, ICustomer customerRepo, IProductRepo productRepo, ApplicationDBContext dBContext)
+        public OrderService(IOrderRepo orderRepo, ICustomer customerRepo, IProductRepo productRepo, ICartRepo cartRepo, ApplicationDBContext dBContext)
         {
             _repo = orderRepo;
             _dbContext = dBContext;
             _customerRepo = customerRepo;
             _productRepo = productRepo;
+            _cartRepo = cartRepo;
         }
         public async Task<string> AddOrderAsync(Order o)
         {
@@ -26,14 +28,14 @@ namespace API.Service.Implementations
             {
                 var p = await _productRepo.GetProductByIdAsync(pid.ProductId);
 
-                if (p == null) return "Product {p.Name} is not found!";
+                if (p == null) return $"Product {p.Name} is not found!";
                 products.Add(p);
 
             }
             var order = new Order
             {
                 CustomerId = customer.CustomerId,
-                ////////////////////////////////// OrderItems = products,
+                OrderItems = o.OrderItems,
                 PaymentMethod = o.PaymentMethod,
                 Status = "Pending",
                 ShippingAddress = customer.Address,

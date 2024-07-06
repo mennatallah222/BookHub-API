@@ -9,10 +9,10 @@
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public string ShippingAddress { get; set; } = "";//
         public string PaymentStatus { get; set; } = "Pending";//
-        public string PaymentMethod { get; set; } = "";//
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string PaymentMethod { get; set; } = "";
+        //  public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public ICollection<string> Products { get; set; }//
+        public ICollection<string> Products { get; set; }
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using ClassLibrary1.Data_ClassLibrary1.Core.DTOs;
-using MediatR;
+﻿using MediatR;
 
 namespace API.Core.Features.Commands.Models
 {
@@ -9,7 +8,6 @@ namespace API.Core.Features.Commands.Models
         public int CustomerID { get; set; }
         public string ShippingAddress { get; set; }
         public string? PaymentMethod { get; set; }
-
-        public List<OrderProductDto> Products { get; set; }
+        //i can add a "confirm?" attribute --> bool
     }
 }
