@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Infrastructure.Data
 {
+    //Add-Migration deletedShippingMethod -context API.Infrastructure.Data.ApplicationDBContext
     public class ApplicationDBContext : DbContext
     {
         public ApplicationDBContext()
@@ -59,7 +60,7 @@ namespace API.Infrastructure.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Shipping> Shippings { get; set; }
-        public DbSet<ShippingMethod> ShippingMethods { get; set; }
+        // public DbSet<ShippingMethod> ShippingMethods { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<CartItem> CartItems { get; set; }

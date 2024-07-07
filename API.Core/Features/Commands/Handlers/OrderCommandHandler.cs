@@ -69,7 +69,7 @@ namespace API.Core.Features.Commands.Handlers
             var productsToUpdate = order.OrderItems.ToList();
 
             await _productRepo.UpadteRangeAsync(products);
-
+            await _cartRepo.ClearCartAsync(request.CustomerID);
             return "Succeeeded";
         }
     }

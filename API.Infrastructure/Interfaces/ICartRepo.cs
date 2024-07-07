@@ -8,6 +8,6 @@ namespace API.Infrastructure.Interfaces
         Task AddRangeAsync(ICollection<Product> entities);
         Task<Cart> GetCartByIDAsync(int id);
         Task UpdateAsync(Cart entity);
-
+        Task ClearCartAsync(int customerID);
     }
 }

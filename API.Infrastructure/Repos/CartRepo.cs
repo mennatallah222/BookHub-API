@@ -38,5 +38,15 @@ namespace API.Infrastructure.Repos
             _dbContext.SaveChanges();
 
         }
+
+        public async Task ClearCartAsync(int customerID)
+        {
+            var cart = await GetCartByIDAsync(customerID);
+            if (cart != null)
+            {
+                _dbContext.CartItems.RemoveRange(cart.CartItems);
+                _dbContext.SaveChanges();
+            }
+        }
     }
 }
