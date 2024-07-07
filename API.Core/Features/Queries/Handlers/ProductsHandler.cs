@@ -1,11 +1,13 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Queries.Models;
 using API.Core.Features.Queries.Responses;
+using API.Core.Shared;
 using API.Core.Wrappers;
 using API.Service.Interfaces;
 using AutoMapper;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using System.Linq.Expressions;
 
 namespace API.Core.Features.Queries.Handlers
@@ -18,10 +20,14 @@ namespace API.Core.Features.Queries.Handlers
     {
         private readonly IProductsService _productService;
         private readonly IMapper _mapper;
-        public ProductsHandler(IProductsService productsService, IMapper mapper)
+        private readonly IStringLocalizer<SharedResources> _stringLocalizer;
+        public ProductsHandler(IProductsService productsService,
+                               IMapper mapper,
+                               IStringLocalizer<SharedResources> stringLocalizer)
         {
             _mapper = mapper;
             _productService = productsService;
+            _stringLocalizer = stringLocalizer;
         }
         public async Task<Response<List<GetAllProductsResponses>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
@@ -32,7 +38,7 @@ namespace API.Core.Features.Queries.Handlers
         public async Task<Response<GetAllProductsResponses>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var src = await _productService.GetProductByIdAsync(request.Id);
-            if (src == null) return NotFound<GetAllProductsResponses>("Product is not found!");
+            if (src == null) return NotFound<GetAllProductsResponses>(_stringLocalizer[SharedResourcesKeys.NotFound]);
             var result = _mapper.Map<GetAllProductsResponses>(src);
             return Success(result);
         }

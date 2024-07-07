@@ -4,7 +4,10 @@ using API.Core.Middleware;
 using API.Infrastructure;
 using API.Infrastructure.Data;
 using API.Service;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace EcommerceAPI
 {
@@ -44,6 +47,36 @@ namespace EcommerceAPI
             });
 
 
+            #region Localization
+
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddLocalization(opt =>
+            {
+                opt.ResourcesPath = "";
+            });
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                List<CultureInfo> locales = new List<CultureInfo>
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ar-EG"),
+                    new CultureInfo("tr-TR")
+                };
+                options.DefaultRequestCulture = new RequestCulture("ar-EG");
+                options.SupportedCultures = locales;
+                options.SupportedUICultures = locales;
+            });
+
+            builder.Services.Configure<RequestLocalizationOptions>(opt =>
+            {
+                opt.DefaultRequestCulture = new RequestCulture("ar-EG");
+            });
+
+            #endregion
+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -53,10 +86,12 @@ namespace EcommerceAPI
                 app.UseSwaggerUI();
             }
 
-
+            #region Localization Middleware
+            var opts = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(opts.Value);
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
-
+            #endregion
 
 
 
