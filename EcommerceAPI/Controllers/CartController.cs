@@ -21,7 +21,7 @@ namespace EcommerceAPI.Controllers
             _cartService = cartService;
 
         }
-        [HttpPost]
+        [HttpPost("/AddProductToCart")]
         public async Task<IActionResult> AddProductToCart(AddProductToCartCommand command)
         {
             var res = await _mediator.Send(new AddProductToCartCommand
@@ -33,7 +33,7 @@ namespace EcommerceAPI.Controllers
             return Ok(res);
         }
 
-        [HttpGet]
+        [HttpGet("/GetCart")]
         public async Task<IActionResult> GetCustomerCart([FromHeader] int cid)
         {
             var src = await _cartService.GetCartContent(cid);

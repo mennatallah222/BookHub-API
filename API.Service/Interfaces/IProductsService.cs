@@ -9,5 +9,7 @@ namespace API.Service.Interfaces
         Task<Product> GetProductByIdAsync(int id);
         Task<bool> IsNameExist(string name);
         Task<Product> UpdateProductAsync(Product p);
+        IQueryable<Product> GetProductsQueryable();
+        IQueryable<Product> FilterProductPaginationQueryable(string search);
     }
 }

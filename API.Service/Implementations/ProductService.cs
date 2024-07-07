@@ -64,6 +64,24 @@ namespace API.Service.Implementations
             return false;
         }
 
+        public IQueryable<Product> GetProductsQueryable()
+        {
+            return _repo.GetTableNoTrasking().Include(p => p.Category).Include(p => p.Reviews).AsQueryable();
+        }
 
+        public IQueryable<Product> FilterProductPaginationQueryable(string search)
+        {
+            var queryable = _repo.GetTableNoTrasking().Include(p => p.Category).Include(p => p.Reviews).AsQueryable();
+
+            if (search != null)
+            {
+                queryable = queryable.Where(x => x.Name.Contains(search) ||
+                                       x.Category.Name.Contains(search) ||
+                                       x.Price.ToString().Contains(search) ||
+                                       x.Description.Contains(search));
+            }
+
+            return queryable;
+        }
     }
 }

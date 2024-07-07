@@ -33,7 +33,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpGet("/Order/GetOrdersHistory/CustomerId")]
         public async Task<IActionResult> GetCustomerOrders([FromHeader] int cid)
         {
             var query = new GetOrderQuery { CustomerId = cid };
@@ -44,25 +44,3 @@ namespace EcommerceAPI.Controllers
         }
     }
 }
-/*
- var order = _mapper.Map<Order>(command);
-            var pids = command.Products.Select(p => p.ProductId).ToList();
-            var products = await _productRepo.GetProductsByIDS(pids);
-            if (products == null || !products.Any()) return NotFound("Products not found for the given IDs");
-
-            order.TotalAmount = 0;
-            foreach (var op in command.Products)
-            {
-                var p = products.FirstOrDefault(x => x.ProductId == op.ProductId);
-                if (p != null)
-                {
-                    p.Quantity -= op.Quantity;
-                    order.TotalAmount += p.Price * op.Quantity;
-                    order.Products.Add(p);
-                }
-                else
-                {
-                    return BadRequest("Product with ID {op.ProductId} not found in the order");
-                }
-            }
- */

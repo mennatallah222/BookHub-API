@@ -46,5 +46,15 @@ namespace EcommerceAPI.Controllers
             }
             return Ok(response.Message);
         }
+
+
+        [HttpGet("/Product/PaginatedList")]
+        public async Task<IActionResult> GetPaginatedProductList([FromQuery] GetProductsPaginatedList query)
+        {
+            var response = await _mediatR.Send(query);
+            return Ok(response);
+        }
+
+
     }
 }
