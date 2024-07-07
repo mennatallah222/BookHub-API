@@ -2,6 +2,7 @@
 using API.Infrastructure.Interfaces;
 using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
+using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Service.Implementations
@@ -69,7 +70,7 @@ namespace API.Service.Implementations
             return _repo.GetTableNoTrasking().Include(p => p.Category).Include(p => p.Reviews).AsQueryable();
         }
 
-        public IQueryable<Product> FilterProductPaginationQueryable(string search)
+        public IQueryable<Product> FilterProductPaginationQueryable(ProductOrderingEnum orderingEnum, string search)
         {
             var queryable = _repo.GetTableNoTrasking().Include(p => p.Category).Include(p => p.Reviews).AsQueryable();
 
@@ -79,6 +80,27 @@ namespace API.Service.Implementations
                                        x.Category.Name.Contains(search) ||
                                        x.Price.ToString().Contains(search) ||
                                        x.Description.Contains(search));
+            }
+
+            switch (orderingEnum)
+            {
+                case ProductOrderingEnum.ProductId:
+                    queryable = queryable.OrderBy(p => p.ProductId);
+                    break;
+                case ProductOrderingEnum.Price:
+                    queryable = queryable.OrderBy(p => p.Price);
+                    break;
+                case ProductOrderingEnum.Quantity:
+                    queryable = queryable.OrderBy(p => p.Quantity);
+                    break;
+                case ProductOrderingEnum.Name:
+                    queryable = queryable.OrderBy(p => p.Name);
+                    break;
+                case ProductOrderingEnum.CategoryName:
+                    queryable = queryable.OrderBy(p => p.Category.Name);
+                    break;
+
+
             }
 
             return queryable;

@@ -1,4 +1,5 @@
 ﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
+using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
 
 namespace API.Service.Interfaces
 {
@@ -10,6 +11,6 @@ namespace API.Service.Interfaces
         Task<bool> IsNameExist(string name);
         Task<Product> UpdateProductAsync(Product p);
         IQueryable<Product> GetProductsQueryable();
-        IQueryable<Product> FilterProductPaginationQueryable(string search);
+        IQueryable<Product> FilterProductPaginationQueryable(ProductOrderingEnum orderingEnum, string search);
     }
 }

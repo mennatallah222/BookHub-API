@@ -43,7 +43,7 @@ namespace API.Core.Features.Queries.Handlers
             Expression<Func<Product, GetProductsPaginatedListResponse>> expression = e => new GetProductsPaginatedListResponse(e.ProductId, e.Name, e.Price, e.Quantity, e.Description, e.Category.Name, e.Image);
             //var queryable = _productService.GetProductsQueryable();
 
-            var filterQuery = _productService.FilterProductPaginationQueryable(request.Search);
+            var filterQuery = _productService.FilterProductPaginationQueryable(request.OrderBy, request.Search);
             var paginatedList = await filterQuery.Select(expression).ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
             return paginatedList;
