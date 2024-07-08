@@ -54,11 +54,10 @@ namespace API.Infrastructure.Repos
 
         public async Task<List<Product>> GetProductsByIDS(List<int> entities)
         {
-            using (var context = new ApplicationDBContext())
-            {
-                return await _products.Where(p => entities.Contains(p.ProductId))
-            .ToListAsync();
-            }
+
+            return await _products.Where(p => entities.Contains(p.ProductId))
+        .ToListAsync();
+
         }
     }
 }

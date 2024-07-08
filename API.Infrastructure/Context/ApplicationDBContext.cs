@@ -1,15 +1,34 @@
-﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
+﻿
+using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
+using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Infrastructure.Data
 {
     //Add-Migration deletedShippingMethod -context API.Infrastructure.Data.ApplicationDBContext
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<User, IdentityRole<int>, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public ApplicationDBContext()
-        {
 
-        }
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Payment> Payment { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Shipping> Shippings { get; set; }
+        // public DbSet<ShippingMethod> ShippingMethods { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,22 +67,5 @@ namespace API.Infrastructure.Data
 
             base.OnModelCreating(modelBuilder);
         }
-
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Payment> Payment { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<Shipping> Shippings { get; set; }
-        // public DbSet<ShippingMethod> ShippingMethods { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<Wishlist> Wishlists { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
     }
-
 }

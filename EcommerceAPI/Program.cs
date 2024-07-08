@@ -31,11 +31,14 @@ namespace EcommerceAPI
                 option.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext"));
             });
 
+
+
             #region DEPENDENCY INJECTION
 
             builder.Services.AddInfrastructureDependencies()
                             .AddServiceDependencies()
-                            .AddCoreDependencies();
+                            .AddCoreDependencies()
+                            .AddServiceRegistration();
 
             #endregion
 
