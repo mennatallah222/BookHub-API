@@ -1,9 +1,11 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Queries.Models;
 using API.Core.Features.Queries.Responses;
+using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Queries.Handlers
 {
@@ -13,11 +15,15 @@ namespace API.Core.Features.Queries.Handlers
 
     {
         private readonly ICustomerService _customerService;
+        private readonly IStringLocalizer<SharedResources> _localizer;
         private readonly IMapper _mapper;
-        public CustomerHandler(ICustomerService customerService, IMapper mapper)
+        public CustomerHandler(ICustomerService customerService, IMapper mapper,
+                                  IStringLocalizer<SharedResources> localizer) : base(localizer)
+
         {
             _customerService = customerService;
             _mapper = mapper;
+            _localizer = localizer;
         }
         public async Task<Response<List<GetCustomersResponse>>> Handle(GetCustomerListQuery request, CancellationToken cancellationToken)
         {

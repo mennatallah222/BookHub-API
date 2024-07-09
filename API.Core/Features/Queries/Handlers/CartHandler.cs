@@ -1,9 +1,11 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Queries.Models;
 using API.Core.Features.Queries.Responses;
+using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Queries.Handlers
 {
@@ -11,11 +13,16 @@ namespace API.Core.Features.Queries.Handlers
                                    IRequestHandler<GetCartQuery, Response<GetCartResponse>>
     {
         private readonly ICartService _cartService;
+        private readonly IStringLocalizer<SharedResources> _localizer;
         private readonly IMapper _mapper;
-        public CartHandler(ICartService cartService, IMapper mapper)
+        public CartHandler(ICartService cartService,
+                           IMapper mapper,
+                                  IStringLocalizer<SharedResources> localizer) : base(localizer)
+
         {
             _cartService = cartService;
             _mapper = mapper;
+            _localizer = localizer;
         }
         public async Task<Response<GetCartResponse>> Handle(GetCartQuery request, CancellationToken cancellationToken)
         {

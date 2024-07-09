@@ -21,9 +21,10 @@ namespace API.Core.Features.Queries.Handlers
         private readonly IProductsService _productService;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _stringLocalizer;
+
         public ProductsHandler(IProductsService productsService,
                                IMapper mapper,
-                               IStringLocalizer<SharedResources> stringLocalizer)
+                               IStringLocalizer<SharedResources> stringLocalizer) : base(stringLocalizer)
         {
             _mapper = mapper;
             _productService = productsService;

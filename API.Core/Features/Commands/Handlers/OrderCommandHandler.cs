@@ -1,10 +1,12 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Commands.Models;
+using API.Core.SharedResource;
 using API.Infrastructure.Interfaces;
 using API.Service.Interfaces;
 using AutoMapper;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Commands.Handlers
 {
@@ -16,15 +18,23 @@ namespace API.Core.Features.Commands.Handlers
         private readonly ICustomer _customer;
         private readonly ICartRepo _cartRepo;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResources> _localizer;
 
 
-        public OrderCommandHandler(IOrederService orederService, IProductRepo productRepo, ICustomer customerRepo, ICartRepo cartRepo, IMapper mapper)
+        public OrderCommandHandler(IOrederService orederService,
+                                   IProductRepo productRepo,
+                                   ICustomer customerRepo,
+                                   ICartRepo cartRepo,
+                                   IMapper mapper,
+                                  IStringLocalizer<SharedResources> localizer) : base(localizer)
+
         {
             _orederService = orederService;
             _productRepo = productRepo;
             _customer = customerRepo;
             _cartRepo = cartRepo;
             _mapper = mapper;
+            _localizer = localizer;
         }
         public async Task<string> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {

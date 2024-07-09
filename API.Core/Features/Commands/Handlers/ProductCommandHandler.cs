@@ -1,9 +1,11 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Commands.Models;
+using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Commands.Handlers
 {
@@ -13,11 +15,16 @@ namespace API.Core.Features.Commands.Handlers
     {
         private readonly IProductsService _productsService;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResources> _localizer;
 
-        public ProductCommandHandler(IProductsService productsService, IMapper mapper)
+        public ProductCommandHandler(IProductsService productsService,
+                                     IMapper mapper,
+                                  IStringLocalizer<SharedResources> localizer) : base(localizer)
+
         {
             _productsService = productsService;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         public async Task<Response<string>> Handle(CreateProductCommand request, CancellationToken cancellationToken)

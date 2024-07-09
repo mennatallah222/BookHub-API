@@ -1,6 +1,8 @@
 ﻿using API.Core.Features.Commands.Models;
+using API.Core.SharedResource;
 using API.Service.Interfaces;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Commands.Validations
 {
@@ -8,12 +10,16 @@ namespace API.Core.Features.Commands.Validations
     {
         #region ATTRIBUTES
         private readonly IProductsService _productsService;
+        private readonly IStringLocalizer<SharedResources> _localizer;
+
         #endregion
 
         #region CTOR
-        public CreateProductValidator(IProductsService productsService)
+        public CreateProductValidator(IProductsService productsService,
+                                      IStringLocalizer<SharedResources> localizer)
         {
             _productsService = productsService;
+            _localizer = localizer;
             ApplyValidationRules();
             ApplyCustomeValidationRules();
         }
@@ -23,8 +29,8 @@ namespace API.Core.Features.Commands.Validations
 
         public void ApplyValidationRules()
         {
-            RuleFor(x => x.Name).NotNull().WithMessage("Name must not be null!")
-                                .NotEmpty().WithMessage("Name must not be empty!")
+            RuleFor(x => x.Name).NotNull().WithMessage(_localizer[SharedResourceKeys.NotNull])
+                                .NotEmpty().WithMessage(_localizer[SharedResourceKeys.NotEmpty])
                               .MaximumLength(100).WithMessage("Name must be less than 100 characters!")
                               .MinimumLength(5).WithMessage("Name must be more than 5 characters!");
             RuleFor(z => z.Price).NotNull().WithMessage("Price must not be null!")

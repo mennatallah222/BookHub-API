@@ -117,8 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllNotFound" xml:space="preserve">
+    <value>لا يوجد عناصر</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>تم الاضافة بنجاح!</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>تم الحذف</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="NotEmpty" xml:space="preserve">
+    <value>لا يسمح ان يكون فارغا</value>
+  </data>
   <data name="NotFound" xml:space="preserve">
     <value>هذا العنصر ليس موجودا</value>
+  </data>
+  <data name="NotNull" xml:space="preserve">
+    <value>لا يسمح ان يكون فارغا</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>سعر</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>هذا الحقل مطلوب</value>

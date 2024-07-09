@@ -1,8 +1,10 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Commands.Models;
+using API.Core.SharedResource;
 using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using MediatR;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Commands.Handlers
 {
@@ -11,11 +13,16 @@ namespace API.Core.Features.Commands.Handlers
         private readonly IProductsService _productService;
         private readonly ICustomerService _customerService;
         private readonly ICartService _cartService;
-        public CartCommandHandler(ICustomerService customerService, ICartService cartService, IProductsService productsService)
+        private readonly IStringLocalizer<SharedResources> _localizer;
+        public CartCommandHandler(ICustomerService customerService,
+                                  ICartService cartService,
+                                  IProductsService productsService,
+                                  IStringLocalizer<SharedResources> localizer) : base(localizer)
         {
             _productService = productsService;
             _customerService = customerService;
             _cartService = cartService;
+            _localizer = localizer;
         }
 
         public async Task<string> Handle(AddProductToCartCommand request, CancellationToken cancellationToken)
