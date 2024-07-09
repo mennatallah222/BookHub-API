@@ -126,7 +126,6 @@
   <data name="Deleted" xml:space="preserve">
     <value>تم الحذف</value>
   </data>
-<<<<<<<< HEAD:API.Core/SharedResource/SharedResources.Ar.resx
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>
