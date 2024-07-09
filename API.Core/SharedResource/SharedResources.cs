@@ -1,4 +1,4 @@
-﻿namespace API.Core.Shared
+﻿namespace API.Core.SharedResource
 {
     public class SharedResources
     {

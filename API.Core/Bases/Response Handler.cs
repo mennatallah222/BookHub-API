@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using API.Core.SharedResource;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Bases
 {
     public class Response_Handler
     {
-        public Response_Handler()
+
+        private readonly IStringLocalizer<SharedResources> _stringLocalizer;
+
+        public Response_Handler(IStringLocalizer<SharedResources> stringLocalizer)
         {
-            
+            _stringLocalizer = stringLocalizer;
         }
-        public Response<T> Deleted<T>()
+        public Response<T> Deleted<T>(string Message = null)
         {
             return new Response<T>()
             {
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Deleted Successfully"
+                Message = Message == null ? _stringLocalizer[SharedResourceKeys.Deleted] : Message
             };
         }
         public Response<T> Success<T>(T entity, object Meta = null)
@@ -28,7 +28,7 @@ namespace API.Core.Bases
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Successeeded",
+                Message = _stringLocalizer[SharedResourceKeys.Success],
                 Meta = Meta
             };
         }
@@ -57,7 +57,7 @@ namespace API.Core.Bases
             {
                 StatusCode = System.Net.HttpStatusCode.NotFound,
                 Succeeded = false,
-                Message = message == null ? "Not Found" : message
+                Message = message == null ? _stringLocalizer[SharedResourceKeys.NotFound] : message
             };
         }
 
@@ -68,7 +68,7 @@ namespace API.Core.Bases
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.Created,
                 Succeeded = true,
-                Message = "Created successfully!",
+                Message = _stringLocalizer[SharedResourceKeys.Created],
                 Meta = Meta
             };
         }
