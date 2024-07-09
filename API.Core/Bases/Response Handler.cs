@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using API.Core.SharedResource;
+using Microsoft.Extensions.Localization;
 
 namespace API.Core.Bases
 {
     public class Response_Handler
     {
-        public Response_Handler()
+        private readonly IStringLocalizer<SharedResources> _localizer;
+
+        public Response_Handler(IStringLocalizer<SharedResources> localizer)
         {
-            
+            _localizer = localizer;
         }
         public Response<T> Deleted<T>()
         {
@@ -18,7 +17,7 @@ namespace API.Core.Bases
             {
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Deleted Successfully"
+                Message = _localizer[SharedResourceKeys.Deleted]
             };
         }
         public Response<T> Success<T>(T entity, object Meta = null)
@@ -28,7 +27,7 @@ namespace API.Core.Bases
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Successeeded",
+                Message = _localizer[SharedResourceKeys.Success],
                 Meta = Meta
             };
         }
@@ -57,7 +56,7 @@ namespace API.Core.Bases
             {
                 StatusCode = System.Net.HttpStatusCode.NotFound,
                 Succeeded = false,
-                Message = message == null ? "Not Found" : message
+                Message = message == null ? _localizer[SharedResourceKeys.NotFound] : message
             };
         }
 
@@ -68,7 +67,7 @@ namespace API.Core.Bases
                 Data = entity,
                 StatusCode = System.Net.HttpStatusCode.Created,
                 Succeeded = true,
-                Message = "Created successfully!",
+                Message = _localizer[SharedResourceKeys.Created],
                 Meta = Meta
             };
         }

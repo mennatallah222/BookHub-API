@@ -1,7 +1,7 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Queries.Models;
 using API.Core.Features.Queries.Responses;
-using API.Core.Shared;
+using API.Core.SharedResource;
 using API.Core.Wrappers;
 using API.Service.Interfaces;
 using AutoMapper;
@@ -39,7 +39,7 @@ namespace API.Core.Features.Queries.Handlers
         public async Task<Response<GetAllProductsResponses>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var src = await _productService.GetProductByIdAsync(request.Id);
-            if (src == null) return NotFound<GetAllProductsResponses>(_stringLocalizer[SharedResourcesKeys.NotFound]);
+            if (src == null) return NotFound<GetAllProductsResponses>(_stringLocalizer[SharedResourceKeys.NotFound]);
             var result = _mapper.Map<GetAllProductsResponses>(src);
             return Success(result);
         }
