@@ -60,27 +60,28 @@ namespace EcommerceAPI
 
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
-                List<CultureInfo> locales = new List<CultureInfo>
+                List<CultureInfo> supportedCultures = new List<CultureInfo>
                 {
                     new CultureInfo("en-US"),
                     new CultureInfo("ar-EG"),
                     new CultureInfo("tr-TR")
                 };
                 options.DefaultRequestCulture = new RequestCulture("ar-EG");
-                options.SupportedCultures = locales;
-                options.SupportedUICultures = locales;
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
             });
+            var currentCulture = CultureInfo.CurrentCulture.Name;
+            var currentUICulture = CultureInfo.CurrentUICulture.Name;
+            Console.WriteLine($"Current Culture: {currentCulture}, Current UI Culture: {currentUICulture}");
 
-            builder.Services.Configure<RequestLocalizationOptions>(opt =>
-            {
-                opt.DefaultRequestCulture = new RequestCulture("ar-EG");
-            });
+
 
             #endregion
 
 
 
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -91,8 +92,15 @@ namespace EcommerceAPI
 
             #region Localization Middleware
             var opts = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(opts.Value);
-
+            if (opts != null)
+            {
+                app.UseRequestLocalization(opts.Value);
+            }
+            else
+            {
+                // Handle the case where opts is null (e.g., log an error)
+                throw new InvalidOperationException("RequestLocalizationOptions is not configured properly.");
+            }
             app.UseMiddleware<ErrorHandlerMiddleware>();
             #endregion
 

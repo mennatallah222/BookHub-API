@@ -11,7 +11,7 @@ namespace API.Core.Bases
         {
             _localizer = localizer;
         }
-        public Response<T> Deleted<T>()
+        public Response<T> Deleted<T>(string Message = null)
         {
             return new Response<T>()
             {
