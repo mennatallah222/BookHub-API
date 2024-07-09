@@ -21,10 +21,4 @@
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\User\Queries\Handlers\" />
-    <Folder Include="Features\User\Queries\Mpdels\" />
-    <Folder Include="Features\User\Queries\" />
-  </ItemGroup>
-
 </Project>
