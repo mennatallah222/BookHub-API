@@ -16,6 +16,9 @@
         public const string UserName = "UserName";
         public const string UserNameExists = "UserNameExists";
         public const string FailedToAddUser = "FailedToAddUser";
+        public const string Equal = "Equal";
+        public const string ChangePasswordFailed = "ChangePasswordFailed";
+
 
     }
 }

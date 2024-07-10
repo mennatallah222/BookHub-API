@@ -120,6 +120,9 @@
   <data name="AllNotFound" xml:space="preserve">
     <value>لا يوجد عناصر</value>
   </data>
+  <data name="ChangePasswordFailed" xml:space="preserve">
+    <value>تغيير كلمة المرور لم تنجح</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>تم الاضافة بنجاح!</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="EmailExists" xml:space="preserve">
     <value>الايميل الذي ادخلته موجود بالفعل!</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>يجب ان يطابق</value>
   </data>
   <data name="FailedToAddUser" xml:space="preserve">
     <value>حدث خطأ اثناء اضافة المستخدم</value>

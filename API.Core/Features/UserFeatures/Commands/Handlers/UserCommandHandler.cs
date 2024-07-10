@@ -13,7 +13,9 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
     public class UserCommandHandler : Response_Handler,
         IRequestHandler<AddUserCommand, Response<string>>,
         IRequestHandler<UpdateUserCommand, Response<string>>,
-        IRequestHandler<DeleteUserCommand, Response<string>>
+        IRequestHandler<DeleteUserCommand, Response<string>>,
+        IRequestHandler<ChangeUserPasswordCommand, Response<string>>
+
 
 
     {
@@ -96,8 +98,25 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
                 return BadRequest<string>(result.Errors.FirstOrDefault()?.Description);
 
             }
-            return Success<string>(_stringLocalizer[SharedResourceKeys.Updated]);
+            return Success<string>(_stringLocalizer[SharedResourceKeys.Deleted]);
 
+        }
+
+        public async Task<Response<string>> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (user == null)
+            {
+                return NotFound<string>(_stringLocalizer[SharedResourceKeys.NotFound]);
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, request.CurrentPasswrod, request.NewPasswrod);
+            if (!result.Succeeded)
+            {
+                return BadRequest<string>(_stringLocalizer[SharedResourceKeys.ChangePasswordFailed]);
+
+            }
+            return Success<string>(_stringLocalizer[SharedResourceKeys.Updated]);
         }
     }
 }

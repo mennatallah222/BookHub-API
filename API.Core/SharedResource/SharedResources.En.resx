@@ -120,6 +120,9 @@
   <data name="AllNotFound" xml:space="preserve">
     <value>No found objects!</value>
   </data>
+  <data name="ChangePasswordFailed" xml:space="preserve">
+    <value>Changing your password has failed</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Created successfully!</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="EmailExists" xml:space="preserve">
     <value>The email you entered already exists!</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>must be equal</value>
   </data>
   <data name="FailedToAddUser" xml:space="preserve">
     <value>Failed to add the user</value>

@@ -13,7 +13,6 @@ namespace API.Core.Mapping.UserMapping
             CreateMap<UpdateUserCommand, User>();
 
 
-
             CreateMap<User, GetUsersListResponse>();
 
 

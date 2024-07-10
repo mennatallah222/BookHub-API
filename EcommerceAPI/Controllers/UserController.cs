@@ -49,5 +49,14 @@ namespace EcommerceAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut("/User/ChangeUserPassword")]
+        public async Task<IActionResult> ChangeUserPassword([FromBody] ChangeUserPasswordCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
     }
 }
