@@ -9,8 +9,9 @@ namespace API.Core.Mapping.UserMapping
     {
         public UserProfile()
         {
-            CreateMap<AddUserCommand, User>()
-                ;
+            CreateMap<AddUserCommand, User>();
+            CreateMap<UpdateUserCommand, User>();
+
 
 
             CreateMap<User, GetUsersListResponse>();

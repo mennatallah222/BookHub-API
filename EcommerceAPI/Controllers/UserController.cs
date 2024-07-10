@@ -35,5 +35,19 @@ namespace EcommerceAPI.Controllers
 
             return Ok(response);
         }
+        [HttpPut("/User/UpdateUser")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+        [HttpDelete("/User/DeleteUser")]
+        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
     }
 }

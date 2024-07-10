@@ -4,12 +4,18 @@ using API.Core.SharedResource;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.UserFeatures.Commands.Handlers
 {
+
     public class UserCommandHandler : Response_Handler,
-        IRequestHandler<AddUserCommand, Response<string>>
+        IRequestHandler<AddUserCommand, Response<string>>,
+        IRequestHandler<UpdateUserCommand, Response<string>>,
+        IRequestHandler<DeleteUserCommand, Response<string>>
+
+
     {
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _stringLocalizer;
@@ -51,6 +57,47 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
             }
 
             return Created("");
+        }
+
+        public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (user == null)
+            {
+                return BadRequest<string>(_stringLocalizer[SharedResourceKeys.NotFound]);
+            }
+            user.FullName = request.FullName;
+            user.Email = request.Email;
+            user.UserName = request.UserName;
+            user.Address = request.Address;
+            user.PhoneNumber = request.PhoneNumber;
+            user.Country = request.Country;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest<string>(result.Errors.FirstOrDefault()?.Description);
+
+            }
+            return Success<string>(_stringLocalizer[SharedResourceKeys.Updated]);
+        }
+
+        public async Task<Response<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
+            if (user == null)
+            {
+                return BadRequest<string>(_stringLocalizer[SharedResourceKeys.NotFound]);
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                return BadRequest<string>(result.Errors.FirstOrDefault()?.Description);
+
+            }
+            return Success<string>(_stringLocalizer[SharedResourceKeys.Updated]);
+
         }
     }
 }
