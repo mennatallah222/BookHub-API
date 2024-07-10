@@ -14,19 +14,18 @@ namespace API.Infrastructure
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.RequireUniqueEmail = true;
                 opt.Password.RequiredLength = 8;
+                opt.SignIn.RequireConfirmedEmail = false;///////////for now
 
-                //i can control the max of failed access attempts
                 opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 opt.Lockout.MaxFailedAccessAttempts = 3;
                 opt.Lockout.AllowedForNewUsers = true;
 
-                opt.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            })
+            .AddEntityFrameworkStores<ApplicationDBContext>()
+            .AddDefaultTokenProviders();
 
-            }).AddEntityFrameworkStores<ApplicationDBContext>().AddDefaultTokenProviders();
-
-            //Cookies configuration
-
+            // Other service registrations
             return services;
         }
     }

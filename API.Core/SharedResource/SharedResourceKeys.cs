@@ -12,5 +12,10 @@
         public const string NotEmpty = "NotEmpty";
         public const string NotNull = "NotNull";
 
+        public const string EmailExists = "EmailExists";
+        public const string UserName = "UserName";
+        public const string UserNameExists = "UserNameExists";
+        public const string FailedToAddUser = "FailedToAddUser";
+
     }
 }

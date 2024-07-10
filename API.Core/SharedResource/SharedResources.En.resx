@@ -126,6 +126,12 @@
   <data name="Deleted" xml:space="preserve">
     <value>Deleted Successfully</value>
   </data>
+  <data name="EmailExists" xml:space="preserve">
+    <value>The email you entered already exists!</value>
+  </data>
+  <data name="FailedToAddUser" xml:space="preserve">
+    <value>Failed to add the user</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -146,5 +152,11 @@
   </data>
   <data name="Updated" xml:space="preserve">
     <value>Updated Successfully</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UserNameExists" xml:space="preserve">
+    <value>Username already exists</value>
   </data>
 </root>

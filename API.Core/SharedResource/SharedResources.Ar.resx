@@ -126,14 +126,18 @@
   <data name="Deleted" xml:space="preserve">
     <value>تم الحذف</value>
   </data>
+  <data name="EmailExists" xml:space="preserve">
+    <value>الايميل الذي ادخلته موجود بالفعل!</value>
+  </data>
+  <data name="FailedToAddUser" xml:space="preserve">
+    <value>حدث خطأ اثناء اضافة المستخدم</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>
   <data name="NotEmpty" xml:space="preserve">
     <value>لا يسمح ان يكون فارغا</value>
   </data>
-========
->>>>>>>> 6ee1af34bf7d79957b4049c648c25c26c18263de:API.Core/SharedResource/SharedResources.ar.resx
   <data name="NotFound" xml:space="preserve">
     <value>هذا العنصر ليس موجودا</value>
   </data>
@@ -151,5 +155,11 @@
   </data>
   <data name="Updated" xml:space="preserve">
     <value>تم التعديل بنجاح</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="UserNameExists" xml:space="preserve">
+    <value>هذا الاسم يوجد بالفعل</value>
   </data>
 </root>

@@ -1,11 +1,13 @@
 
 using API.Core;
 using API.Core.Middleware;
+using API.Core.SharedResource;
 using API.Infrastructure;
 using API.Infrastructure.Data;
 using API.Service;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 
@@ -35,10 +37,12 @@ namespace EcommerceAPI
 
             #region DEPENDENCY INJECTION
 
-            builder.Services.AddInfrastructureDependencies()
+            builder.Services.AddServiceRegistration()
+                            .AddInfrastructureDependencies()
                             .AddServiceDependencies()
                             .AddCoreDependencies()
-                            .AddServiceRegistration();
+                            .AddSingleton<IStringLocalizer, StringLocalizer<SharedResources>>();
+
 
             #endregion
 
