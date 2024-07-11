@@ -1,12 +1,14 @@
 ﻿using API.Core.Features.UserFeatures.Commands.Models;
 using API.Core.Features.UserFeatures.Queries.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -1,12 +1,14 @@
 ﻿using API.Core.Features.Commands.Models;
 using API.Core.Features.Queries.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediatR;
@@ -14,6 +16,8 @@ namespace EcommerceAPI.Controllers
         {
             _mediatR = mediator;
         }
+
+        [AllowAnonymous]
         [HttpGet("/Product/List")]
         public async Task<IActionResult> GetProductList()
         {
@@ -21,6 +25,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("/Product/{id}")]
         public async Task<IActionResult> GetProductByID(int id)
         {
@@ -47,7 +52,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response.Message);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("/Product/PaginatedList")]
         public async Task<IActionResult> GetPaginatedProductList([FromQuery] GetProductsPaginatedList query)
         {

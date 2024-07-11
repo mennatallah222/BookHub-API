@@ -150,6 +150,9 @@
   <data name="NotNull" xml:space="preserve">
     <value>Object can't be Null!</value>
   </data>
+  <data name="PasswordNotCorrect" xml:space="preserve">
+    <value>Password is not correct</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>

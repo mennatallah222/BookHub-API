@@ -18,6 +18,7 @@
         public const string FailedToAddUser = "FailedToAddUser";
         public const string Equal = "Equal";
         public const string ChangePasswordFailed = "ChangePasswordFailed";
+        public const string PasswordNotCorrect = "PasswordNotCorrect";
 
 
     }

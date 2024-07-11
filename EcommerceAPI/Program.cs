@@ -37,7 +37,7 @@ namespace EcommerceAPI
 
             #region DEPENDENCY INJECTION
 
-            builder.Services.AddServiceRegistration()
+            builder.Services.AddServiceRegistration(builder.Configuration)
                             .AddInfrastructureDependencies()
                             .AddServiceDependencies()
                             .AddCoreDependencies()
@@ -46,13 +46,13 @@ namespace EcommerceAPI
 
             #endregion
 
-
+            /*
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
                 options.JsonSerializerOptions.MaxDepth = 64; // Adjust the max depth as needed
             });
-
+            */
 
             #region Localization
 
@@ -112,9 +112,8 @@ namespace EcommerceAPI
 
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

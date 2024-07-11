@@ -150,6 +150,9 @@
   <data name="NotNull" xml:space="preserve">
     <value>لا يسمح ان يكون فارغا</value>
   </data>
+  <data name="PasswordNotCorrect" xml:space="preserve">
+    <value>كلمة المرور ليست صحيحة</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>سعر</value>
   </data>
