@@ -4,6 +4,7 @@ using API.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240712031720_AddRefreshTokenTable")]
+    partial class AddRefreshTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,9 +218,6 @@ namespace API.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("JwtId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Token")
@@ -668,7 +668,7 @@ namespace API.Infrastructure.Migrations
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.UserRefreshToken", b =>
                 {
                     b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
-                        .WithMany("UserRefreshTokens")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -846,11 +846,6 @@ namespace API.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", b =>
-                {
-                    b.Navigation("UserRefreshTokens");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Order", b =>

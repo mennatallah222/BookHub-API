@@ -28,6 +28,7 @@ namespace API.Infrastructure.Data
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

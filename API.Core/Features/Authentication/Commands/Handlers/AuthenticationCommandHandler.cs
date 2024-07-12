@@ -49,7 +49,7 @@ namespace API.Core.Features.Authentication.Commands.Handlers
 
             }
             //generate token then return it
-            var accessToken = _authenticationService.GetJWTToken(user);
+            var accessToken = await _authenticationService.GetJWTToken(user);
 
             return Success(accessToken);
         }

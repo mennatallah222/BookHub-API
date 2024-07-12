@@ -1,4 +1,5 @@
-﻿using API.Service.Interfaces;
+﻿using API.Infrastructure.Interfaces;
+using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
 using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
 using Microsoft.IdentityModel.Tokens;
@@ -15,12 +16,15 @@ namespace API.Service.Implementations
 
         private readonly JwtSettings _jwtSettings;
         private readonly ConcurrentDictionary<string, RefreshToken> _userRefreshToken;
-        public AuthenticationService(JwtSettings jwtSettings)
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
+        public AuthenticationService(JwtSettings jwtSettings,
+                                     IRefreshTokenRepository refreshTokenRepository)
         {
             _jwtSettings = jwtSettings;
+            _refreshTokenRepository = refreshTokenRepository;
             _userRefreshToken = new ConcurrentDictionary<string, RefreshToken>();
         }
-        public JwtAuthResult GetJWTToken(User user)
+        public async Task<JwtAuthResult> GetJWTToken(User user)
         {
 
             //get claims
@@ -42,7 +46,21 @@ namespace API.Service.Implementations
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
 
 
+            //refresh token
             var refreshToken = getRefreshToken(user.UserName);
+
+            var userRefreshtoken = new UserRefreshToken
+            {
+                AddedTime = DateTime.Now,
+                ExpiryTime = DateTime.Now.AddDays(_jwtSettings.RefreshTokenExipreDate),
+                IsUsed = true,
+                JwtId = jwtToken.Id,
+                RefreshToken = refreshToken.ToString(),
+                Token = accessToken,
+                UserId = user.Id
+            };
+
+            await _refreshTokenRepository.AddAsync(userRefreshtoken);
 
             var response = new JwtAuthResult();
             response.refreshToken = refreshToken;
