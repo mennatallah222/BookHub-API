@@ -35,7 +35,7 @@ namespace API.Core.Features.Authentication.Queries.Handlers
             {
                 return Success(result);
             }
-            return BadRequest<string>("Expired");
+            return Unauthorized<string>(_localizer[SharedResourceKeys.TokenIsExpired]);
         }
     }
 }

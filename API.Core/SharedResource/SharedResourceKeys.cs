@@ -20,6 +20,12 @@
         public const string ChangePasswordFailed = "ChangePasswordFailed";
         public const string PasswordNotCorrect = "PasswordNotCorrect";
 
+        public const string Unauthorized = "Unauthorized";
+        public const string AlgorithmIsWrong = "AlgorithmIsWrong";
+        public const string TokenIsNotExpired = "TokenIsNotExpired";
+        public const string RefreshTokenIsNotFound = "RefreshTokenIsNotFound";
+        public const string RefreshTokenIsExpired = "RefreshTokenIsExpired";
+        public const string TokenIsExpired = "TokenIsExpired";
 
     }
 }
