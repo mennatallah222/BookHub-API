@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlgorithmIsWrong" xml:space="preserve">
+    <value>هناك خطأ في الخوارزمية المستخدمة في التشفير</value>
+  </data>
   <data name="AllNotFound" xml:space="preserve">
     <value>لا يوجد عناصر</value>
   </data>
@@ -156,11 +159,26 @@
   <data name="Price" xml:space="preserve">
     <value>سعر</value>
   </data>
+  <data name="RefreshTokenIsExpired" xml:space="preserve">
+    <value>رمز التشفير المستخدم انتهي صلاحيته</value>
+  </data>
+  <data name="RefreshTokenIsNotFound" xml:space="preserve">
+    <value>رمز التشفير المستخدم ليس موجودا</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>هذا الحقل مطلوب</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>تم النجاح</value>
+  </data>
+  <data name="TokenIsExpired" xml:space="preserve">
+    <value>رمز التشفير انتهي صلاحيته</value>
+  </data>
+  <data name="TokenIsNotExpired" xml:space="preserve">
+    <value>رمز التشفير المستخدم لم ينتهي صلاحيته</value>
+  </data>
+  <data name="Unauthorized" xml:space="preserve">
+    <value>غير مصرح له</value>
   </data>
   <data name="Updated" xml:space="preserve">
     <value>تم التعديل بنجاح</value>
