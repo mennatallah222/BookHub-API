@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
 {
@@ -12,7 +7,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
     {
         [Key]
         public int ReviewId { get; set; }
-
+        public string? Content { get; set; }
         [Required]
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]

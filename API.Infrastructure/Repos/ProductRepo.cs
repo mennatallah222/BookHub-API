@@ -38,7 +38,8 @@ namespace API.Infrastructure.Repos
 
         public async Task<List<Product>> GetProductListAsync()
         {
-            return await _products.Include(cn => cn.Category).ToListAsync();
+            return await _products.Include(cn => cn.Category)
+                .Include(p => p.Reviews).ToListAsync();
         }
 
         public async Task<List<Product>> GetProductsByNames(List<string> names)

@@ -13,6 +13,7 @@
 
         public string CategoryName { get; set; }
         public string? Image { get; set; }
+        public List<string> Reviews { get; set; }
 
 
     }

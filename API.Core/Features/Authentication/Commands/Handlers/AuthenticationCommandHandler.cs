@@ -3,6 +3,7 @@ using API.Core.Features.Authentication.Commands.Models;
 using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
+using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Localization;
 namespace API.Core.Features.Authentication.Commands.Handlers
 {
     public class AuthenticationCommandHandler : Response_Handler,
-            IRequestHandler<SignInCommand, Response<string>>
+            IRequestHandler<SignInCommand, Response<JwtAuthResult>>
     {
 
         private readonly IMapper _mapper;
@@ -34,21 +35,21 @@ namespace API.Core.Features.Authentication.Commands.Handlers
             _authenticationService = authenticationService;
 
         }
-        public async Task<Response<string>> Handle(SignInCommand request, CancellationToken cancellationToken)
+        public async Task<Response<JwtAuthResult>> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
             //check if user exists, then return username not found if not
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return BadRequest<string>(_localizer[SharedResourceKeys.NotFound]);
+            if (user == null) return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.NotFound]);
 
             //try to sign in, if failed, retun password is wrong
             var signInResult = _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!signInResult.IsCompletedSuccessfully)
             {
-                return BadRequest<string>(_localizer[SharedResourceKeys.PasswordNotCorrect]);
+                return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.PasswordNotCorrect]);
 
             }
             //generate token then return it
-            var accessToken = await _authenticationService.GetJWTToken(user);
+            var accessToken = _authenticationService.GetJWTToken(user);
 
             return Success(accessToken);
         }

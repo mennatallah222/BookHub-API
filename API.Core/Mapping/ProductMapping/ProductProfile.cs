@@ -10,7 +10,8 @@ namespace API.Core.Mapping.ProductMapping
         public ProductProfile()
         {
             CreateMap<Product, GetAllProductsResponses>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews.Select(c => c.Content).ToList()));
             /*CreateMap<CreateProductCommand, Product>()
                 .ForMember(dest => dest.Category.Name, opt => opt.MapFrom(src => src.CategoryName));
             */

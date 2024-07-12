@@ -9,6 +9,8 @@
         public bool ValidateIssuer { get; set; }
         public bool ValidateLifetime { get; set; }
         public bool ValidateIssuerSigningKey { get; set; }
+        public int AccessTokenExipreDate { get; set; }
+        public int RefreshTokenExipreDate { get; set; }
 
     }
 }
