@@ -11,7 +11,8 @@ using Microsoft.Extensions.Localization;
 namespace API.Core.Features.Authentication.Commands.Handlers
 {
     public class AuthenticationCommandHandler : Response_Handler,
-            IRequestHandler<SignInCommand, Response<JwtAuthResult>>
+            IRequestHandler<SignInCommand, Response<JwtAuthResult>>,
+            IRequestHandler<RefreshTokenCommand, Response<JwtAuthResult>>
     {
 
         private readonly IMapper _mapper;
@@ -52,6 +53,12 @@ namespace API.Core.Features.Authentication.Commands.Handlers
             var accessToken = await _authenticationService.GetJWTToken(user);
 
             return Success(accessToken);
+        }
+
+        public async Task<Response<JwtAuthResult>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _authenticationService.GetRefreshToken(request.AccessToken, request.RfreshToken);
+            return Success(result);
         }
     }
 }

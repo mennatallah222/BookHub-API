@@ -6,5 +6,7 @@ namespace API.Service.Interfaces
     public interface IAuthenticationService
     {
         public Task<JwtAuthResult> GetJWTToken(User user);
+        public Task<JwtAuthResult> GetRefreshToken(string AccessTpken, string RefreshToken);
+        public Task<string> ValidateToken(string accessToken);
     }
 }
