@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Features\Authentication\Queries\Validators\" />
+    <Folder Include="Features\Authorization\Queries\Handlers\" />
+    <Folder Include="Features\Authorization\Queries\Models\" />
   </ItemGroup>
 
 </Project>

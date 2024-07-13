@@ -58,7 +58,17 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
                 return BadRequest<string>(createdUser.Errors.FirstOrDefault()?.Description);
             }
 
-            return Created("");
+            var usersList = await _userManager.Users.ToListAsync();
+            if (usersList.Count >= 0)
+            {
+                await _userManager.AddToRoleAsync(identityUser, "User");
+            }
+            else
+            {
+                await _userManager.AddToRoleAsync(identityUser, "Admin");
+            }
+
+            return Created("User added seuccessfully");
         }
 
         public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)

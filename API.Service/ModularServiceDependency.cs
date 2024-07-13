@@ -13,6 +13,8 @@ namespace API.Service
             services.AddTransient<IOrederService, OrderService>();
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IAuthorizationService, AuthorizationService>();
+
 
             return services;
         }

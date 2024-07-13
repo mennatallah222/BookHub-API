@@ -16,7 +16,7 @@ namespace API.Infrastructure
     {
         public static IServiceCollection AddServiceRegistration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentity<User, IdentityRole<int>>(opt =>
+            services.AddIdentity<User, Role>(opt =>
             {
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.RequireUniqueEmail = true;

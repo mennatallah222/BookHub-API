@@ -18,7 +18,7 @@ public class AuthenticationCommandHandler : Response_Handler,
     private readonly SignInManager<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User> _signInManager;
     private readonly IAuthenticationService _authenticationService;
 
-    public AuthenticationCommandHandler(IProductsService productsService,
+    public AuthenticationCommandHandler(
                                         IMapper mapper,
                                         UserManager<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User> userManager,
                                         SignInManager<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User> signInManager,
