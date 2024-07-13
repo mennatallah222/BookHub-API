@@ -8,7 +8,6 @@ namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediatR;
@@ -34,6 +33,8 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPost("/Product/Add")]
+        [Authorize(Roles = "Admin, Author")]
+
         public async Task<IActionResult> PostProduct([FromBody] CreateProductCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -42,6 +43,8 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPut("/Product/Update")]
+        [Authorize(Roles = "Admin, Author")]
+
         public async Task<IActionResult> PutProduct([FromBody] UpdateProductCommand command)
         {
             var response = await _mediatR.Send(command);

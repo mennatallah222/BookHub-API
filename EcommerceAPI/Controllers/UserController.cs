@@ -46,6 +46,8 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
         [HttpDelete("/User/DeleteUser")]
+        [Authorize(Roles = "Admin, Author")]
+
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUserCommand command)
         {
             var response = await _mediator.Send(command);

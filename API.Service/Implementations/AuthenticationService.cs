@@ -31,7 +31,7 @@ namespace API.Service.Implementations
             //get claims
             //     var jwtToken = GenerateJwtToken(user);
 
-            var (jwtToken, accessToken) = GenerateJwtToken(user);
+            var (jwtToken, accessToken) = await GenerateJwtToken(user);
 
             //refresh token
             var refreshToken = getRefreshToken(user.UserName);
@@ -75,16 +75,11 @@ namespace API.Service.Implementations
         }
 
 
-        private (JwtSecurityToken, string) GenerateJwtToken(User user)
+        private async Task<(JwtSecurityToken, string)> GenerateJwtToken(User user)
         {
-            var claims = new List<Claim>()
-            {
-                new Claim(nameof(UserClaimModel.UserName), user.UserName),
-                new Claim(nameof(UserClaimModel.Email), user.Email),
-                new Claim(nameof(UserClaimModel.PhoneNumber), user.PhoneNumber),
-                new Claim(nameof(UserClaimModel.Id), user.Id.ToString())
-            };
+            var roles = await _userManager.GetRolesAsync(user);
 
+            var claims = GetClaims(user, roles.ToList());
 
             var jwtToken = new JwtSecurityToken(
                                 _jwtSettings.Issuer,
@@ -101,12 +96,30 @@ namespace API.Service.Implementations
 
         }
 
+        public List<Claim> GetClaims(User user, IList<string> roles)
+        {
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                //new Claim(nameof(UserClaimModel.PhoneNumber), user.PhoneNumber),
+                new Claim(nameof(UserClaimModel.Id), user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.UserName)
+
+            };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            return claims;
+        }
         public async Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken token, string refreshToken, DateTime? expireTime)
         {
             //read token to get the claims
 
 
-            var (jwtSecurityToken, newToken) = GenerateJwtToken(user);
+            var (jwtSecurityToken, newToken) = await GenerateJwtToken(user);
 
             var response = new JwtAuthResult();
             response.AccessToken = newToken;

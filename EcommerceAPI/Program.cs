@@ -4,7 +4,10 @@ using API.Core.Middleware;
 using API.Core.SharedResource;
 using API.Infrastructure;
 using API.Infrastructure.Data;
+using API.Infrastructure.Seeder;
 using API.Service;
+using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -15,7 +18,7 @@ namespace EcommerceAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +45,7 @@ namespace EcommerceAPI
                             .AddServiceDependencies()
                             .AddCoreDependencies()
                             .AddSingleton<IStringLocalizer, StringLocalizer<SharedResources>>();
+
 
 
             #endregion
@@ -85,6 +89,15 @@ namespace EcommerceAPI
 
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+                await UserSeeder.SeedAsync(userManager);
+                await RoleSeeder.SeedAsync(roleManager);
+            }
+
 
 
             // Configure the HTTP request pipeline.
