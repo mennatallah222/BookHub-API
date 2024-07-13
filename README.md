@@ -1,5 +1,5 @@
 
-# Project Title
+# Online Shopping
 
 an  online shopping done using asp .net core 8 using clean architecture. It has order, product, cart, user management and used jwt tokens.
 ## 🛠 Skills
