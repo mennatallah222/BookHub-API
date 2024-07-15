@@ -192,4 +192,7 @@
   <data name="UserNameExists" xml:space="preserve">
     <value>هذا الاسم يوجد بالفعل</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>لم يتم العثور علي المستخدم</value>
+  </data>
 </root>
