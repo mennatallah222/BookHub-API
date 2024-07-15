@@ -47,5 +47,21 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("/Authorization/ManageUserRoles/{id}")]
+        public async Task<IActionResult> ManageUserRoles([FromRoute] int id)
+        {
+            var response = await _mediator.Send(new ManageUserRoleQuery() { UserId = id });
+
+            return Ok(response);
+        }
+
+        [HttpPost("/Authorization/AddRoleToUser")]
+        public async Task<IActionResult> AddRoleToUser([FromBody] UpdateUserRolesCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
     }
 }

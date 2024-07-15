@@ -10,5 +10,7 @@ namespace API.Service.Interfaces
         public Task<string> EditRoleAsync(EditRoleRequest editRoleRequest);
         public Task<List<Role>> GetRolesList();
         public Task<Role> GetRolesById(int id);
+        public Task<ManageUserRoleResponse> GetManageUserRolesData(User user);
+        public Task<string> AddRoleToUserAsync(int uId, string roleName);
     }
 }

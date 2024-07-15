@@ -9,10 +9,13 @@ namespace API.Service.Implementations
     internal class AuthorizationService : IAuthorizationService
     {
         private readonly RoleManager<Role> _roleManager;
+        private readonly UserManager<User> _userManager;
 
-        public AuthorizationService(RoleManager<Role> roleManager)
+        public AuthorizationService(RoleManager<Role> roleManager,
+            UserManager<User> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
         public async Task<string> AddRoleAsync(string roleName)
         {
@@ -57,6 +60,59 @@ namespace API.Service.Implementations
         public async Task<Role> GetRolesById(int id)
         {
             return await _roleManager.FindByIdAsync(id.ToString());
+        }
+
+        public async Task<ManageUserRoleResponse> GetManageUserRolesData(User user)
+        {
+            var response = new ManageUserRoleResponse();
+            var newUserRoles = new List<UserRoles>();
+            //user roles
+            var userRoles = await _userManager.GetRolesAsync(user);
+            //all roles
+            var roles = await _roleManager.Roles.ToListAsync();
+
+            response.UserId = user.Id;
+            foreach (var role in roles)
+            {
+                var userRole = new UserRoles();
+                userRole.Id = role.Id;
+                userRole.Name = role.Name;
+                if (userRoles.Contains(role.Name))
+                {
+                    userRole.HasRole = true;
+                }
+                else
+                {
+                    userRole.HasRole = false;
+                }
+                newUserRoles.Add(userRole);
+            }
+            response.UserRoles = newUserRoles;
+            return response;
+
+        }
+
+        public async Task<string> AddRoleToUserAsync(int userId, string roleName)
+        {
+            var response = new ManageUserRoleResponse();
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var role = await _roleManager.FindByNameAsync(roleName);
+            //user roles
+            var userRoles = await _userManager.GetRolesAsync(user);
+            //all roles
+
+            if (userRoles.Contains(roleName))
+            {
+                return "The role you entered is alrady assigned to the user";
+            }
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (result.Succeeded)
+            {
+                return "Role added to the user successfully";
+            }
+
+            return "Failed to add role to the user";
         }
     }
 }

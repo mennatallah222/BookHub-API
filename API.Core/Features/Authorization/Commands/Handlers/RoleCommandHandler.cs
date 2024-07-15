@@ -10,7 +10,9 @@ namespace API.Core.Features.Authorization.Commands.Handlers
 {
     public class RoleCommandHandler : Response_Handler,
                                          IRequestHandler<AddRoleCommand, Response<string>>,
-                                         IRequestHandler<EditRoleCommand, Response<string>>
+                                         IRequestHandler<EditRoleCommand, Response<string>>,
+                                         IRequestHandler<UpdateUserRolesCommand, Response<string>>
+
 
     {
         private readonly IMapper _mapper;
@@ -41,6 +43,21 @@ namespace API.Core.Features.Authorization.Commands.Handlers
             else if (result == "Success") return Success<string>(_localizer[SharedResourceKeys.Updated]);
 
             else return BadRequest<string>(result);
+        }
+
+        public async Task<Response<string>> Handle(UpdateUserRolesCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _authorizationService.AddRoleToUserAsync(request.UserId, request.roleName);
+            if (result == "User not found" || result.Contains("does not exist"))
+            {
+                return NotFound<string>(result);
+            }
+            else if (result == "Role added to the user successfully.")
+            {
+                return Success<string>("Role updated successfully.");
+            }
+
+            return BadRequest<string>(result);
         }
     }
 }

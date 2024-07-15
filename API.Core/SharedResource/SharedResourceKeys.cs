@@ -28,6 +28,7 @@
         public const string TokenIsExpired = "TokenIsExpired";
 
         public const string AddedFailed = "AddedFailed";
+        public const string UserNotFound = "UserNotFound";
 
 
 
