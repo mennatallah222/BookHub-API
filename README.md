@@ -8,6 +8,7 @@ an  online shopping done using asp .net core 8 using clean architecture. It has 
 
 - Products, Order, Customer, User, Cart, Review CRUD
 - Authentication and authorization using JWT
+- Admin must add the role then assign it to the user, both are different endpoints
 
 ## Screenshots
 ![1](https://github.com/user-attachments/assets/4224943f-4af8-4cca-9bce-9776f90899d2)
