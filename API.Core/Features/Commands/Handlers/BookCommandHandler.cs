@@ -9,15 +9,17 @@ using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Commands.Handlers
 {
-    public class ProductCommandHandler : Response_Handler,
-        IRequestHandler<CreateProductCommand, Response<string>>,
-        IRequestHandler<UpdateProductCommand, Response<string>>
+    public class BookCommandHandler : Response_Handler,
+        IRequestHandler<CreateBookCommand, Response<string>>,
+        IRequestHandler<UpdateBookCommand, Response<string>>,
+        IRequestHandler<DeleteBookCommand, Response<string>>
+
     {
         private readonly IProductsService _productsService;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
 
-        public ProductCommandHandler(IProductsService productsService,
+        public BookCommandHandler(IProductsService productsService,
                                      IMapper mapper,
                                   IStringLocalizer<SharedResources> localizer) : base(localizer)
 
@@ -27,10 +29,10 @@ namespace API.Core.Features.Commands.Handlers
             _localizer = localizer;
         }
 
-        public async Task<Response<string>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<Product>(request);
-            var res = await _productsService.AddProductAsync(product);
+            var res = await _productsService.AddProductAsync(product, request.GenresNames);
             //if (res == "") return BadRequest<string>("Name already exists!");
             /*var createdProduct = await _productsService.AddProductAsync(product);
             var response = _mapper.Map<CreateProductResponse>(createdProduct);
@@ -41,7 +43,7 @@ namespace API.Core.Features.Commands.Handlers
             //   return BadRequest<string>("An unknown error occurred");
         }
 
-        public async Task<Response<string>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
             var product = await _productsService.GetProductByIdAsync(request.Id);
             if (product == null)
@@ -49,8 +51,14 @@ namespace API.Core.Features.Commands.Handlers
                 return NotFound<string>("Product is not found!");
             }
             _mapper.Map(request, product);
-            await _productsService.UpdateProductAsync(product);
+            await _productsService.UpdateProductAsync(product, request.BookGenres);
             return Success("product updated successfully!");
+
+        }
+
+        public async Task<Response<string>> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+        {
+            return Deleted<string>(await _productsService.DeleteProductAsync(request.BookId));
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Commands.Validations
 {
-    public class CreateProductValidator : AbstractValidator<CreateProductCommand>
+    public class CreateProductValidator : AbstractValidator<CreateBookCommand>
     {
         #region ATTRIBUTES
         private readonly IProductsService _productsService;

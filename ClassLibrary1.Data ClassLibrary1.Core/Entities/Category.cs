@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
 {
@@ -11,12 +6,14 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
     {
         public Category()
         {
-            Products= new HashSet<Product>();
+            //  Products = new HashSet<Product>();
+            BookGenres = new HashSet<BookGenre>();
         }
         [Key]
         public int CategoryId { get; set; }
         [Required]
         public string Name { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<BookGenre>? BookGenres { get; set; }
     }
 }

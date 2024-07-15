@@ -4,8 +4,7 @@ using MediatR;
 
 namespace API.Core.Features.Queries.Models
 {
-    public class GetProductByIdQuery : IRequest<Response<GetAllProductsResponses>>
+    public class GetAllBooksQuery : IRequest<Response<List<GetAllBooksResponses>>>
     {
-        public int Id { get; set; }
     }
 }

@@ -29,6 +29,9 @@ namespace API.Infrastructure.Data
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
+        public DbSet<BookGenre> BookGenres { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,6 +68,25 @@ namespace API.Infrastructure.Data
             .ToTable("OrderItems") // Ensure the correct table name
             .Property(o => o.Price)
             .HasColumnType("decimal(18,2)");
+
+
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.CurrentlyReading)
+                .WithOne()
+                .HasForeignKey(p => p.CustomerId);
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.ReadBooks)
+                .WithOne(p => p.Customer)
+                .HasForeignKey(p => p.CustomerId);
+            modelBuilder.Entity<BookGenre>()
+                .HasKey(bg => bg.BookGenreId);
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.BookGenres)
+                .WithOne(bg => bg.Genre)
+                .HasForeignKey(bg => bg.GenreId);
+
+
 
             base.OnModelCreating(modelBuilder);
         }

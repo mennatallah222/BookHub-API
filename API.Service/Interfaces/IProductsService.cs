@@ -5,12 +5,17 @@ namespace API.Service.Interfaces
 {
     public interface IProductsService
     {
-        Task<string> AddProductAsync(Product p);
+        Task<string> AddProductAsync(Product product, List<string> genreNames);
+
+
         Task<List<Product>> GetAllProductsAsync();
         Task<Product> GetProductByIdAsync(int id);
         Task<bool> IsNameExist(string name);
-        Task<Product> UpdateProductAsync(Product p);
+        Task<string> UpdateProductAsync(Product p, List<string> genreNames);
         IQueryable<Product> GetProductsQueryable();
         IQueryable<Product> FilterProductPaginationQueryable(ProductOrderingEnum orderingEnum, string search);
+
+        public Task<string> DeleteProductAsync(int productId);
+
     }
 }

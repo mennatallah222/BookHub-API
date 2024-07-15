@@ -1,15 +1,8 @@
-﻿using API.Core.Bases;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Core.Features.Commands.Responses
 {
-    public class CreateProductResponse
+    public class CreateBookResponse
     {
         [Required]
         public string Name { get; set; }

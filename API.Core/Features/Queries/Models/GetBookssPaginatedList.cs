@@ -5,7 +5,7 @@ using MediatR;
 
 namespace API.Core.Features.Queries.Models
 {
-    public class GetProductsPaginatedList : IRequest<PaginatedResult<GetProductsPaginatedListResponse>>
+    public class GetBookssPaginatedList : IRequest<PaginatedResult<GetBookssPaginatedListResponse>>
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }

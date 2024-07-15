@@ -8,6 +8,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public Product()
         {
             Reviews = new HashSet<Review>();
+            BookGenres = new HashSet<BookGenre>();
         }
         [Key]
         public int ProductId { get; set; }
@@ -21,21 +22,23 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public int Quantity { get; set; }
         public string? Description { get; set; }
         public bool IsDeleted { get; set; }
-        //public int? OrderId { get; set; }
-        //[ForeignKey("OrderId")]
-        //( [InverseProperty("ProductId")]
-        //public virtual Order? Order {  get; set; }
-
-        public int? CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public virtual Category? Category { get; set; }
+        public string? ISBN { get; set; }
         public string? Image { get; set; }
+        public int? PagesNumber { get; set; }
+        public DateTime? PublishedAt { get; set; }
+        public string? Language { get; set; }
+
         public int? CartId { get; set; }
         [ForeignKey("CartId")]
         public virtual Cart? Cart { get; set; }
-
+        public int? AuthorId { get; set; }
+        [ForeignKey("AuthorId")]
+        public Author? Author { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
-
+        public virtual ICollection<BookGenre>? BookGenres { get; set; }
+        public int? CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
+        public virtual Customer? Customer { get; set; }
 
     }
 }

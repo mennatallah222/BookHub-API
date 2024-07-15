@@ -8,14 +8,16 @@ using Microsoft.Extensions.Localization;
 
 namespace API.Core.Features.Authorization.Commands.Handlers
 {
-    public class AddRoleCommandHandler : Response_Handler,
-                                         IRequestHandler<AddRoleCommand, Response<string>>
+    public class RoleCommandHandler : Response_Handler,
+                                         IRequestHandler<AddRoleCommand, Response<string>>,
+                                         IRequestHandler<EditRoleCommand, Response<string>>
+
     {
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
         private readonly IAuthorizationService _authorizationService;
 
-        public AddRoleCommandHandler(IMapper mapper,
+        public RoleCommandHandler(IMapper mapper,
                                      IAuthorizationService authorizationService,
                                      IStringLocalizer<SharedResources> localizer) : base(localizer)
         {
@@ -30,6 +32,15 @@ namespace API.Core.Features.Authorization.Commands.Handlers
             if (result == "Successeeded") return Success(result);
             return BadRequest<string>(_localizer[SharedResourceKeys.AddedFailed]);
 
+        }
+
+        public async Task<Response<string>> Handle(EditRoleCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _authorizationService.EditRoleAsync(request);
+            if (result == "NotFound") return NotFound<string>(result);
+            else if (result == "Success") return Success<string>(_localizer[SharedResourceKeys.Updated]);
+
+            else return BadRequest<string>(result);
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using API.Core.Features.Authorization.Commands.Models;
+using API.Core.Features.Authorization.Queries.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AuthorizationController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,5 +22,30 @@ namespace EcommerceAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut("/Authorization/UpdateRole")]
+        public async Task<IActionResult> UpdateRole([FromForm] EditRoleCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpGet("/Authorization/GetRoleList")]
+        public async Task<IActionResult> GetRoleList()
+        {
+            var response = await _mediator.Send(new GetRoleListQuery());
+
+            return Ok(response);
+        }
+
+        [HttpGet("/Authorization/GetRoleById/{id}")]
+        public async Task<IActionResult> GetRoleById([FromRoute] int id)
+        {
+            var response = await _mediator.Send(new GetRoleByIdQuery() { Id = id });
+
+            return Ok(response);
+        }
+
     }
 }

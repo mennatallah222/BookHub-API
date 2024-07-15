@@ -1,0 +1,13 @@
+﻿namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
+{
+    public class Author
+    {
+        public Author()
+        {
+            WrittenBooks = new HashSet<Product>();
+        }
+        public int AuthorId { get; set; }
+        public string Name { get; set; }
+        public virtual ICollection<Product>? WrittenBooks { get; set; }
+    }
+}

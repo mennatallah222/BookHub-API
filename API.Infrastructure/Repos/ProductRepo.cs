@@ -31,14 +31,15 @@ namespace API.Infrastructure.Repos
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _dbContext.Products.Include(p => p.Reviews)
-                                  .Include(p => p.Category)
+            return await _products
+                                  .Include(cn => cn.BookGenres).ThenInclude(g => g.Genre)
+                                  .Include(p => p.Reviews)
                                   .FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
         public async Task<List<Product>> GetProductListAsync()
         {
-            return await _products.Include(cn => cn.Category)
+            return await _products.Include(cn => cn.BookGenres).ThenInclude(g => g.Genre)
                 .Include(p => p.Reviews).ToListAsync();
         }
 
