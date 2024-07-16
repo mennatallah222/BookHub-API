@@ -141,8 +141,17 @@
   <data name="Equal" xml:space="preserve">
     <value>يجب ان يطابق</value>
   </data>
+  <data name="FailedToAddNewClaims" xml:space="preserve">
+    <value>عملية اضافة الصلاحيات لم تنجح</value>
+  </data>
   <data name="FailedToAddUser" xml:space="preserve">
     <value>حدث خطأ اثناء اضافة المستخدم</value>
+  </data>
+  <data name="FailedToRemoveClaims" xml:space="preserve">
+    <value>عملية حذف الصلاحيات لم تنجح</value>
+  </data>
+  <data name="FailedToUpdateClaims" xml:space="preserve">
+    <value>عملية تحديث الصلاحيات لم تنجح</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
