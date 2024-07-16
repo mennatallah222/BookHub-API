@@ -63,5 +63,14 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("/Authorization/ManageUserClaims/{id}")]
+        public async Task<IActionResult> ManageUserClaims([FromRoute] int id)
+        {
+            var response = await _mediator.Send(new ManageUserClaimQuery() { UserId = id });
+
+            return Ok(response);
+        }
+
+
     }
 }

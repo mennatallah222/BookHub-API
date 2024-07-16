@@ -4,7 +4,7 @@ using MediatR;
 
 namespace API.Core.Features.Authorization.Queries.Models
 {
-    public class ManageUserRoleQuery : IRequest<Response<ManageUserRoleResponse>>
+    public class ManageUserClaimQuery : IRequest<Response<ManageUserClaimResponse>>
     {
         public int UserId { get; set; }
     }

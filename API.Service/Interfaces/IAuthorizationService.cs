@@ -1,5 +1,6 @@
-﻿using ClassLibrary1.Data_ClassLibrary1.Core.DTOs;
-using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using ClassLibrary1.Data_ClassLibrary1.Core.Requests;
+using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 
 namespace API.Service.Interfaces
 {
@@ -10,7 +11,10 @@ namespace API.Service.Interfaces
         public Task<string> EditRoleAsync(EditRoleRequest editRoleRequest);
         public Task<List<Role>> GetRolesList();
         public Task<Role> GetRolesById(int id);
-        public Task<ManageUserRoleResponse> GetManageUserRolesData(User user);
+        public Task<ManageUserRoleResponse> ManageUserRolesData(User user);
         public Task<string> AddRoleToUserAsync(int uId, string roleName);
+
+        public Task<ManageUserClaimResponse> ManageUserClaimssData(User user);
+
     }
 }

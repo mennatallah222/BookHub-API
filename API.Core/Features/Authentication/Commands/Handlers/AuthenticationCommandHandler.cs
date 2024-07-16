@@ -3,7 +3,7 @@ using API.Core.Features.Authentication.Commands.Models;
 using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
-using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
+using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;

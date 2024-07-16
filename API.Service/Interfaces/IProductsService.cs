@@ -1,5 +1,5 @@
 ﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
-using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
+using ClassLibrary1.Data_ClassLibrary1.Core.Enums;
 
 namespace API.Service.Interfaces
 {

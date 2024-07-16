@@ -1,6 +1,6 @@
 ﻿
 using API.Core.Bases;
-using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
+using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 using MediatR;
 
 namespace API.Core.Features.Authentication.Commands.Models

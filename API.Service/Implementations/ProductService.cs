@@ -2,7 +2,7 @@
 using API.Infrastructure.Interfaces;
 using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
-using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
+using ClassLibrary1.Data_ClassLibrary1.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Service.Implementations

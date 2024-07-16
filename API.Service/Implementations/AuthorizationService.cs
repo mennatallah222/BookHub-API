@@ -1,6 +1,7 @@
 ﻿using API.Service.Interfaces;
-using ClassLibrary1.Data_ClassLibrary1.Core.DTOs;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using ClassLibrary1.Data_ClassLibrary1.Core.Requests;
+using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -62,7 +63,7 @@ namespace API.Service.Implementations
             return await _roleManager.FindByIdAsync(id.ToString());
         }
 
-        public async Task<ManageUserRoleResponse> GetManageUserRolesData(User user)
+        public async Task<ManageUserRoleResponse> ManageUserRolesData(User user)
         {
             var response = new ManageUserRoleResponse();
             var newUserRoles = new List<UserRoles>();
@@ -114,5 +115,36 @@ namespace API.Service.Implementations
 
             return "Failed to add role to the user";
         }
+
+        public async Task<ManageUserClaimResponse> ManageUserClaimssData(User user)
+        {
+            var response = new ManageUserClaimResponse();
+            var userClaimsList = new List<UserClaims>();
+            response.UserId = user.Id;
+            //get user
+            //get user claims
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            foreach (var claim in userClaims)
+            {
+                var claims = new UserClaims();
+                claims.Type = claim.Type;
+                if (userClaims.Any(x => x.Type == claim.Type))
+                {
+                    claims.Value = true;
+                }
+                else
+                {
+                    claims.Value = false;
+                }
+                userClaimsList.Add(claims);
+            }
+            //if claim exists for user then value is true
+            response.UserClaims = userClaimsList;
+            return response;
+            //return result
+        }
+
+
+
     }
 }

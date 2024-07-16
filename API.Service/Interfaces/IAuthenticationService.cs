@@ -1,5 +1,5 @@
 ﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
-using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
+using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace API.Service.Interfaces

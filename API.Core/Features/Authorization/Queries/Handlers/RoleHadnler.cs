@@ -4,7 +4,7 @@ using API.Core.Features.Authorization.Queries.Responses;
 using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
-using ClassLibrary1.Data_ClassLibrary1.Core.DTOs;
+using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
@@ -54,7 +54,7 @@ namespace API.Core.Features.Authorization.Queries.Handlers
             var user = await _userManager.FindByIdAsync(request.UserId.ToString());
             if (user == null) return NotFound<ManageUserRoleResponse>(_localizer[SharedResourceKeys.UserNotFound]);
 
-            var result = await _authorizationService.GetManageUserRolesData(user);
+            var result = await _authorizationService.ManageUserRolesData(user);
 
             return Success(result);
 

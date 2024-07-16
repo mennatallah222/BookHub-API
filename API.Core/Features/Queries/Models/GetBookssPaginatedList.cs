@@ -1,6 +1,6 @@
 ﻿using API.Core.Features.Queries.Responses;
 using API.Core.Wrappers;
-using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
+using ClassLibrary1.Data_ClassLibrary1.Core.Enums;
 using MediatR;
 
 namespace API.Core.Features.Queries.Models

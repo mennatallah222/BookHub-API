@@ -1,4 +1,4 @@
-﻿namespace ClassLibrary1.Data_ClassLibrary1.Core.DTOs
+﻿namespace ClassLibrary1.Data_ClassLibrary1.Core.Responses
 
 {
     public class ManageUserRoleResponse
