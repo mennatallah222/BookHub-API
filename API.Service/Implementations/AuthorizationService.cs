@@ -1,9 +1,12 @@
-﻿using API.Service.Interfaces;
+﻿using API.Infrastructure.Data;
+using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
 using ClassLibrary1.Data_ClassLibrary1.Core.Requests;
 using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Service.Implementations
 {
@@ -11,12 +14,15 @@ namespace API.Service.Implementations
     {
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly ApplicationDBContext _dBContext;
 
         public AuthorizationService(RoleManager<Role> roleManager,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            ApplicationDBContext dBContext)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _dBContext = dBContext;
         }
         public async Task<string> AddRoleAsync(string roleName)
         {
@@ -124,19 +130,19 @@ namespace API.Service.Implementations
             //get user
             //get user claims
             var userClaims = await _userManager.GetClaimsAsync(user);
-            foreach (var claim in userClaims)
+            foreach (var claim in ClaimStore.claims)
             {
-                var claims = new UserClaims();
-                claims.Type = claim.Type;
+                var userClaim = new UserClaims();
+                userClaim.Type = claim.Type;
                 if (userClaims.Any(x => x.Type == claim.Type))
                 {
-                    claims.Value = true;
+                    userClaim.Value = true;
                 }
                 else
                 {
-                    claims.Value = false;
+                    userClaim.Value = false;
                 }
-                userClaimsList.Add(claims);
+                userClaimsList.Add(userClaim);
             }
             //if claim exists for user then value is true
             response.UserClaims = userClaimsList;
@@ -144,7 +150,35 @@ namespace API.Service.Implementations
             //return result
         }
 
+        public async Task<string> UpdateUserClaims(UpdateUserClaimsRequest request)
+        {
+            var transact = await _dBContext.Database.BeginTransactionAsync();
+            try
+            {
+                var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+                if (user == null)
+                {
+                    return "UserIsNull";
+                }
+                var userClaims = await _userManager.GetClaimsAsync(user);
+                var removeClaims = await _userManager.RemoveClaimsAsync(user, userClaims);
+                var claims = request.UserClaims.Where(x => x.Value == true).Select(x => new Claim(x.Type, x.Value.ToString()));
+                if (!removeClaims.Succeeded) return "FailedToRemoveClaims";
 
 
+                var addedClaims = await _userManager.AddClaimsAsync(user, claims);
+                if (!addedClaims.Succeeded) return "FailedToAddNewClaims";
+
+                await transact.CommitAsync();
+
+                return "Success";
+
+            }
+            catch (Exception ex)
+            {
+                await transact.RollbackAsync();
+                return "FailedToUpdateClaims";
+            }
+        }
     }
 }

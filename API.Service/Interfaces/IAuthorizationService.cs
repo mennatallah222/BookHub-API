@@ -15,6 +15,7 @@ namespace API.Service.Interfaces
         public Task<string> AddRoleToUserAsync(int uId, string roleName);
 
         public Task<ManageUserClaimResponse> ManageUserClaimssData(User user);
+        public Task<string> UpdateUserClaims(UpdateUserClaimsRequest request);
 
     }
 }

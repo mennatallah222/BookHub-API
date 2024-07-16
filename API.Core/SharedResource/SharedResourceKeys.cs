@@ -30,6 +30,10 @@
         public const string AddedFailed = "AddedFailed";
         public const string UserNotFound = "UserNotFound";
 
+        public const string FailedToRemoveClaims = "FailedToRemoveClaims";
+        public const string FailedToAddNewClaims = "FailedToAddNewClaims";
+        public const string FailedToUpdateClaims = "FailedToUpdateClaims";
+
 
 
     }

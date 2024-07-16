@@ -71,6 +71,12 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
+        [HttpPost("/Authorization/UpdateUserClaims")]
+        public async Task<IActionResult> UpdateUserClaims([FromBody] UpdateUserClaimsCommand command)
+        {
+            var response = await _mediator.Send(command);
 
+            return Ok(response);
+        }
     }
 }
