@@ -74,7 +74,6 @@ namespace API.Service.Implementations
             var response = new ManageUserRoleResponse();
             var newUserRoles = new List<UserRoles>();
             //user roles
-            var userRoles = await _userManager.GetRolesAsync(user);
             //all roles
             var roles = await _roleManager.Roles.ToListAsync();
 
@@ -84,7 +83,7 @@ namespace API.Service.Implementations
                 var userRole = new UserRoles();
                 userRole.Id = role.Id;
                 userRole.Name = role.Name;
-                if (userRoles.Contains(role.Name))
+                if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     userRole.HasRole = true;
                 }

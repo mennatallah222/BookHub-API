@@ -78,9 +78,7 @@ namespace API.Service.Implementations
 
         private async Task<(JwtSecurityToken, string)> GenerateJwtToken(User user)
         {
-            var roles = await _userManager.GetRolesAsync(user);
-
-            var claims = GetClaims(user, roles.ToList());
+            var claims = await GetClaims(user);
 
             var jwtToken = new JwtSecurityToken(
                                 _jwtSettings.Issuer,
@@ -97,8 +95,9 @@ namespace API.Service.Implementations
 
         }
 
-        public List<Claim> GetClaims(User user, IList<string> roles)
+        public async Task<List<Claim>> GetClaims(User user)
         {
+            var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.UserName),
@@ -113,6 +112,9 @@ namespace API.Service.Implementations
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            claims.AddRange(userClaims);
             return claims;
         }
         public async Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken token, string refreshToken, DateTime? expireTime)

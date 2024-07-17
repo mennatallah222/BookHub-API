@@ -16,13 +16,13 @@ namespace EcommerceAPI.Controllers
         {
             _mediator = mediator;
         }
-
         [HttpGet("/User/{id}")]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             var response = await _mediator.Send(new GetUserByIDQuery(id));
             return Ok(response);
         }
+        [Authorize(Policy = "GetUsers")]
         [HttpGet("/User/PaginatedList")]
         public async Task<IActionResult> GetPaginatedUserList([FromQuery] GetPaginatedUsersListQuery query)
         {

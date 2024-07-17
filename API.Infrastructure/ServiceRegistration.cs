@@ -94,6 +94,14 @@ namespace API.Infrastructure
             });
 
 
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("GetUsers", policy =>
+                {
+                    policy.RequireClaim("Get Users", "True");//other claims to be added later
+                });
+            });
+
             // Other service registrations
             return services;
         }
