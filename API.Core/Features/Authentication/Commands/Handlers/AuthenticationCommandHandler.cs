@@ -38,6 +38,9 @@ public class AuthenticationCommandHandler : Response_Handler,
         if (user == null) return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.NotFound]);
 
         var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+        if (!user.EmailConfirmed)
+            return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
+
         if (!signInResult.Succeeded)
         {
             return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.PasswordNotCorrect]);

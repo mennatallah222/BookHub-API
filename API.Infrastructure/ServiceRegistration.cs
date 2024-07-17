@@ -21,7 +21,7 @@ namespace API.Infrastructure
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.RequireUniqueEmail = true;
                 opt.Password.RequiredLength = 8;
-                opt.SignIn.RequireConfirmedEmail = false;///////////for now
+                opt.SignIn.RequireConfirmedEmail = true;///////////for now
 
                 opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 opt.Lockout.MaxFailedAccessAttempts = 3;

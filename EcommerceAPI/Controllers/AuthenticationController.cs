@@ -31,9 +31,17 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpGet("/Authentication/Validate-Token")]
-        public async Task<IActionResult> ValidateToken([FromQuery] AuthorizeUserQuery command)
+        public async Task<IActionResult> ValidateToken([FromQuery] AuthorizeUserQuery query)
         {
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(query);
+
+            return Ok(response);
+        }
+
+        [HttpGet("/Authentication/ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailQuery query)
+        {
+            var response = await _mediator.Send(query);
 
             return Ok(response);
         }

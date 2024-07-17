@@ -35,6 +35,10 @@
         public const string FailedToUpdateClaims = "FailedToUpdateClaims";
 
         public const string FailedToSendEmail = "FailedToSendEmail";
+        public const string EmailNotConfirmed = "EmailNotConfirmed";
+        public const string TryToRegisterAgain = "TryToRegisterAgain";
+        public const string ErrorConfirmingEmail = "ErrorConfirmingEmail";
+        public const string ConfirmingEmailDone = "ConfirmingEmailDone";
 
 
     }

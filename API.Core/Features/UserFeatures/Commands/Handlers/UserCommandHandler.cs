@@ -1,8 +1,10 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.UserFeatures.Commands.Models;
 using API.Core.SharedResource;
+using API.Service.Interfaces;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -22,53 +24,47 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _stringLocalizer;
         private readonly UserManager<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User> _userManager;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IEmailService _emailService;
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IApplicationUserService _applicationUserService;
 
         public UserCommandHandler(IStringLocalizer<SharedResources> stringLocalizer,
                                   IMapper mapper,
-                                  UserManager<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User> userManager) : base(stringLocalizer)
+                                  UserManager<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User> userManager,
+                                  IHttpContextAccessor contextAccessor,
+                                  IEmailService emailService,
+                                  IAuthenticationService authenticationService,
+                                  IApplicationUserService applicationUserService) : base(stringLocalizer)
         {
             _mapper = mapper;
             _stringLocalizer = stringLocalizer;
             _userManager = userManager;
+            _contextAccessor = contextAccessor;
+            _emailService = emailService;
+            _authenticationService = authenticationService;
+            _applicationUserService = applicationUserService;
         }
 
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            // If email already exists
-            var userEmail = await _userManager.FindByEmailAsync(request.Email);
-            if (userEmail != null)
-            {
-                return BadRequest<string>(_stringLocalizer[SharedResourceKeys.EmailExists]);
-            }
-
-            // If username already exists
-            var username = await _userManager.FindByNameAsync(request.UserName);
-            if (username != null)
-            {
-                return BadRequest<string>(_stringLocalizer[SharedResourceKeys.UserNameExists]);
-            }
-
             // Map request to User entity
             var identityUser = _mapper.Map<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User>(request);
 
             // Create user
-            var createdUser = await _userManager.CreateAsync(identityUser, request.Password);
-            if (!createdUser.Succeeded)
-            {
-                return BadRequest<string>(createdUser.Errors.FirstOrDefault()?.Description);
-            }
+            var createdUser = await _applicationUserService.AddUserAsync(identityUser, request.Password);
 
-            var usersList = await _userManager.Users.ToListAsync();
-            if (usersList.Count >= 0)
+            switch (createdUser)
             {
-                await _userManager.AddToRoleAsync(identityUser, "User");
-            }
-            else
-            {
-                await _userManager.AddToRoleAsync(identityUser, "Admin");
-            }
 
-            return Created("User added seuccessfully");
+                case "EmailExists": return BadRequest<string>(_stringLocalizer[SharedResourceKeys.EmailExists]);
+                case "UserNameExists": return BadRequest<string>(_stringLocalizer[SharedResourceKeys.UserNameExists]);
+                case "ErrorInCreateUser": return BadRequest<string>(_stringLocalizer[SharedResourceKeys.FailedToAddUser]);
+                case "Success": return Success<string>(_stringLocalizer[SharedResourceKeys.Success]);
+                case "Failed": return BadRequest<string>(_stringLocalizer[SharedResourceKeys.TryToRegisterAgain]);
+                default: return BadRequest<string>(createdUser);
+            }
+            // return Success<string>("");
         }
 
         public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)

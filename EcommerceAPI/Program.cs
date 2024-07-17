@@ -9,6 +9,9 @@ using API.Service;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -57,6 +60,14 @@ namespace EcommerceAPI
                 options.JsonSerializerOptions.MaxDepth = 64; // Adjust the max depth as needed
             });
             */
+
+            builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            builder.Services.AddTransient<IUrlHelper>(x =>
+            {
+                var actionContext = x.GetRequiredService<IActionContextAccessor>().ActionContext;
+                var factory = x.GetRequiredService<IUrlHelperFactory>();
+                return factory.GetUrlHelper(actionContext);
+            });
 
             #region Localization
 

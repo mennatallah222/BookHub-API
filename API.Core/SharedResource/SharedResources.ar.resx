@@ -129,6 +129,9 @@
   <data name="ChangePasswordFailed" xml:space="preserve">
     <value>تغيير كلمة المرور لم تنجح</value>
   </data>
+  <data name="ConfirmingEmailDone" xml:space="preserve">
+    <value>تم تفغيل الايميل بنجاح</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>تم الاضافة بنجاح!</value>
   </data>
@@ -138,8 +141,14 @@
   <data name="EmailExists" xml:space="preserve">
     <value>الايميل الذي ادخلته موجود بالفعل!</value>
   </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>لم يتم تفعيل الايميل</value>
+  </data>
   <data name="Equal" xml:space="preserve">
     <value>يجب ان يطابق</value>
+  </data>
+  <data name="ErrorConfirmingEmail" xml:space="preserve">
+    <value>حدث خطأ في تأكيد البريد</value>
   </data>
   <data name="FailedToAddNewClaims" xml:space="preserve">
     <value>عملية اضافة الصلاحيات لم تنجح</value>
@@ -191,6 +200,9 @@
   </data>
   <data name="TokenIsNotExpired" xml:space="preserve">
     <value>رمز التشفير المستخدم لم ينتهي صلاحيته</value>
+  </data>
+  <data name="TryToRegisterAgain" xml:space="preserve">
+    <value>حاول التسجيل مرة اخري</value>
   </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>غير مصرح له</value>

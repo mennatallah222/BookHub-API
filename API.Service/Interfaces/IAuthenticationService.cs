@@ -12,5 +12,6 @@ namespace API.Service.Interfaces
 
         public Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken token, string refreshToken, DateTime? expireTime);
         public Task<string> ValidateToken(string accessToken);
+        public Task<string> ConfirmEmail(int? iserId, string? code);
     }
 }
