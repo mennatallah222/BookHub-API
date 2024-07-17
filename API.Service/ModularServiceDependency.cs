@@ -14,6 +14,7 @@ namespace API.Service
             services.AddTransient<ICartService, CartService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IAuthorizationService, AuthorizationService>();
+            services.AddTransient<IEmailService, EmailService>();
 
 
             return services;

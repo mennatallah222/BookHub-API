@@ -150,6 +150,9 @@
   <data name="FailedToRemoveClaims" xml:space="preserve">
     <value>Failed To Remove Claims</value>
   </data>
+  <data name="FailedToSendEmail" xml:space="preserve">
+    <value>Failed To Send Email</value>
+  </data>
   <data name="FailedToUpdateClaims" xml:space="preserve">
     <value>Failed To Update Claims</value>
   </data>

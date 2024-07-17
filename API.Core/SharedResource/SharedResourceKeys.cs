@@ -34,6 +34,7 @@
         public const string FailedToAddNewClaims = "FailedToAddNewClaims";
         public const string FailedToUpdateClaims = "FailedToUpdateClaims";
 
+        public const string FailedToSendEmail = "FailedToSendEmail";
 
 
     }

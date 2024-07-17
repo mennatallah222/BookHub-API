@@ -150,6 +150,9 @@
   <data name="FailedToRemoveClaims" xml:space="preserve">
     <value>عملية حذف الصلاحيات لم تنجح</value>
   </data>
+  <data name="FailedToSendEmail" xml:space="preserve">
+    <value>فشل في ارسال البريد</value>
+  </data>
   <data name="FailedToUpdateClaims" xml:space="preserve">
     <value>عملية تحديث الصلاحيات لم تنجح</value>
   </data>
