@@ -74,10 +74,11 @@ namespace API.Service.Implementations
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var requestAccessor = _contextAccessor.HttpContext.Request;
                 var returnedUrl = requestAccessor.Scheme + "://" + requestAccessor.Host + _urlHelper.Action("ConfirmEmail", "Authentication", new { userId = user.Id, code = code });
+                var message = $"To confirm email, click on: <a href='{returnedUrl}'> </a>";
                 // $"/Authentication/ConfirmEmail?userId={user.Id}&code={code}";
 
                 //message body
-                var message = await _emailService.SendEmail(user.Email, returnedUrl);
+                await _emailService.SendEmail(user.Email, returnedUrl, "Confrim Email");
 
                 await transact.CommitAsync();
                 return "Success";

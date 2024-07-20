@@ -1,6 +1,9 @@
 ﻿
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using EntityFrameworkCore.EncryptColumn.Extension;
+using EntityFrameworkCore.EncryptColumn.Interfaces;
+using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +13,17 @@ namespace API.Infrastructure.Data
     //Add-Migration deletedShippingMethod -context API.Infrastructure.Data.ApplicationDBContext
     public class ApplicationDBContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
+        private readonly IEncryptionProvider _encryptionProvider;
 
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+        {
+            // Ensure the encryption key is of correct length
+            _encryptionProvider = new GenerateEncryptionProvider("8a4dcaaec64d412380fe4b02193cd26f");
+
+        }
+
+
+
 
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -87,8 +99,16 @@ namespace API.Infrastructure.Data
                 .HasForeignKey(bg => bg.GenreId);
 
 
+            //modelBuilder.Entity<User>()
+            //.Property(u => u.Code)
+            //.IsEncrypted();
+
+
+            modelBuilder.UseEncryption(_encryptionProvider);
+
 
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }

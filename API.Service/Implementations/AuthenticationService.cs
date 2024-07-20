@@ -1,4 +1,5 @@
-﻿using API.Infrastructure.Interfaces;
+﻿using API.Infrastructure.Data;
+using API.Infrastructure.Interfaces;
 using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
 using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
@@ -18,13 +19,19 @@ namespace API.Service.Implementations
         private readonly JwtSettings _jwtSettings;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly UserManager<User> _userManager;
+        private readonly IEmailService _emailService;
+        private readonly ApplicationDBContext _dbContext;
         public AuthenticationService(JwtSettings jwtSettings,
                                      IRefreshTokenRepository refreshTokenRepository,
-                                     UserManager<User> userManager)
+                                     UserManager<User> userManager,
+                                     IEmailService emailService,
+                                     ApplicationDBContext dBContext)
         {
             _jwtSettings = jwtSettings;
             _userManager = userManager;
             _refreshTokenRepository = refreshTokenRepository;
+            _emailService = emailService;
+            _dbContext = dBContext;
         }
         public async Task<JwtAuthResult> GetJWTToken(User user)
         {
@@ -230,6 +237,37 @@ namespace API.Service.Implementations
             var confirmEmail = await _userManager.ConfirmEmailAsync(uer, code);
             if (!confirmEmail.Succeeded) return "ErrorConfirmingEmail";
             return "Success";
+        }
+
+        public async Task<string> SendResestPasswordCode(string email)
+        {
+            var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null) return "UserNotFound";
+
+                Random random = new Random();
+                string randNum = random.Next(0, 1000000).ToString("06");
+
+                //update the code in db
+                user.Code = randNum;
+                var updatedResult = await _userManager.UpdateAsync(user);
+                if (!updatedResult.Succeeded) return "ErrorUpdatingTheUser";
+
+                //send the code to email
+                var result = await _emailService.SendEmail(email, "Code to reset your message: " + user.Code, "Reset Password");
+
+                await transaction.CommitAsync();
+                return result;
+            }
+
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine(e.Message);
+                return "Failed";
+            }
         }
     }
 }

@@ -10,7 +10,9 @@ using Microsoft.Extensions.Localization;
 
 public class AuthenticationCommandHandler : Response_Handler,
         IRequestHandler<SignInCommand, Response<JwtAuthResult>>,
-        IRequestHandler<RefreshTokenCommand, Response<JwtAuthResult>>
+        IRequestHandler<RefreshTokenCommand, Response<JwtAuthResult>>,
+        IRequestHandler<ResestPasswordCommand, Response<string>>
+
 {
     private readonly IMapper _mapper;
     private readonly IStringLocalizer<SharedResources> _localizer;
@@ -86,4 +88,19 @@ public class AuthenticationCommandHandler : Response_Handler,
         var result = await _authenticationService.GetRefreshToken(user, token, request.RfreshToken, expireDate);
         return Success(result);
     }
+
+    public async Task<Response<string>> Handle(ResestPasswordCommand request, CancellationToken cancellationToken)
+    {
+        var result = await _authenticationService.SendResestPasswordCode(request.Email);
+        switch (result)
+        {
+            case "UserNotFound":
+                return Unauthorized<string>(_localizer[SharedResourceKeys.UserNotFound]);
+            case "ErrorUpdatingTheUser":
+                return Unauthorized<string>(_localizer[SharedResourceKeys.TryAgainAnotherTime]);
+
+            default: return BadRequest<string>(result);
+        }
+    }
 }
+//} < PackageReference Include = "EntityFrameworkCore.EncryptColumn" Version = "6.0.8" />

@@ -25,7 +25,7 @@ namespace API.Core.Features.Emails.Commands.Handlers
         }
         public async Task<Response<string>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
         {
-            var response = await _emailService.SendEmail(request.Email, request.Message);
+            var response = await _emailService.SendEmail(request.Email, request.Message, null);
             if (response == "Success")
             {
                 return Success<string>(response);

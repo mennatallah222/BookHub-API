@@ -40,6 +40,9 @@
         public const string ErrorConfirmingEmail = "ErrorConfirmingEmail";
         public const string ConfirmingEmailDone = "ConfirmingEmailDone";
 
+        public const string TryAgainAnotherTime = "TryAgainAnotherTime";
+
+
 
     }
 }

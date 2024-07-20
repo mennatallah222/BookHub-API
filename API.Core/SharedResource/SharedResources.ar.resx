@@ -201,6 +201,9 @@
   <data name="TokenIsNotExpired" xml:space="preserve">
     <value>رمز التشفير المستخدم لم ينتهي صلاحيته</value>
   </data>
+  <data name="TryAgainAnotherTime" xml:space="preserve">
+    <value>حاول مرة اخري في وقت اخر</value>
+  </data>
   <data name="TryToRegisterAgain" xml:space="preserve">
     <value>حاول التسجيل مرة اخري</value>
   </data>
