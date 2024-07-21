@@ -17,7 +17,6 @@ namespace API.Service
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
 
-
             return services;
         }
     }

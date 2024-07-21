@@ -14,5 +14,6 @@ namespace API.Service.Interfaces
         public Task<string> ValidateToken(string accessToken);
         public Task<string> ConfirmEmail(int? iserId, string? code);
         public Task<string> SendResestPasswordCode(string email);
+        public Task<string> ResestPasswordCode(string code, string email);
     }
 }

@@ -1,11 +1,11 @@
-﻿using API.Core.Features.Authentication.Commands.Models;
+﻿using API.Core.Features.Authentication.Queries.Models;
 using API.Core.SharedResource;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 
-namespace API.Core.Features.Authentication.Commands.Validators
+namespace API.Core.Features.Authentication.Queries.Validators
 {
-    public class SendResestPasswordValidator : AbstractValidator<ResestPasswordCommand>
+    public class SendResestPasswordValidator : AbstractValidator<ChangePasswordQuery>
     {
         private readonly IStringLocalizer _localization;
 
@@ -20,13 +20,13 @@ namespace API.Core.Features.Authentication.Commands.Validators
 
         {                                             //add:  _localization[SharedResourcesKey.NotEmpty]
 
-            RuleFor(x => x.Email).NotEmpty().WithMessage(_localization[SharedResourceKeys.NotEmpty])
+            RuleFor(x => x.Code).NotEmpty().WithMessage(_localization[SharedResourceKeys.NotEmpty])
                                     .NotNull().WithMessage(_localization[SharedResourceKeys.Required])
                               ;
 
-
-
-
+            RuleFor(x => x.Email).NotEmpty().WithMessage(_localization[SharedResourceKeys.NotEmpty])
+                                    .NotNull().WithMessage(_localization[SharedResourceKeys.Required])
+                              ;
         }
 
     }

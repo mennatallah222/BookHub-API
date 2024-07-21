@@ -42,6 +42,7 @@
 
         public const string TryAgainAnotherTime = "TryAgainAnotherTime";
 
+        public const string InvalidCode = "InvalidCode";
 
 
     }

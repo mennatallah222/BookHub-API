@@ -69,6 +69,10 @@ namespace EcommerceAPI
                 return factory.GetUrlHelper(actionContext);
             });
 
+            //    builder.Services.AddSingleton<IEncryptionProvider>(provider =>
+            //new GenerateEncryptionProvider("8a4dcaaec64d412380fe4b02193cd26f"));
+
+
             #region Localization
 
             builder.Services.AddControllersWithViews();

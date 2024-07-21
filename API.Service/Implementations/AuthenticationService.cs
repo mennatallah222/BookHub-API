@@ -4,6 +4,8 @@ using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
 using ClassLibrary1.Data_ClassLibrary1.Core.Helpers;
 using ClassLibrary1.Data_ClassLibrary1.Core.Responses;
+using EntityFrameworkCore.EncryptColumn.Interfaces;
+using EntityFrameworkCore.EncryptColumn.Util;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,6 +23,8 @@ namespace API.Service.Implementations
         private readonly UserManager<User> _userManager;
         private readonly IEmailService _emailService;
         private readonly ApplicationDBContext _dbContext;
+        private readonly IEncryptionProvider _encryptionProvider;
+
         public AuthenticationService(JwtSettings jwtSettings,
                                      IRefreshTokenRepository refreshTokenRepository,
                                      UserManager<User> userManager,
@@ -32,6 +36,8 @@ namespace API.Service.Implementations
             _refreshTokenRepository = refreshTokenRepository;
             _emailService = emailService;
             _dbContext = dBContext;
+            _encryptionProvider = new GenerateEncryptionProvider("8a4dcaaec64d412380fe4b02193cd26f");
+
         }
         public async Task<JwtAuthResult> GetJWTToken(User user)
         {
@@ -268,6 +274,16 @@ namespace API.Service.Implementations
                 Console.WriteLine(e.Message);
                 return "Failed";
             }
+        }
+
+        public async Task<string> ResestPasswordCode(string code, string email)
+        {
+            //get user from db then decrypt its code and compare it with the entered one
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return "NotFound";
+            var userCode = user.Code;
+            if (userCode == code) return "Success";
+            return "Failed";
         }
     }
 }

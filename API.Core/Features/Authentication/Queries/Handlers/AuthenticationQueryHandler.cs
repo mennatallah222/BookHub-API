@@ -10,7 +10,9 @@ namespace API.Core.Features.Authentication.Queries.Handlers
 {
     public class AuthenticationQueryHandler : Response_Handler,
             IRequestHandler<AuthorizeUserQuery, Response<string>>,
-            IRequestHandler<ConfirmEmailQuery, Response<string>>
+            IRequestHandler<ConfirmEmailQuery, Response<string>>,
+            IRequestHandler<ChangePasswordQuery, Response<string>>
+
 
     {
 
@@ -50,6 +52,21 @@ namespace API.Core.Features.Authentication.Queries.Handlers
             }
             return Success<string>(_localizer[SharedResourceKeys.ConfirmingEmailDone]);
 
+        }
+
+        public async Task<Response<string>> Handle(ChangePasswordQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _authenticationService.ResestPasswordCode(request.Code, request.Email);
+            switch (result)
+            {
+                case "NotFound":
+                    return Unauthorized<string>(_localizer[SharedResourceKeys.UserNotFound]);
+                case "Failed":
+                    return Unauthorized<string>(_localizer[SharedResourceKeys.InvalidCode]);
+                case "Success": return Success<string>(_localizer[SharedResourceKeys.Success]);
+
+                default: return BadRequest<string>(result);
+            }
         }
     }
 }
