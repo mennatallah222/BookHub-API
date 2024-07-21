@@ -165,6 +165,9 @@
   <data name="FailedToUpdateClaims" xml:space="preserve">
     <value>عملية تحديث الصلاحيات لم تنجح</value>
   </data>
+  <data name="InvalidCode" xml:space="preserve">
+    <value>الكود الذي ادخلته خطأ</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>
