@@ -285,5 +285,26 @@ namespace API.Service.Implementations
             if (userCode == code) return "Success";
             return "Failed";
         }
+
+        public async Task<string> ResestPassword(string password, string email)
+        {
+            var transact = _dbContext.Database.BeginTransaction();
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null) return "NotFound";
+
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, password);
+
+                await transact.CommitAsync();
+                return "Success";
+            }
+            catch (Exception e)
+            {
+                await transact.RollbackAsync();
+                return "Failure";
+            }
+        }
     }
 }

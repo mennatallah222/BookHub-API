@@ -54,12 +54,21 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("/Authentication/ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromQuery] ChangePasswordQuery query)
+        [HttpGet("/Authentication/ConfirmResetPassword")]
+        public async Task<IActionResult> ConfirmResetPassword([FromQuery] ChangePasswordQuery query)
         {
             var response = await _mediator.Send(query);
 
             return Ok(response);
         }
+
+        [HttpPost("/Authentication/ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromForm] NewPasswordCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
     }
 }

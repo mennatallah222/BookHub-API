@@ -11,7 +11,9 @@ using Microsoft.Extensions.Localization;
 public class AuthenticationCommandHandler : Response_Handler,
         IRequestHandler<SignInCommand, Response<JwtAuthResult>>,
         IRequestHandler<RefreshTokenCommand, Response<JwtAuthResult>>,
-        IRequestHandler<ResestPasswordCommand, Response<string>>
+        IRequestHandler<ResestPasswordCommand, Response<string>>,
+        IRequestHandler<NewPasswordCommand, Response<string>>
+
 
 {
     private readonly IMapper _mapper;
@@ -40,13 +42,14 @@ public class AuthenticationCommandHandler : Response_Handler,
         if (user == null) return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.NotFound]);
 
         var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-        if (!user.EmailConfirmed)
-            return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
 
         if (!signInResult.Succeeded)
         {
             return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.PasswordNotCorrect]);
         }
+
+        if (!user.EmailConfirmed)
+            return BadRequest<JwtAuthResult>(_localizer[SharedResourceKeys.EmailNotConfirmed]);
 
         var accessToken = await _authenticationService.GetJWTToken(user);
         return Success(accessToken);
@@ -102,5 +105,22 @@ public class AuthenticationCommandHandler : Response_Handler,
             default: return BadRequest<string>(result);
         }
     }
+
+    public async Task<Response<string>> Handle(NewPasswordCommand request, CancellationToken cancellationToken)
+    {
+        var result = await _authenticationService.ResestPassword(request.Password, request.Email);
+        switch (result)
+        {
+            case "NotFound":
+                return Unauthorized<string>(_localizer[SharedResourceKeys.UserNotFound]);
+            case "Failed":
+                return Unauthorized<string>(_localizer[SharedResourceKeys.InvalidCode]);
+            case "Success": return Success<string>(_localizer[SharedResourceKeys.Success]);
+
+            default: return BadRequest<string>(result);
+        }
+    }
+
+
 }
 //} < PackageReference Include = "EntityFrameworkCore.EncryptColumn" Version = "6.0.8" />
