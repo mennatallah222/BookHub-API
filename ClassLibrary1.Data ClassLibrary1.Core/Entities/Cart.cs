@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
@@ -12,9 +13,9 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         [Key]
         public int Id { get; set; }
         // public decimal TotalAmount { get; set; }
-        public int CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
         public DateTime? CreatedAt { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
     }

@@ -20,33 +20,33 @@ namespace API.Service.Implementations
             _productRepo = productRepo;
             _cartRepo = cartRepo;
         }
-        public async Task<string> AddOrderAsync(Order o)
-        {
-            var customer = await _customerRepo.GetCustomerByID(o.Customer.CustomerId);
-            var products = new List<Product>();
-            foreach (var pid in o.OrderItems)/////////////////////////////////////to be chnanged
-            {
-                var p = await _productRepo.GetProductByIdAsync(pid.ProductId);
+        //public async Task<string> AddOrderAsync(Order o)
+        //{
+        //    var customer = await _customerRepo.GetCustomerByID(o.Customer.CustomerId);
+        //    var products = new List<Product>();
+        //    foreach (var pid in o.OrderItems)
+        //    {
+        //        var p = await _productRepo.GetProductByIdAsync(pid.ProductId);
 
-                if (p == null) return $"Product {p.Name} is not found!";
-                products.Add(p);
+        //        if (p == null) return $"Product {p.Name} is not found!";
+        //        products.Add(p);
 
-            }
-            var order = new Order
-            {
-                CustomerId = customer.CustomerId,
-                OrderItems = o.OrderItems,
-                PaymentMethod = o.PaymentMethod,
-                Status = "Pending",
-                ShippingAddress = customer.Address,
-                PaymentStatus = o.PaymentStatus,
-                OrderDate = DateTime.UtcNow,
-                TrackingNumber = ""
-            };
-            await _repo.AddAsync(order);
-            await _dbContext.SaveChangesAsync();
-            return "Oreder created successfully!";
-        }
+        //    }
+        //    var order = new Order
+        //    {
+        //        CustomerId = customer.CustomerId,
+        //        OrderItems = o.OrderItems,
+        //        PaymentMethod = o.PaymentMethod,
+        //        Status = "Pending",
+        //        ShippingAddress = customer.Address,
+        //        PaymentStatus = o.PaymentStatus,
+        //        OrderDate = DateTime.UtcNow,
+        //        TrackingNumber = ""
+        //    };
+        //    await _repo.AddAsync(order);
+        //    await _dbContext.SaveChangesAsync();
+        //    return "Oreder created successfully!";
+        //}
 
         public Task<List<Product>> GetAllOrdersAsync()
         {

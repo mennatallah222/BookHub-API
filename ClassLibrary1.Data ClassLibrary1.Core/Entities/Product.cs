@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
@@ -36,9 +37,16 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public Author? Author { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<BookGenre>? BookGenres { get; set; }
-        public int? CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public virtual Customer? Customer { get; set; }
+        public int? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User? User { get; set; }
+
+
+        // Navigation properties for many-to-many relationships
+        public virtual ICollection<User> CurrentlyReadingUsers { get; set; }
+        public virtual ICollection<User> WantToReadUsers { get; set; }
+        public virtual ICollection<User> ReadUsers { get; set; }
+
 
     }
 }

@@ -126,6 +126,9 @@
   <data name="AllNotFound" xml:space="preserve">
     <value>No found objects!</value>
   </data>
+  <data name="BookNotFound" xml:space="preserve">
+    <value>Book is Not Found</value>
+  </data>
   <data name="ChangePasswordFailed" xml:space="preserve">
     <value>Changing your password has failed</value>
   </data>

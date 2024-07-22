@@ -34,7 +34,6 @@ namespace EcommerceAPI.Controllers
 
         [HttpPost("/Book/Add")]
         // [Authorize(Roles = "Admin, Author")]
-
         public async Task<IActionResult> PostBook([FromBody] CreateBookCommand command)
         {
             var response = await _mediatR.Send(command);

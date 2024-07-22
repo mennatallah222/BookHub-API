@@ -29,7 +29,7 @@ namespace API.Infrastructure.Repos
 
         public async Task<Cart> GetCartByIDAsync(int cid)
         {
-            return await _carts.Include(c => c.CartItems).ThenInclude(ci => ci.Product).FirstOrDefaultAsync(c => c.CustomerId == cid);
+            return await _carts.Include(c => c.CartItems).ThenInclude(ci => ci.Product).FirstOrDefaultAsync(c => c.UserId == cid);
         }
 
         public async Task UpdateAsync(Cart entity)

@@ -126,6 +126,9 @@
   <data name="AllNotFound" xml:space="preserve">
     <value>لا يوجد عناصر</value>
   </data>
+  <data name="BookNotFound" xml:space="preserve">
+    <value>لم يتم العثور علي الكتاب</value>
+  </data>
   <data name="ChangePasswordFailed" xml:space="preserve">
     <value>تغيير كلمة المرور لم تنجح</value>
   </data>

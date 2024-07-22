@@ -33,14 +33,22 @@ namespace API.Core.Features.UserFeatures.Queries.Handlers
 
         public async Task<PaginatedResult<GetUsersListResponse>> Handle(GetPaginatedUsersListQuery request, CancellationToken cancellationToken)
         {
-            var users = _userManager.Users.AsQueryable();
+            var users = _userManager.Users
+                             .Include(u => u.CurrentlyReading)
+                             .Include(u => u.ReadBooks)
+                             .Include(u => u.WantToRead)
+                             .AsQueryable();
             var paginatedList = await _mapper.ProjectTo<GetUsersListResponse>(users).ToPaginatedListAsync(request.PageNumber, request.PageSize);
             return paginatedList;
         }
 
         public async Task<Response<GetUserByIDResponse>> Handle(GetUserByIDQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var user = await _userManager.Users
+                             .Include(u => u.CurrentlyReading)
+                             .Include(u => u.ReadBooks)
+                             .Include(u => u.WantToRead)
+                             .FirstOrDefaultAsync(x => x.Id == request.Id);
             if (user == null) return NotFound<GetUserByIDResponse>(_localizer[SharedResourceKeys.NotFound]);
             var result = _mapper.Map<GetUserByIDResponse>(user);
             return Success(result);

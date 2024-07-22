@@ -13,10 +13,17 @@ namespace API.Core.Mapping.UserMapping
             CreateMap<UpdateUserCommand, User>();
 
 
-            CreateMap<User, GetUsersListResponse>();
+            CreateMap<User, GetUsersListResponse>()
+                .ForMember(dest => dest.CurrentlyReading, opt => opt.MapFrom(src => src.CurrentlyReading.Select(b => b.Name).ToList()))
+                .ForMember(dest => dest.ReadList, opt => opt.MapFrom(src => src.ReadBooks.Select(b => b.Name).ToList()))
+                .ForMember(dest => dest.WantToReadList, opt => opt.MapFrom(src => src.WantToRead.Select(b => b.Name).ToList()));
 
 
-            CreateMap<User, GetUserByIDResponse>();
+
+            CreateMap<User, GetUserByIDResponse>()
+                .ForMember(dest => dest.CurrentlyReading, opt => opt.MapFrom(src => src.CurrentlyReading.Select(b => b.Name).ToList()))
+                .ForMember(dest => dest.ReadList, opt => opt.MapFrom(src => src.ReadBooks.Select(b => b.Name).ToList()))
+                .ForMember(dest => dest.WantToReadList, opt => opt.MapFrom(src => src.WantToRead.Select(b => b.Name).ToList()));
         }
     }
 }

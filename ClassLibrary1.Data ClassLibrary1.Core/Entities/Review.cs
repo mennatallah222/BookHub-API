@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
@@ -14,15 +15,19 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public Product Product { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
 
         [Required, Range(1, 5)]
         public int Rating { get; set; } // e.g., 1 to 5 stars
         public string? Comment { get; set; }
         [Required]
         public DateTime ReviewDate { get; set; }
+
+
+
+        public virtual ICollection<User> ReviewedByUsers { get; set; }
 
     }
 }

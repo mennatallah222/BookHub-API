@@ -25,7 +25,7 @@ namespace API.Infrastructure.Repos
 
         public async Task<List<Order>> GetListAsync()
         {
-            return await _orders.Include(x => x.Customer).Include(s => s.OrderItems).ToListAsync();
+            return await _orders.Include(x => x.User).Include(s => s.OrderItems).ToListAsync();
         }
         public async Task<Order> GetByIdAsync(int id)
         {

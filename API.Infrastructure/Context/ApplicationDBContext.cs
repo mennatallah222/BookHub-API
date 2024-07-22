@@ -82,21 +82,52 @@ namespace API.Infrastructure.Data
             .HasColumnType("decimal(18,2)");
 
 
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.HasOne(p => p.User)
+                    .WithMany()
+                    .HasForeignKey(p => p.UserId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
 
-            modelBuilder.Entity<Customer>()
-                .HasMany(c => c.CurrentlyReading)
-                .WithOne()
-                .HasForeignKey(p => p.CustomerId);
-            modelBuilder.Entity<Customer>()
-                .HasMany(c => c.ReadBooks)
-                .WithOne(p => p.Customer)
-                .HasForeignKey(p => p.CustomerId);
-            modelBuilder.Entity<BookGenre>()
-                .HasKey(bg => bg.BookGenreId);
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.BookGenres)
-                .WithOne(bg => bg.Genre)
-                .HasForeignKey(bg => bg.GenreId);
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasMany(u => u.CurrentlyReading)
+                    .WithMany(p => p.CurrentlyReadingUsers)
+                    .UsingEntity(j => j.ToTable("UserCurrentlyReading"));
+
+                entity.HasMany(u => u.WantToRead)
+                    .WithMany(p => p.WantToReadUsers)
+                    .UsingEntity(j => j.ToTable("UserWantToRead"));
+
+                entity.HasMany(u => u.ReadBooks)
+                    .WithMany(p => p.ReadUsers)
+                    .UsingEntity(j => j.ToTable("UserReadBooks"));
+
+                entity.HasMany(u => u.FavouriteAuthors)
+                    .WithMany(a => a.FavouriteByUsers)
+                    .UsingEntity(j => j.ToTable("UserFavouriteAuthors"));
+
+                entity.HasMany(u => u.ReviewedBooks)
+               .WithOne(r => r.User)
+               .HasForeignKey(r => r.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            //modelBuilder.Entity<Customer>()
+            //    .HasMany(c => c.CurrentlyReading)
+            //    .WithOne()
+            //    .HasForeignKey(p => p.CustomerId);
+            //modelBuilder.Entity<Customer>()
+            //    .HasMany(c => c.ReadBooks)
+            //    .WithOne(p => p.Customer)
+            //    .HasForeignKey(p => p.CustomerId);
+            //modelBuilder.Entity<BookGenre>()
+            //    .HasKey(bg => bg.BookGenreId);
+            //modelBuilder.Entity<Category>()
+            //    .HasMany(c => c.BookGenres)
+            //    .WithOne(bg => bg.Genre)
+            //    .HasForeignKey(bg => bg.GenreId);
 
 
             //modelBuilder.Entity<User>()

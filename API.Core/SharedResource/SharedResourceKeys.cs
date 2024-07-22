@@ -44,6 +44,8 @@
 
         public const string InvalidCode = "InvalidCode";
 
+        public const string BookNotFound = "BookNotFound";
+
 
     }
 }

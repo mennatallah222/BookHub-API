@@ -9,6 +9,14 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
         public User()
         {
             UserRefreshTokens = new HashSet<UserRefreshToken>();
+
+            Orders = new HashSet<Order>();
+            CurrentlyReading = new HashSet<Product>();
+            WantToRead = new HashSet<Product>();
+            ReadBooks = new HashSet<Product>();
+            FavouriteAuthors = new HashSet<Author>();
+            ReviewedBooks = new HashSet<Review>();
+            //Friends = new HashSet<Friendship>();
         }
         public string FullName { get; set; }
         public string? Address { get; set; }
@@ -19,5 +27,19 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
         [InverseProperty(nameof(UserRefreshToken.User))]
         public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; }
 
+
+
+        public bool IsDeleted { get; set; }
+        public Cart Cart { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Product>? CurrentlyReading { get; set; }
+        public virtual ICollection<Product>? WantToRead { get; set; }
+        public virtual ICollection<Product>? ReadBooks { get; set; }
+
+        public virtual ICollection<Author>? FavouriteAuthors { get; set; }
+
+        public virtual ICollection<Review>? ReviewedBooks { get; set; }
+        //public virtual ICollection<Friendship>? FriendsAsUser { get; set; }
+        //public virtual ICollection<Friendship>? FriendsAsFriend { get; set; }
     }
 }

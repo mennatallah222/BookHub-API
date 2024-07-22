@@ -74,7 +74,7 @@ namespace API.Core.Features.Commands.Handlers
             order.PaymentMethod = request.PaymentMethod;
             order.Status = "Pending";
 
-            var res = await _orederService.AddOrderAsync(order);
+            ////////////////////  var res = await _orederService.AddOrderAsync(order);
 
             var productsToUpdate = order.OrderItems.ToList();
 

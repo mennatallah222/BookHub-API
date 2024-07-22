@@ -9,9 +9,9 @@ namespace API.Core.Mapping.CustomerMapping
     {
         public CustomerProfile()
         {
-            CreateMap<Customer, GetCustomersResponse>()
-                .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
-                                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.Cart.CartItems));
+            //CreateMap<Customer, GetCustomersResponse>()
+            //    .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
+            //                    .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.Cart.CartItems));
 
 
             CreateMap<Product, ProductDto>();
@@ -31,9 +31,10 @@ namespace API.Core.Mapping.CustomerMapping
             CreateMap<Product, CustomersOrdersDTO>();
 
             CreateMap<Customer, GetSingleCustomerResponse>()
-                //.ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.FirstOrDefault().Status))
-                .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.Cart.CartItems))
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
+                        //.ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.Orders.FirstOrDefault().Status))
+                        //        .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.Cart.CartItems))
+                        //        .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+                        ;
         }
 
     }
