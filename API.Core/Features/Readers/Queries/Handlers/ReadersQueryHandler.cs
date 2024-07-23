@@ -10,7 +10,10 @@ using Microsoft.Extensions.Localization;
 namespace API.Core.Features.Readers.Queries.Handlers
 {
     public class ReadersQueryHandler : Response_Handler,
-        IRequestHandler<GetCurrentlyReadingList, GetCurrentlyReadingListResponse>
+        IRequestHandler<GetCurrentlyReadingList, GetCurrentlyReadingListResponse>,
+        IRequestHandler<GetWantToReadListQuery, GetWantToReadListResponse>,
+        IRequestHandler<GetReadListQuery, GetReadListResponse>
+
     {
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
@@ -33,6 +36,28 @@ namespace API.Core.Features.Readers.Queries.Handlers
             return new GetCurrentlyReadingListResponse
             {
                 CurrentlyReading = currentlyReading
+            };
+        }
+
+        public async Task<GetWantToReadListResponse> Handle(GetWantToReadListQuery request, CancellationToken cancellationToken)
+        {
+            var user = await _readerService.GetUserWithWantToReadList(request.UserId);
+            var wantToRead = user.WantToRead.Select(b => b.Name).ToList();
+
+            return new GetWantToReadListResponse
+            {
+                WantToRead = wantToRead
+            };
+        }
+
+        public async Task<GetReadListResponse> Handle(GetReadListQuery request, CancellationToken cancellationToken)
+        {
+            var user = await _readerService.GetUserWithReadList(request.UserId);
+            var readList = user.ReadBooks.Select(b => b.Name).ToList();
+
+            return new GetReadListResponse
+            {
+                ReadList = readList
             };
         }
     }

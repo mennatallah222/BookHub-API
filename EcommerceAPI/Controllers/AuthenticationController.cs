@@ -14,7 +14,7 @@ namespace EcommerceAPI.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost("/Authentication/SignIn")]
+        [HttpPost("Authentication/SignIn")]
         public async Task<IActionResult> CreateUser([FromForm] SignInCommand command)
         {
             var response = await _mediator.Send(command);
@@ -22,7 +22,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/Authentication/RefreshToken")]
+        [HttpPost("Authentication/RefreshToken")]
         public async Task<IActionResult> RefreshToken([FromForm] RefreshTokenCommand command)
         {
             var response = await _mediator.Send(command);
@@ -30,7 +30,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("/Authentication/Validate-Token")]
+        [HttpGet("Authentication/Validate-Token")]
         public async Task<IActionResult> ValidateToken([FromQuery] AuthorizeUserQuery query)
         {
             var response = await _mediator.Send(query);
@@ -38,7 +38,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("/Authentication/ConfirmEmail")]
+        [HttpGet("Authentication/ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailQuery query)
         {
             var response = await _mediator.Send(query);
@@ -46,7 +46,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/Authentication/SendForResetPassword")]
+        [HttpPost("Authentication/SendForResetPassword")]
         public async Task<IActionResult> SendForResetPassword([FromQuery] ResestPasswordCommand query)
         {
             var response = await _mediator.Send(query);
@@ -54,7 +54,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("/Authentication/ConfirmResetPassword")]
+        [HttpGet("Authentication/ConfirmResetPassword")]
         public async Task<IActionResult> ConfirmResetPassword([FromQuery] ChangePasswordQuery query)
         {
             var response = await _mediator.Send(query);
@@ -62,7 +62,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/Authentication/ResetPassword")]
+        [HttpPost("Authentication/ResetPassword")]
         public async Task<IActionResult> ResetPassword([FromForm] NewPasswordCommand command)
         {
             var response = await _mediator.Send(command);

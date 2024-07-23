@@ -13,7 +13,7 @@ namespace EcommerceAPI.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost("/Email/SendEmail")]
+        [HttpPost("Email/SendEmail")]
         public async Task<IActionResult> SendEmail([FromQuery] SendEmailCommand command)
         {
             var response = await _mediator.Send(command);

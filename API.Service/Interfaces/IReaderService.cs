@@ -12,5 +12,7 @@ namespace API.Service.Interfaces
         public Task<string> RemoveFromWantToReadListAsync(int userId, int bookId);
 
         public Task<User> GetUserWithCurrentlyReadingList(int userId);
+        public Task<User> GetUserWithWantToReadList(int userId);
+        public Task<User> GetUserWithReadList(int userId);
     }
 }

@@ -165,5 +165,19 @@ namespace API.Service.Implementations
             .Include(u => u.CurrentlyReading)
             .FirstOrDefaultAsync(u => u.Id == userId);
         }
+
+        public async Task<User> GetUserWithWantToReadList(int userId)
+        {
+            return await _context.Users
+                        .Include(u => u.WantToRead)
+                        .FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
+        public async Task<User> GetUserWithReadList(int userId)
+        {
+            return await _context.Users
+                        .Include(u => u.ReadBooks)
+                        .FirstOrDefaultAsync(u => u.Id == userId);
+        }
     }
 }

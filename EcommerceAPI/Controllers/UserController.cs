@@ -16,21 +16,21 @@ namespace EcommerceAPI.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet("/User/{id}")]
+        [HttpGet("User/{id}")]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             var response = await _mediator.Send(new GetUserByIDQuery(id));
             return Ok(response);
         }
         [Authorize(Policy = "GetUsers")]
-        [HttpGet("/User/PaginatedList")]
+        [HttpGet("User/PaginatedList")]
         public async Task<IActionResult> GetPaginatedUserList([FromQuery] GetPaginatedUsersListQuery query)
         {
             var response = await _mediator.Send(query);
             return Ok(response);
         }
 
-        [HttpPost("/User/AddUser")]
+        [HttpPost("User/AddUser")]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUser([FromBody] AddUserCommand command)
         {
@@ -38,14 +38,14 @@ namespace EcommerceAPI.Controllers
 
             return Ok(response);
         }
-        [HttpPut("/User/UpdateUser")]
+        [HttpPut("User/UpdateUser")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
             var response = await _mediator.Send(command);
 
             return Ok(response);
         }
-        [HttpDelete("/User/DeleteUser")]
+        [HttpDelete("User/DeleteUser")]
         [Authorize(Roles = "Admin, Author")]
 
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUserCommand command)
@@ -55,7 +55,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut("/User/ChangeUserPassword")]
+        [HttpPut("User/ChangeUserPassword")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangeUserPasswordCommand command)
         {
             var response = await _mediator.Send(command);

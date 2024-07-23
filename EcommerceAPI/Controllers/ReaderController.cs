@@ -15,8 +15,7 @@ namespace EcommerceAPI.Controllers
         {
             _mediatR = mediator;
         }
-        [HttpPost("/Reader/AddToCurrentlyReading")]
-        // [Authorize(Roles = "Admin, Author")]
+        [HttpPost("Reader/AddToCurrentlyReading")]
         public async Task<IActionResult> AddToCurrentlyReading([FromBody] AddBookToCurrentlyReadingListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -24,8 +23,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/Reader/AddToReadList")]
-        // [Authorize(Roles = "Admin, Author")]
+        [HttpPost("Reader/AddToReadList")]
         public async Task<IActionResult> AddToReadList([FromBody] AddBookToReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -33,7 +31,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/Reader/AddToWantToReadList")]
+        [HttpPost("Reader/AddToWantToReadList")]
         public async Task<IActionResult> AddToWantToReadList([FromBody] AddBookToWantToReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -41,7 +39,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("/Reader/RemoveFromWantToReadList")]
+        [HttpDelete("Reader/RemoveFromWantToReadList")]
         public async Task<IActionResult> RemoveFromWantToReadList([FromBody] RemoveBookFromWantToReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -49,7 +47,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("/Reader/RemoveFromReadList")]
+        [HttpDelete("Reader/RemoveFromReadList")]
         public async Task<IActionResult> RemoveFromReadList([FromBody] RemoveBookFromReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -57,7 +55,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("/Reader/RemoveFromCurrentlyReadingList")]
+        [HttpDelete("Reader/RemoveFromCurrentlyReadingList")]
         public async Task<IActionResult> RemoveFromCurrentlyReadingList([FromBody] RemoveBookFromCurrentlyReadingListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -72,5 +70,23 @@ namespace EcommerceAPI.Controllers
             var response = await _mediatR.Send(query);
             return Ok(response);
         }
+
+        [HttpGet("{userId}/WantToReadList")]
+        public async Task<IActionResult> GetWantToRead(int userId)
+        {
+            var query = new GetWantToReadListQuery(userId);
+            var response = await _mediatR.Send(query);
+            return Ok(response);
+        }
+
+        [HttpGet("{userId}/ReadList")]
+        public async Task<IActionResult> GetReadList(int userId)
+        {
+            var query = new GetReadListQuery(userId);
+            var response = await _mediatR.Send(query);
+            return Ok(response);
+        }
+
+
     }
 }
