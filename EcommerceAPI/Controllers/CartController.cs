@@ -26,7 +26,7 @@ namespace EcommerceAPI.Controllers
         {
             var res = await _mediator.Send(new AddProductToCartCommand
             {
-                ProductId = command.ProductId,
+                BookId = command.BookId,
                 CustomerId = command.CustomerId,
                 Quantity = command.Quantity
             });

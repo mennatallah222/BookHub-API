@@ -1,4 +1,6 @@
-﻿namespace API.Service.Interfaces
+﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+
+namespace API.Service.Interfaces
 {
     public interface IReaderService
     {
@@ -9,5 +11,6 @@
         public Task<string> RemoveFromCurrentlyReadingAsync(int userId, int bookId);
         public Task<string> RemoveFromWantToReadListAsync(int userId, int bookId);
 
+        public Task<User> GetUserWithCurrentlyReadingList(int userId);
     }
 }

@@ -2,6 +2,8 @@
 using API.Infrastructure.Interfaces;
 using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
+using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Service.Implementations
 {
@@ -12,41 +14,49 @@ namespace API.Service.Implementations
         private readonly IProductRepo _productRepo;
         private readonly ICartRepo _cartRepo;
         private readonly ApplicationDBContext _dbContext;
-        public OrderService(IOrderRepo orderRepo, ICustomer customerRepo, IProductRepo productRepo, ICartRepo cartRepo, ApplicationDBContext dBContext)
+        private readonly UserManager<User> _userManager;
+
+        public OrderService(IOrderRepo orderRepo,
+                            ICustomer customerRepo,
+                            IProductRepo productRepo,
+                            ICartRepo cartRepo,
+                            UserManager<User> userManager,
+                            ApplicationDBContext dBContext)
         {
             _repo = orderRepo;
             _dbContext = dBContext;
             _customerRepo = customerRepo;
             _productRepo = productRepo;
             _cartRepo = cartRepo;
+            _userManager = userManager;
         }
-        //public async Task<string> AddOrderAsync(Order o)
-        //{
-        //    var customer = await _customerRepo.GetCustomerByID(o.Customer.CustomerId);
-        //    var products = new List<Product>();
-        //    foreach (var pid in o.OrderItems)
-        //    {
-        //        var p = await _productRepo.GetProductByIdAsync(pid.ProductId);
+        public async Task<string> AddOrderAsync(Order o)
+        {
+            var user = await _userManager.FindByIdAsync(o.User.Id.ToString());
+            var products = new List<Product>();
+            foreach (var pid in o.OrderItems)
+            {
+                var p = await _productRepo.GetProductByIdAsync(pid.ProductId);
 
-        //        if (p == null) return $"Product {p.Name} is not found!";
-        //        products.Add(p);
+                if (p == null) return $"Product {p.Name} is not found!";
+                products.Add(p);
 
-        //    }
-        //    var order = new Order
-        //    {
-        //        CustomerId = customer.CustomerId,
-        //        OrderItems = o.OrderItems,
-        //        PaymentMethod = o.PaymentMethod,
-        //        Status = "Pending",
-        //        ShippingAddress = customer.Address,
-        //        PaymentStatus = o.PaymentStatus,
-        //        OrderDate = DateTime.UtcNow,
-        //        TrackingNumber = ""
-        //    };
-        //    await _repo.AddAsync(order);
-        //    await _dbContext.SaveChangesAsync();
-        //    return "Oreder created successfully!";
-        //}
+            }
+            var order = new Order
+            {
+                UserId = user.Id,
+                OrderItems = o.OrderItems,
+                PaymentMethod = o.PaymentMethod,
+                Status = "Pending",
+                ShippingAddress = user.Address,
+                PaymentStatus = o.PaymentStatus,
+                OrderDate = DateTime.UtcNow,
+                TrackingNumber = ""
+            };
+            await _repo.AddAsync(order);
+            await _dbContext.SaveChangesAsync();
+            return "Oreder created successfully!";
+        }
 
         public Task<List<Product>> GetAllOrdersAsync()
         {

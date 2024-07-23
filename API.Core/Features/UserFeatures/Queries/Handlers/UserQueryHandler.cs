@@ -48,6 +48,8 @@ namespace API.Core.Features.UserFeatures.Queries.Handlers
                              .Include(u => u.CurrentlyReading)
                              .Include(u => u.ReadBooks)
                              .Include(u => u.WantToRead)
+                             .Include(x => x.Orders).ThenInclude(o => o.OrderItems)
+                             .Include(c => c.Cart).ThenInclude(ci => ci.CartItems).ThenInclude(p => p.Product)
                              .FirstOrDefaultAsync(x => x.Id == request.Id);
             if (user == null) return NotFound<GetUserByIDResponse>(_localizer[SharedResourceKeys.NotFound]);
             var result = _mapper.Map<GetUserByIDResponse>(user);
@@ -55,3 +57,6 @@ namespace API.Core.Features.UserFeatures.Queries.Handlers
         }
     }
 }
+//    return await _customers.Include(x => x.Orders).ThenInclude(o => o.OrderItems)
+//                           .Include(c => c.Cart).ThenInclude(ci => ci.CartItems).ThenInclude(p => p.Product)
+//                           .FirstOrDefaultAsync(i => i.CustomerId == id);

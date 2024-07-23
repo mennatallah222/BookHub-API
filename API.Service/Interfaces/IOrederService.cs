@@ -4,7 +4,7 @@ namespace API.Service.Interfaces
 {
     public interface IOrederService
     {
-        //Task<string> AddOrderAsync(Order o);
+        Task<string> AddOrderAsync(Order o);
         Task<List<Product>> GetAllOrdersAsync();
         Task<Product> GetOrderByIdAsync(int id);
         Task<bool> IsNameExist(string name);

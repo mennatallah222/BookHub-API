@@ -1,5 +1,6 @@
 ﻿using API.Infrastructure.Data;
 using API.Service.Interfaces;
+using ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Service.Implementations
@@ -15,7 +16,7 @@ namespace API.Service.Implementations
 
         public async Task<string> AddToCurrentlyReadingAsync(int userId, int bookId)
         {
-            var user = await _context.Users.AsNoTracking()
+            var user = await _context.Users
                 .Include(u => u.ReadBooks)
                 .Include(b => b.CurrentlyReading)
                 .Include(b => b.WantToRead)
@@ -158,5 +159,11 @@ namespace API.Service.Implementations
         }
 
 
+        public async Task<User> GetUserWithCurrentlyReadingList(int userId)
+        {
+            return await _context.Users
+            .Include(u => u.CurrentlyReading)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+        }
     }
 }

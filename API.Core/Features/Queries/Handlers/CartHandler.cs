@@ -26,7 +26,7 @@ namespace API.Core.Features.Queries.Handlers
         }
         public async Task<Response<GetCartResponse>> Handle(GetCartQuery request, CancellationToken cancellationToken)
         {
-            var cart = await _cartService.GetCartContent(request.CustomerId);
+            var cart = await _cartService.GetCartContent(request.UserId);
             if (cart == null)
             {
                 return NotFound<GetCartResponse>("Cart is not found");

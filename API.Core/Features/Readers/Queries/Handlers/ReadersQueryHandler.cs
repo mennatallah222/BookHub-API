@@ -1,5 +1,6 @@
 ﻿using API.Core.Bases;
 using API.Core.Features.Readers.Queries.Models;
+using API.Core.Features.Readers.Queries.Responses;
 using API.Core.SharedResource;
 using API.Service.Interfaces;
 using AutoMapper;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Localization;
 namespace API.Core.Features.Readers.Queries.Handlers
 {
     public class ReadersQueryHandler : Response_Handler,
-        IRequestHandler<GetCurrentlyReadingList, Response<string>>
+        IRequestHandler<GetCurrentlyReadingList, GetCurrentlyReadingListResponse>
     {
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
@@ -24,7 +25,15 @@ namespace API.Core.Features.Readers.Queries.Handlers
             _readerService = readerService;
         }
 
+        public async Task<GetCurrentlyReadingListResponse> Handle(GetCurrentlyReadingList request, CancellationToken cancellationToken)
+        {
+            var user = await _readerService.GetUserWithCurrentlyReadingList(request.UserId);
+            var currentlyReading = user.CurrentlyReading.Select(b => b.Name).ToList();
 
-
+            return new GetCurrentlyReadingListResponse
+            {
+                CurrentlyReading = currentlyReading
+            };
+        }
     }
 }

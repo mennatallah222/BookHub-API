@@ -15,7 +15,6 @@ namespace API.Core.Features.Commands.Handlers
     {
         private readonly IOrederService _orederService;
         private readonly IProductRepo _productRepo;
-        private readonly ICustomer _customer;
         private readonly ICartRepo _cartRepo;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<SharedResources> _localizer;
@@ -23,7 +22,6 @@ namespace API.Core.Features.Commands.Handlers
 
         public OrderCommandHandler(IOrederService orederService,
                                    IProductRepo productRepo,
-                                   ICustomer customerRepo,
                                    ICartRepo cartRepo,
                                    IMapper mapper,
                                   IStringLocalizer<SharedResources> localizer) : base(localizer)
@@ -31,7 +29,6 @@ namespace API.Core.Features.Commands.Handlers
         {
             _orederService = orederService;
             _productRepo = productRepo;
-            _customer = customerRepo;
             _cartRepo = cartRepo;
             _mapper = mapper;
             _localizer = localizer;
@@ -45,7 +42,7 @@ namespace API.Core.Features.Commands.Handlers
                 throw new ArgumentException("You must choose a Payment Method");
 
             }
-            var cart = await _cartRepo.GetCartByIDAsync(request.CustomerID);
+            var cart = await _cartRepo.GetCartByIDAsync(request.UserId);
             var pids = cart.CartItems.Select(p => p.ProductId).ToList();
             var products = await _productRepo.GetProductsByIDS(pids);
             if (products == null || !products.Any()) return "Product's not found for the given IDs";
@@ -74,12 +71,12 @@ namespace API.Core.Features.Commands.Handlers
             order.PaymentMethod = request.PaymentMethod;
             order.Status = "Pending";
 
-            ////////////////////  var res = await _orederService.AddOrderAsync(order);
+            var res = await _orederService.AddOrderAsync(order);
 
             var productsToUpdate = order.OrderItems.ToList();
 
             await _productRepo.UpadteRangeAsync(products);
-            await _cartRepo.ClearCartAsync(request.CustomerID);
+            await _cartRepo.ClearCartAsync(request.UserId);
             return "Succeeeded";
         }
     }

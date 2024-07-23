@@ -5,6 +5,6 @@ namespace API.Core.Features.Queries.Models
 {
     public class GetOrderQuery : IRequest<GetOrdersHistoryResponse>
     {
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
     }
 }

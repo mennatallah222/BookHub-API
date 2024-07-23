@@ -25,7 +25,7 @@ namespace EcommerceAPI.Controllers
             _customerRepo = customerRepo;
         }
 
-        [HttpPost("/Order/Add/CustomerId")]
+        [HttpPost("Order/MakeOrder/UserId")]
         public async Task<IActionResult> PostOrder([FromBody] CreateOrderCommand command)
         {
             var response = await _mediator.Send(command);
@@ -33,10 +33,10 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("/Order/GetOrdersHistory/CustomerId")]
-        public async Task<IActionResult> GetCustomerOrders([FromHeader] int cid)
+        [HttpGet("Order/GetOrdersHistory/userId")]
+        public async Task<IActionResult> GetCustomerOrders([FromHeader] int userId)
         {
-            var query = new GetOrderQuery { CustomerId = cid };
+            var query = new GetOrderQuery { UserId = userId };
             var response = await _mediator.Send(query);
 
             var ordersHistoryDto = _mapper.Map<GetOrdersHistoryResponse>(response);

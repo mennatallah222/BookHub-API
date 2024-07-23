@@ -25,7 +25,12 @@ namespace API.Infrastructure.Repos
 
         public async Task<List<Order>> GetListAsync()
         {
-            return await _orders.Include(x => x.User).Include(s => s.OrderItems).ToListAsync();
+            var orders = await _orders.Include(x => x.User).Include(o => o.OrderItems).ThenInclude(oi => oi.Product).ToListAsync();
+            foreach (var order in orders)
+            {
+                order.TotalAmount = order.OrderItems.Sum(oi => oi.Product.Price);
+            }
+            return orders;
         }
         public async Task<Order> GetByIdAsync(int id)
         {

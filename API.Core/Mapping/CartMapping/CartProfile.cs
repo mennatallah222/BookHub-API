@@ -18,9 +18,6 @@ namespace API.Core.Mapping.CartMapping
 
             CreateMap<Cart, GetCartResponse>()
                 .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartItems));
-
-
-
         }
 
     }

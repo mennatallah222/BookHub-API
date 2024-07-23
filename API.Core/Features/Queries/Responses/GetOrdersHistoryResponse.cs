@@ -4,7 +4,7 @@ namespace API.Core.Features.Queries.Responses
 {
     public class GetOrdersHistoryResponse
     {
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
 
         // public string? OrderStatus { get; set; }

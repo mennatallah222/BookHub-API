@@ -6,6 +6,6 @@ namespace API.Core.Features.Queries.Models
 {
     public class GetCartQuery : IRequest<Response<GetCartResponse>>
     {
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
     }
 }

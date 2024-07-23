@@ -2,6 +2,7 @@
 using API.Core.Features.Queries.Responses;
 using API.Infrastructure.Interfaces;
 using AutoMapper;
+using ClassLibrary1.Data_ClassLibrary1.Core.DTOs;
 using MediatR;
 
 namespace API.Core.Features.Queries.Handlers
@@ -22,8 +23,15 @@ namespace API.Core.Features.Queries.Handlers
             {
                 throw new Exception("No order history found!");
             }
-            var mappedResponse = _mapper.Map<GetOrdersHistoryResponse>(orders);
-            return mappedResponse;
+            var usersOrdersGrouped = orders.GroupBy(o => o.User.Id).Select(g => new GetOrdersHistoryResponse
+            {
+                UserId = g.Key,
+                Name = g.First().User.FullName,
+                Orders = g.Select(o => _mapper.Map<OrderDTOs>(o)).ToList()
+            }).FirstOrDefault();
+
+            if (usersOrdersGrouped == null) throw new Exception("No order history found!");
+            return usersOrdersGrouped;
         }
 
     }

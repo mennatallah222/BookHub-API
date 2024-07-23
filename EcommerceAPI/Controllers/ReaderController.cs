@@ -1,4 +1,5 @@
 ﻿using API.Core.Features.Readers.Commands.Models;
+using API.Core.Features.Readers.Queries.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,5 +65,12 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{userId}/CurrentlyReadingList")]
+        public async Task<IActionResult> GetCurrentlyReading(int userId)
+        {
+            var query = new GetCurrentlyReadingList(userId);
+            var response = await _mediatR.Send(query);
+            return Ok(response);
+        }
     }
 }
