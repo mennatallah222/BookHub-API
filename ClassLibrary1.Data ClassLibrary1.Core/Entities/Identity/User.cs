@@ -16,7 +16,8 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
             ReadBooks = new HashSet<Product>();
             FavouriteAuthors = new HashSet<Author>();
             ReviewedBooks = new HashSet<Review>();
-            //Friends = new HashSet<Friendship>();
+            FirendInitiated = new HashSet<Friendship>();
+            FirendRecieved = new HashSet<Friendship>();
         }
         public string FullName { get; set; }
         public string? Address { get; set; }
@@ -39,7 +40,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
         public virtual ICollection<Author>? FavouriteAuthors { get; set; }
 
         public virtual ICollection<Review>? ReviewedBooks { get; set; }
-        //public virtual ICollection<Friendship>? FriendsAsUser { get; set; }
-        //public virtual ICollection<Friendship>? FriendsAsFriend { get; set; }
+        public virtual ICollection<Friendship>? FirendInitiated { get; set; }
+        public virtual ICollection<Friendship>? FirendRecieved { get; set; }
     }
 }

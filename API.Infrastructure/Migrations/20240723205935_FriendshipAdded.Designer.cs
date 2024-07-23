@@ -12,18 +12,73 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240710024736_updatedUser")]
-    partial class updatedUser
+    [Migration("20240723205935_FriendshipAdded")]
+    partial class FriendshipAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AuthorUser", b =>
+                {
+                    b.Property<int>("FavouriteAuthorsAuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FavouriteByUsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FavouriteAuthorsAuthorId", "FavouriteByUsersId");
+
+                    b.HasIndex("FavouriteByUsersId");
+
+                    b.ToTable("UserFavouriteAuthors", (string)null);
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.BookGenre", b =>
+                {
+                    b.Property<int>("BookGenreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookGenreId"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookGenreId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("BookGenres");
+                });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", b =>
                 {
@@ -36,12 +91,12 @@ namespace API.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Carts");
@@ -98,25 +153,64 @@ namespace API.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Friendship", b =>
+                {
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<int?>("FriendId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FriendshipStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("UserId", "FriendId");
+
+                    b.HasIndex("FriendId");
+
+                    b.ToTable("Friendships");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", b =>
@@ -131,6 +225,9 @@ namespace API.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -150,6 +247,9 @@ namespace API.Infrastructure.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -174,6 +274,9 @@ namespace API.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ReviewId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -194,7 +297,48 @@ namespace API.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("ReviewId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.UserRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AddedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JwtId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRefreshTokens");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Order", b =>
@@ -207,9 +351,6 @@ namespace API.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -236,9 +377,12 @@ namespace API.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -319,13 +463,16 @@ namespace API.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISBN")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
@@ -334,22 +481,36 @@ namespace API.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PagesNumber")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateTime?>("PublishedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("CartId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Products");
                 });
@@ -365,8 +526,8 @@ namespace API.Infrastructure.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -377,11 +538,14 @@ namespace API.Infrastructure.Migrations
                     b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ReviewId");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -461,36 +625,6 @@ namespace API.Infrastructure.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Wishlists");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -596,15 +730,94 @@ namespace API.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", b =>
+            modelBuilder.Entity("ProductUser", b =>
                 {
-                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Customer", "Customer")
-                        .WithOne("Cart")
-                        .HasForeignKey("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", "CustomerId")
+                    b.Property<int>("CurrentlyReadingProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrentlyReadingUsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CurrentlyReadingProductId", "CurrentlyReadingUsersId");
+
+                    b.HasIndex("CurrentlyReadingUsersId");
+
+                    b.ToTable("UserCurrentlyReading", (string)null);
+                });
+
+            modelBuilder.Entity("ProductUser1", b =>
+                {
+                    b.Property<int>("WantToReadProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WantToReadUsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WantToReadProductId", "WantToReadUsersId");
+
+                    b.HasIndex("WantToReadUsersId");
+
+                    b.ToTable("UserWantToRead", (string)null);
+                });
+
+            modelBuilder.Entity("ProductUser2", b =>
+                {
+                    b.Property<int>("ReadBooksProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReadUsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReadBooksProductId", "ReadUsersId");
+
+                    b.HasIndex("ReadUsersId");
+
+                    b.ToTable("UserReadBooks", (string)null);
+                });
+
+            modelBuilder.Entity("AuthorUser", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Author", null)
+                        .WithMany()
+                        .HasForeignKey("FavouriteAuthorsAuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("FavouriteByUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.BookGenre", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", "Book")
+                        .WithMany("BookGenres")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Category", "Genre")
+                        .WithMany("BookGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.CartItem", b =>
@@ -626,13 +839,50 @@ namespace API.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Friendship", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "Friend")
+                        .WithMany("FirendRecieved")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
+                        .WithMany("FirendInitiated")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Friend");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Review", null)
+                        .WithMany("ReviewedByUsers")
+                        .HasForeignKey("ReviewId");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.UserRefreshToken", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
+                        .WithMany("UserRefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Order", b =>
                 {
-                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Customer", "Customer")
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.OrderItem", b =>
@@ -667,36 +917,43 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", b =>
                 {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Author", "Author")
+                        .WithMany("WrittenBooks")
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", "Cart")
                         .WithMany()
                         .HasForeignKey("CartId");
 
-                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Author");
 
                     b.Navigation("Cart");
 
-                    b.Navigation("Category");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Review", b =>
                 {
-                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
+                        .WithMany("ReviewedBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Shipping", b =>
@@ -731,7 +988,7 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -758,7 +1015,7 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -780,6 +1037,56 @@ namespace API.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ProductUser", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("CurrentlyReadingProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("CurrentlyReadingUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductUser1", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("WantToReadProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("WantToReadUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductUser2", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ReadBooksProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("ReadUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Author", b =>
+                {
+                    b.Navigation("WrittenBooks");
+                });
+
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -787,15 +1094,23 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("BookGenres");
                 });
 
-            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Customer", b =>
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", b =>
                 {
                     b.Navigation("Cart")
                         .IsRequired();
 
+                    b.Navigation("FirendInitiated");
+
+                    b.Navigation("FirendRecieved");
+
                     b.Navigation("Orders");
+
+                    b.Navigation("ReviewedBooks");
+
+                    b.Navigation("UserRefreshTokens");
                 });
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Order", b =>
@@ -805,7 +1120,14 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Product", b =>
                 {
+                    b.Navigation("BookGenres");
+
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Review", b =>
+                {
+                    b.Navigation("ReviewedByUsers");
                 });
 #pragma warning restore 612, 618
         }

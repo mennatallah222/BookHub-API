@@ -48,14 +48,6 @@ namespace API.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*modelBuilder.Entity<OrderItem>()
-                .Property(o => o.PriceAtOrder)
-                .HasPrecision(18, 2); // Adjust precision and scale as per your requirements
-
-            modelBuilder.Entity<OrderItem>()
-                .Property(o => o.UnitPrice)
-                .HasPrecision(18, 2);
-            */
             modelBuilder.Entity<Payment>()
                 .Property(p => p.Amount)
                 .HasPrecision(18, 2);
@@ -114,26 +106,20 @@ namespace API.Infrastructure.Data
                .OnDelete(DeleteBehavior.Cascade);
             });
 
-            //modelBuilder.Entity<Customer>()
-            //    .HasMany(c => c.CurrentlyReading)
-            //    .WithOne()
-            //    .HasForeignKey(p => p.CustomerId);
-            //modelBuilder.Entity<Customer>()
-            //    .HasMany(c => c.ReadBooks)
-            //    .WithOne(p => p.Customer)
-            //    .HasForeignKey(p => p.CustomerId);
-            //modelBuilder.Entity<BookGenre>()
-            //    .HasKey(bg => bg.BookGenreId);
-            //modelBuilder.Entity<Category>()
-            //    .HasMany(c => c.BookGenres)
-            //    .WithOne(bg => bg.Genre)
-            //    .HasForeignKey(bg => bg.GenreId);
+            modelBuilder.Entity<Friendship>()
+            .HasKey(f => new { f.UserId, f.FriendId });
 
+            modelBuilder.Entity<Friendship>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.FirendInitiated)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<User>()
-            //.Property(u => u.Code)
-            //.IsEncrypted();
-
+            modelBuilder.Entity<Friendship>()
+                .HasOne(f => f.Friend)
+                .WithMany(u => u.FirendRecieved)
+                .HasForeignKey(f => f.FriendId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.UseEncryption(_encryptionProvider);
 

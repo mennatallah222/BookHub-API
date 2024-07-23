@@ -157,13 +157,25 @@ namespace API.Infrastructure.Migrations
 
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Friendship", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int?>("FriendId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FriendshipStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("UserId", "FriendId");
+
+                    b.HasIndex("FriendId");
 
                     b.ToTable("Friendships");
                 });
@@ -824,6 +836,25 @@ namespace API.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Friendship", b =>
+                {
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "Friend")
+                        .WithMany("FirendRecieved")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", "User")
+                        .WithMany("FirendInitiated")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Friend");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User", b =>
                 {
                     b.HasOne("ClassLibrary1.Data_ClassLibrary1.Core.Entities.Review", null)
@@ -1067,6 +1098,10 @@ namespace API.Infrastructure.Migrations
                 {
                     b.Navigation("Cart")
                         .IsRequired();
+
+                    b.Navigation("FirendInitiated");
+
+                    b.Navigation("FirendRecieved");
 
                     b.Navigation("Orders");
 
