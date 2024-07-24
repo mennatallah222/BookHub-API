@@ -17,6 +17,7 @@ namespace API.Core.Mapping.ProductMapping
 
             CreateMap<CreateBookCommand, Product>()
                 .ForMember(dest => dest.BookGenres, opt => opt.Ignore())
+                .ForMember(dest => dest.Image, opt => opt.Ignore())
                 .AfterMap((src, dest) =>
                 {
                     if (dest.BookGenres == null)

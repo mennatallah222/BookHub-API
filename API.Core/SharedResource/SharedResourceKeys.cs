@@ -46,6 +46,9 @@
 
         public const string BookNotFound = "BookNotFound";
 
+        public const string NoImage = "NoImage";
+        public const string FailedToUploadTheImage = "FailedToUploadTheImage";
+
 
     }
 }

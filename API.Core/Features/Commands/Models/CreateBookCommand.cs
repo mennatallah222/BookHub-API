@@ -1,5 +1,6 @@
 ﻿using API.Core.Bases;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Core.Features.Commands.Models
 {
@@ -10,7 +11,7 @@ namespace API.Core.Features.Commands.Models
         public int Quantity { get; set; }
         public string Description { get; set; }
         public List<string>? GenresNames { get; set; }
-        public string? Image { get; set; }
+        public IFormFile? Image { get; set; }
 
     }
 }

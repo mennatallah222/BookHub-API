@@ -168,11 +168,17 @@
   <data name="FailedToUpdateClaims" xml:space="preserve">
     <value>Failed To Update Claims</value>
   </data>
+  <data name="FailedToUploadTheImage" xml:space="preserve">
+    <value>Failed To Upload The Image</value>
+  </data>
   <data name="InvalidCode" xml:space="preserve">
     <value>Invalid Code</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="NoImage" xml:space="preserve">
+    <value>No Image</value>
   </data>
   <data name="NotEmpty" xml:space="preserve">
     <value>Object can't be empty!</value>

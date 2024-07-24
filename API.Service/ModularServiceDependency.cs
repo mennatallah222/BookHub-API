@@ -21,6 +21,8 @@ namespace API.Service
             services.AddTransient<IReaderService, ReaderService>();
             services.AddTransient<IFriendsService, FriendsService>();
             services.AddTransient<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<IFileService, FileService>();
+
 
             return services;
         }

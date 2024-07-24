@@ -1,11 +1,12 @@
 ﻿using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using ClassLibrary1.Data_ClassLibrary1.Core.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Service.Interfaces
 {
     public interface IProductsService
     {
-        Task<string> AddProductAsync(Product product, List<string> genreNames);
+        Task<string> AddProductAsync(Product product, List<string> genreNames, IFormFile file);
 
 
         Task<List<Product>> GetAllProductsAsync();

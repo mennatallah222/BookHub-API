@@ -32,13 +32,21 @@ namespace API.Core.Features.Commands.Handlers
         public async Task<Response<string>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<Product>(request);
-            var res = await _productsService.AddProductAsync(product, request.GenresNames);
+            var res = await _productsService.AddProductAsync(product, request.GenresNames, request.Image);
             //if (res == "") return BadRequest<string>("Name already exists!");
             /*var createdProduct = await _productsService.AddProductAsync(product);
             var response = _mapper.Map<CreateProductResponse>(createdProduct);
             */
             //if (res == "Success")
-            return Created("Added!");
+
+            switch (res)
+            {
+                case "NoImage": return BadRequest<string>(_localizer[SharedResourceKeys.NoImage]);
+                case "FailedToUploadTheImage": return BadRequest<string>(_localizer[SharedResourceKeys.FailedToUploadTheImage]);
+
+            }
+
+            return Created<string>(_localizer[SharedResourceKeys.Created]);
             // else
             //   return BadRequest<string>("An unknown error occurred");
         }

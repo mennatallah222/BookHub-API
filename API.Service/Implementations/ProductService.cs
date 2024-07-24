@@ -3,6 +3,7 @@ using API.Infrastructure.Interfaces;
 using API.Service.Interfaces;
 using ClassLibrary1.Data_ClassLibrary1.Core.Entities;
 using ClassLibrary1.Data_ClassLibrary1.Core.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Service.Implementations
@@ -11,10 +12,18 @@ namespace API.Service.Implementations
     {
         private readonly IProductRepo _repo;
         private readonly ApplicationDBContext _dbContext;
-        public ProductService(IProductRepo productRepo, ApplicationDBContext dBContext)
+        private readonly IFileService _fileService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public ProductService(IProductRepo productRepo,
+                              ApplicationDBContext dBContext,
+                              IFileService fileService,
+                              IHttpContextAccessor httpContextAccessor)
         {
             _repo = productRepo;
             _dbContext = dBContext;
+            _fileService = fileService;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<List<Product>> GetAllProductsAsync()
         {
@@ -28,8 +37,19 @@ namespace API.Service.Implementations
             return products;
         }
 
-        public async Task<string> AddProductAsync(Product product, List<string> genreNames)
+        public async Task<string> AddProductAsync(Product product, List<string> genreNames, IFormFile file)
         {
+            var myContext = _httpContextAccessor.HttpContext.Request;
+            var myBaseUrl = myContext.Scheme + "://" + myContext.Host;
+            var imageUrl = await _fileService.UploadImage("Books", file);
+            switch (imageUrl)//Stormlight Archive book 1 The Way of Kings
+            {
+                case "NoImage": return "NoImage";
+                case "FailedToUploadTheImage": return "FailedToUploadTheImage";
+
+            }
+            product.Image = myBaseUrl + imageUrl;
+
             var existingGenres = await _dbContext.Categories.Where(c => genreNames.Contains(c.Name)).ToListAsync();
             foreach (var genre in existingGenres)
             {
