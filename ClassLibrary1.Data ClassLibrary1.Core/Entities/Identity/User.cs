@@ -18,6 +18,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
             ReviewedBooks = new HashSet<Review>();
             FirendInitiated = new HashSet<Friendship>();
             FirendRecieved = new HashSet<Friendship>();
+            NotificationsBox = new HashSet<Notification>();
         }
         public string FullName { get; set; }
         public string? Address { get; set; }
@@ -42,5 +43,6 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
         public virtual ICollection<Review>? ReviewedBooks { get; set; }
         public virtual ICollection<Friendship>? FirendInitiated { get; set; }
         public virtual ICollection<Friendship>? FirendRecieved { get; set; }
+        public virtual ICollection<Notification>? NotificationsBox { get; set; }
     }
 }

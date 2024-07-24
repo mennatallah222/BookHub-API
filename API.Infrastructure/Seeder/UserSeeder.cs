@@ -22,8 +22,8 @@ namespace API.Infrastructure.Seeder
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                 };
-                await userManager.CreateAsync(defaultUser, "M123_");
-                await userManager.AddToRoleAsync(defaultUser, "Admin");
+                // await userManager.CreateAsync(defaultUser, "M123_");
+                //await userManager.AddToRoleAsync(defaultUser, "Admin");
             }
         }
     }

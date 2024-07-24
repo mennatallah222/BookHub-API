@@ -17,7 +17,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("Book/List")]
+        [HttpGet("List")]
         public async Task<IActionResult> GetBookList()
         {
             var response = await _mediatR.Send(new GetAllBooksQuery());
@@ -25,14 +25,14 @@ namespace EcommerceAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("Book/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetBookByID(int id)
         {
             var response = await _mediatR.Send(new GetBookByIdQuery { Id = id });
             return Ok(response);
         }
 
-        [HttpPost("Book/Add")]
+        [HttpPost("Add")]
         // [Authorize(Roles = "Admin, Author")]
         public async Task<IActionResult> PostBook([FromBody] CreateBookCommand command)
         {
@@ -41,7 +41,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut("Book/Update")]
+        [HttpPut("Update")]
         // [Authorize(Roles = "Admin, Author")]
 
         public async Task<IActionResult> PutBook(int id, [FromBody] UpdateBookCommand command)
@@ -59,7 +59,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("Book/PaginatedList")]
+        [HttpGet("PaginatedList")]
         public async Task<IActionResult> GetPaginatedBookList([FromQuery] GetBookssPaginatedList query)
         {
             var response = await _mediatR.Send(query);
@@ -67,7 +67,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpDelete("Book/DeleteBook{id}")]
+        [HttpDelete("DeleteBook{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
             var response = await _mediatR.Send(new DeleteBookCommand { BookId = id });

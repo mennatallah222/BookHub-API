@@ -44,6 +44,8 @@ namespace API.Infrastructure.Data
         public DbSet<Friendship> Friendships { get; set; }
         public DbSet<BookGenre> BookGenres { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

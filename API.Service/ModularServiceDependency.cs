@@ -17,6 +17,7 @@ namespace API.Service
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IReaderService, ReaderService>();
+            services.AddTransient<IFriendsService, FriendsService>();
 
             return services;
         }

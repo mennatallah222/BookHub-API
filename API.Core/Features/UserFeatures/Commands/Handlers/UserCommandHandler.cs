@@ -48,10 +48,8 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
 
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            // Map request to User entity
             var identityUser = _mapper.Map<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User>(request);
 
-            // Create user
             var createdUser = await _applicationUserService.AddUserAsync(identityUser, request.Password);
 
             switch (createdUser)

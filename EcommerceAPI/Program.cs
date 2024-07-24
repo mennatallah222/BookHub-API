@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace EcommerceAPI
 {
@@ -49,6 +50,12 @@ namespace EcommerceAPI
                             .AddCoreDependencies()
                             .AddSingleton<IStringLocalizer, StringLocalizer<SharedResources>>();
 
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
 
 
             #endregion

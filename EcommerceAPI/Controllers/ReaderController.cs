@@ -15,7 +15,7 @@ namespace EcommerceAPI.Controllers
         {
             _mediatR = mediator;
         }
-        [HttpPost("Reader/AddToCurrentlyReading")]
+        [HttpPost("AddToCurrentlyReading")]
         public async Task<IActionResult> AddToCurrentlyReading([FromBody] AddBookToCurrentlyReadingListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -23,7 +23,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("Reader/AddToReadList")]
+        [HttpPost("AddToReadList")]
         public async Task<IActionResult> AddToReadList([FromBody] AddBookToReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -31,7 +31,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("Reader/AddToWantToReadList")]
+        [HttpPost("AddToWantToReadList")]
         public async Task<IActionResult> AddToWantToReadList([FromBody] AddBookToWantToReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -39,7 +39,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Reader/RemoveFromWantToReadList")]
+        [HttpDelete("RemoveFromWantToReadList")]
         public async Task<IActionResult> RemoveFromWantToReadList([FromBody] RemoveBookFromWantToReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -47,7 +47,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Reader/RemoveFromReadList")]
+        [HttpDelete("RemoveFromReadList")]
         public async Task<IActionResult> RemoveFromReadList([FromBody] RemoveBookFromReadListCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -55,7 +55,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Reader/RemoveFromCurrentlyReadingList")]
+        [HttpDelete("RemoveFromCurrentlyReadingList")]
         public async Task<IActionResult> RemoveFromCurrentlyReadingList([FromBody] RemoveBookFromCurrentlyReadingListCommand command)
         {
             var response = await _mediatR.Send(command);

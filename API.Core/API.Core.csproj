@@ -22,11 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Friends\Commands\Handlers\" />
-    <Folder Include="Features\Friends\Commands\Models\" />
     <Folder Include="Features\Friends\Commands\Responses\" />
-    <Folder Include="Features\Friends\Queries\Handlers\" />
-    <Folder Include="Features\Friends\Queries\Models\" />
     <Folder Include="Features\Friends\Queries\Responses\" />
     <Folder Include="Features\Readers\Commands\Validators\" />
     <Folder Include="Features\Readers\Queries\Validators\" />

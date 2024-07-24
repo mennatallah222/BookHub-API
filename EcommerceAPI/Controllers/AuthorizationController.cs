@@ -15,7 +15,7 @@ namespace EcommerceAPI.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost("Authorization/AddRole")]
+        [HttpPost("AddRole")]
         public async Task<IActionResult> AddRole([FromForm] AddRoleCommand command)
         {
             var response = await _mediator.Send(command);
@@ -23,7 +23,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut("Authorization/UpdateRole")]
+        [HttpPut("UpdateRole")]
         public async Task<IActionResult> UpdateRole([FromForm] EditRoleCommand command)
         {
             var response = await _mediator.Send(command);
@@ -31,7 +31,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("Authorization/GetRoleList")]
+        [HttpGet("GetRoleList")]
         public async Task<IActionResult> GetRoleList()
         {
             var response = await _mediator.Send(new GetRoleListQuery());
@@ -39,7 +39,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("Authorization/GetRoleById/{id}")]
+        [HttpGet("GetRoleById/{id}")]
         public async Task<IActionResult> GetRoleById([FromRoute] int id)
         {
             var response = await _mediator.Send(new GetRoleByIdQuery() { Id = id });
@@ -47,7 +47,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("Authorization/ManageUserRoles/{id}")]
+        [HttpGet("ManageUserRoles/{id}")]
         public async Task<IActionResult> ManageUserRoles([FromRoute] int id)
         {
             var response = await _mediator.Send(new ManageUserRoleQuery() { UserId = id });
@@ -55,7 +55,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("Authorization/AddRoleToUser")]
+        [HttpPost("AddRoleToUser")]
         public async Task<IActionResult> AddRoleToUser([FromBody] UpdateUserRolesCommand command)
         {
             var response = await _mediator.Send(command);
@@ -63,7 +63,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("Authorization/ManageUserClaims/{id}")]
+        [HttpGet("ManageUserClaims/{id}")]
         public async Task<IActionResult> ManageUserClaims([FromRoute] int id)
         {
             var response = await _mediator.Send(new ManageUserClaimQuery() { UserId = id });
@@ -71,7 +71,7 @@ namespace EcommerceAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("Authorization/UpdateUserClaims")]
+        [HttpPost("UpdateUserClaims")]
         public async Task<IActionResult> UpdateUserClaims([FromBody] UpdateUserClaimsCommand command)
         {
             var response = await _mediator.Send(command);
