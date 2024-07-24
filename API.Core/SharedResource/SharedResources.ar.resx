@@ -168,11 +168,17 @@
   <data name="FailedToUpdateClaims" xml:space="preserve">
     <value>عملية تحديث الصلاحيات لم تنجح</value>
   </data>
+  <data name="FailedToUploadTheImage" xml:space="preserve">
+    <value>فشل في رفع الصورة</value>
+  </data>
   <data name="InvalidCode" xml:space="preserve">
     <value>الكود الذي ادخلته خطأ</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
+  </data>
+  <data name="NoImage" xml:space="preserve">
+    <value>لم يتم العثور علي الصورة</value>
   </data>
   <data name="NotEmpty" xml:space="preserve">
     <value>لا يسمح ان يكون فارغا</value>
