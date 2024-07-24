@@ -1,5 +1,6 @@
 
 using API.Core;
+using API.Core.Filters;
 using API.Core.Middleware;
 using API.Core.SharedResource;
 using API.Infrastructure;
@@ -39,6 +40,13 @@ namespace EcommerceAPI
             {
                 option.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext"));
             });
+
+
+
+            //to use it:
+            //[Authorize(Roles ="User")]
+            //[ServiceFilter(typeof(AuthFilter))]
+            builder.Services.AddTransient<AuthFilter>();
 
 
 

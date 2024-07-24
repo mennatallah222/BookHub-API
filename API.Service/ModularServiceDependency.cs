@@ -1,4 +1,6 @@
-﻿using API.Service.Implementations;
+﻿using API.Service.AuthService.Implementations;
+using API.Service.AuthService.Interfaces;
+using API.Service.Implementations;
 using API.Service.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +20,7 @@ namespace API.Service
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IReaderService, ReaderService>();
             services.AddTransient<IFriendsService, FriendsService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
 
             return services;
         }
