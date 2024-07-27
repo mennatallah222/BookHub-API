@@ -15,23 +15,26 @@ namespace API.Service.Implementations
         private readonly IEmailService _emailService;
         private readonly ApplicationDBContext _dbContext;
         private readonly IUrlHelper _urlHelper;
+        private readonly IFileService _fileService;
 
         public ApplicationUserService(
                                      UserManager<User> userManager,
                                      IHttpContextAccessor httpContextAccessor,
                                      IEmailService emailService,
                                      ApplicationDBContext dBContext,
-                                     IUrlHelper urlHelper)
+                                     IUrlHelper urlHelper,
+                                     IFileService fileService)
         {
             _userManager = userManager;
             _dbContext = dBContext;
             _contextAccessor = httpContextAccessor;
             _emailService = emailService;
             _urlHelper = urlHelper;
+            _fileService = fileService;
         }
 
 
-        public async Task<string> AddUserAsync(User user, string password)
+        public async Task<string> AddUserAsync(User user, string password, IFormFile file)
         {
             var transact = await _dbContext.Database.BeginTransactionAsync();
             try
@@ -50,8 +53,18 @@ namespace API.Service.Implementations
                     return "UserNameExists";
                 }
 
-                // Map request to User entity
-                // var identityUser = _mapper.Map<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User>(request);
+                var myContext = _contextAccessor.HttpContext.Request;
+                var myBaseUrl = myContext.Scheme + "://" + myContext.Host;
+                var imageUrl = await _fileService.UploadImage("Users", file);
+                switch (imageUrl)
+                {
+                    case "NoImage": return "NoImage";
+                    case "FailedToUploadTheImage": return "FailedToUploadTheImage";
+
+                }
+                user.Image = myBaseUrl + imageUrl;
+
+
 
                 // Create user
                 var createdUser = await _userManager.CreateAsync(user, password);

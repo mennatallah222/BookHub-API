@@ -50,7 +50,7 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
         {
             var identityUser = _mapper.Map<ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity.User>(request);
 
-            var createdUser = await _applicationUserService.AddUserAsync(identityUser, request.Password);
+            var createdUser = await _applicationUserService.AddUserAsync(identityUser, request.Password, request.Image);
 
             switch (createdUser)
             {
@@ -62,7 +62,6 @@ namespace API.Core.Features.UserFeatures.Commands.Handlers
                 case "Failed": return BadRequest<string>(_stringLocalizer[SharedResourceKeys.TryToRegisterAgain]);
                 default: return BadRequest<string>(createdUser);
             }
-            // return Success<string>("");
         }
 
         public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)

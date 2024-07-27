@@ -151,7 +151,7 @@ namespace EcommerceAPI
             app.UseMiddleware<ErrorHandlerMiddleware>();
             #endregion
 
-
+            app.UseStaticFiles();
 
 
             app.UseHttpsRedirection();

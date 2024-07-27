@@ -9,5 +9,6 @@
         public List<string>? CurrentlyReading { get; set; }
         public List<string>? WantToReadList { get; set; }
         public List<string>? ReadList { get; set; }
+        public string? Image { get; set; }
     }
 }

@@ -33,11 +33,6 @@ namespace API.Core.Features.Commands.Handlers
         {
             var product = _mapper.Map<Product>(request);
             var res = await _productsService.AddProductAsync(product, request.GenresNames, request.Image);
-            //if (res == "") return BadRequest<string>("Name already exists!");
-            /*var createdProduct = await _productsService.AddProductAsync(product);
-            var response = _mapper.Map<CreateProductResponse>(createdProduct);
-            */
-            //if (res == "Success")
 
             switch (res)
             {
@@ -47,8 +42,6 @@ namespace API.Core.Features.Commands.Handlers
             }
 
             return Created<string>(_localizer[SharedResourceKeys.Created]);
-            // else
-            //   return BadRequest<string>("An unknown error occurred");
         }
 
         public async Task<Response<string>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)

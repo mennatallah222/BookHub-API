@@ -32,7 +32,7 @@ namespace EcommerceAPI.Controllers
 
         [HttpPost("AddUser")]
         //[AllowAnonymous]
-        public async Task<IActionResult> CreateUser([FromBody] AddUserCommand command)
+        public async Task<IActionResult> CreateUser([FromForm] AddUserCommand command)
         {
             var response = await _mediator.Send(command);
 

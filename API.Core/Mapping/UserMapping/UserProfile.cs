@@ -18,7 +18,8 @@ namespace API.Core.Mapping.UserMapping
             CreateMap<User, GetUsersListResponse>()
                 .ForMember(dest => dest.CurrentlyReading, opt => opt.MapFrom(src => src.CurrentlyReading.Select(b => b.Name).ToList()))
                 .ForMember(dest => dest.ReadList, opt => opt.MapFrom(src => src.ReadBooks.Select(b => b.Name).ToList()))
-                .ForMember(dest => dest.WantToReadList, opt => opt.MapFrom(src => src.WantToRead.Select(b => b.Name).ToList()));
+                .ForMember(dest => dest.WantToReadList, opt => opt.MapFrom(src => src.WantToRead.Select(b => b.Name).ToList()))
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
 
 
 

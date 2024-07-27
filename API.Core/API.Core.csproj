@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Authors\Commands\Validators\" />
+    <Folder Include="Features\Authors\Commands\Handlers\" />
+    <Folder Include="Features\Authors\Queries\Handlers\" />
+    <Folder Include="Features\Authors\Queries\Models\" />
+    <Folder Include="Features\Authors\Queries\Validators\" />
     <Folder Include="Features\Friends\Commands\Responses\" />
     <Folder Include="Features\Friends\Queries\Responses\" />
     <Folder Include="Features\Readers\Commands\Validators\" />

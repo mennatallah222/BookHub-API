@@ -29,7 +29,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities.Identity
         [InverseProperty(nameof(UserRefreshToken.User))]
         public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; }
 
-
+        public string? Image { get; set; }
 
         public bool IsDeleted { get; set; }
         public Cart Cart { get; set; }
