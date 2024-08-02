@@ -10,14 +10,12 @@ namespace API.Service.Implementations
     public class OrderService : IOrederService
     {
         private readonly IOrderRepo _repo;
-        private readonly ICustomer _customerRepo;
         private readonly IProductRepo _productRepo;
         private readonly ICartRepo _cartRepo;
         private readonly ApplicationDBContext _dbContext;
         private readonly UserManager<User> _userManager;
 
         public OrderService(IOrderRepo orderRepo,
-                            ICustomer customerRepo,
                             IProductRepo productRepo,
                             ICartRepo cartRepo,
                             UserManager<User> userManager,
@@ -25,7 +23,6 @@ namespace API.Service.Implementations
         {
             _repo = orderRepo;
             _dbContext = dBContext;
-            _customerRepo = customerRepo;
             _productRepo = productRepo;
             _cartRepo = cartRepo;
             _userManager = userManager;

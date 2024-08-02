@@ -35,10 +35,6 @@ namespace API.Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Shipping> Shippings { get; set; }
-        // public DbSet<ShippingMethod> ShippingMethods { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
@@ -68,10 +64,10 @@ namespace API.Infrastructure.Data
                       .HasColumnType("decimal(18,2)");
 
                 entity.Property(e => e.PaymentMethod)
-                      .IsRequired(); // Ensure PaymentMethod is required
+                      .IsRequired();
             });
             modelBuilder.Entity<OrderItem>()
-            .ToTable("OrderItems") // Ensure the correct table name
+            .ToTable("OrderItems")
             .Property(o => o.Price)
             .HasColumnType("decimal(18,2)");
 

@@ -48,7 +48,6 @@ namespace API.Service.Implementations
 
         public async Task<string> EditRoleAsync(EditRoleRequest request)
         {
-            //check if it exists or not
             var role = await _roleManager.FindByIdAsync(request.Id.ToString());
             if (role == null) return "NotFound";
             role.Name = request.Name;
@@ -73,8 +72,6 @@ namespace API.Service.Implementations
         {
             var response = new ManageUserRoleResponse();
             var newUserRoles = new List<UserRoles>();
-            //user roles
-            //all roles
             var roles = await _roleManager.Roles.ToListAsync();
 
             response.UserId = user.Id;
@@ -104,9 +101,7 @@ namespace API.Service.Implementations
 
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var role = await _roleManager.FindByNameAsync(roleName);
-            //user roles
             var userRoles = await _userManager.GetRolesAsync(user);
-            //all roles
 
             if (userRoles.Contains(roleName))
             {
@@ -126,8 +121,6 @@ namespace API.Service.Implementations
             var response = new ManageUserClaimResponse();
             var userClaimsList = new List<UserClaims>();
             response.UserId = user.Id;
-            //get user
-            //get user claims
             var userClaims = await _userManager.GetClaimsAsync(user);
             foreach (var claim in ClaimStore.claims)
             {
@@ -143,10 +136,9 @@ namespace API.Service.Implementations
                 }
                 userClaimsList.Add(userClaim);
             }
-            //if claim exists for user then value is true
+
             response.UserClaims = userClaimsList;
             return response;
-            //return result
         }
 
         public async Task<string> UpdateUserClaims(UpdateUserClaimsRequest request)

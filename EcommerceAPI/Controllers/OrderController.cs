@@ -15,14 +15,12 @@ namespace EcommerceAPI.Controllers
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly IProductRepo _productRepo;
-        private readonly ICustomer _customerRepo;
 
-        public OrderController(IMediator mediator, IMapper mapper, IProductRepo productRepo, ICustomer customerRepo)
+        public OrderController(IMediator mediator, IMapper mapper, IProductRepo productRepo)
         {
             _mediator = mediator;
             _mapper = mapper;
             _productRepo = productRepo;
-            _customerRepo = customerRepo;
         }
 
         [HttpPost("MakeOrder/UserId")]

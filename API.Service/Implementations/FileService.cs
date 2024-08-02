@@ -14,7 +14,6 @@ namespace API.Service.Implementations
 
         public async Task<string> UploadImage(string location, IFormFile file)
         {
-            //get the path then the extension of the file, then create a new file name for it
             var path = _webHostEnvironment.WebRootPath + "/" + location + "/";
             var extension = Path.GetExtension(file.FileName);
             var fileName = Guid.NewGuid().ToString().Replace("-", string.Empty) + extension;
@@ -23,9 +22,6 @@ namespace API.Service.Implementations
             {
                 try
                 {
-
-                    //if there's a file exists then if the dir exists, then create a path for it using its name too
-                    //copy it to the location and clear the buffer of the stream using flush
 
                     if (!Directory.Exists(path))
                     {

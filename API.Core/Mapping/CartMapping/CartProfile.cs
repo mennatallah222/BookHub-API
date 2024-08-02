@@ -23,10 +23,3 @@ namespace API.Core.Mapping.CartMapping
     }
 }
 
-/*
-  CreateMap<Product, CartItem>()
-                .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Name));
-
-            CreateMap<Cart, GetCartResponse>()
-               .ForMember(dest => dest.CartItems, opt => opt.MapFrom(src => src.CartItems));
- */

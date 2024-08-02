@@ -57,6 +57,3 @@ namespace API.Core.Features.UserFeatures.Queries.Handlers
         }
     }
 }
-//    return await _customers.Include(x => x.Orders).ThenInclude(o => o.OrderItems)
-//                           .Include(c => c.Cart).ThenInclude(ci => ci.CartItems).ThenInclude(p => p.Product)
-//                           .FirstOrDefaultAsync(i => i.CustomerId == id);

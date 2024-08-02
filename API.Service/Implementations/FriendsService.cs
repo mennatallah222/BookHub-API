@@ -39,7 +39,7 @@ namespace API.Service.Implementations
             {
                 if (existingRequest.FriendshipStatus == "Pending")
                 {
-                    return "A friend request between you two already exists!";
+                    return "You already sent a friend request!";
                 }
                 else if (existingRequest.FriendshipStatus == "Accepted")
                 {
@@ -77,7 +77,7 @@ namespace API.Service.Implementations
             var notification = new Notification
             {
                 UserId = friendRequest.UserId,
-                Message = $"You have a new friend request from user with ID {friendRequest.UserId}",
+                Message = $"You have a new friend request from user {friendRequest.Friend.FullName}",
                 CreatedAt = DateTime.UtcNow,
                 IsRead = false
             };
@@ -146,4 +146,3 @@ namespace API.Service.Implementations
         }
     }
 }
-//add friend to my list of friend----- then apply the notification logic----- of making a list of notifications in the user entity

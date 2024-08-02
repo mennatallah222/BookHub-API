@@ -15,7 +15,6 @@ namespace API.Core.Features.User.Commands.Validators
         {
             _localization = localization;
             ApplyValidationRules();
-            ApplyCustomeValidationRules();
         }
         #endregion
 
@@ -23,8 +22,7 @@ namespace API.Core.Features.User.Commands.Validators
         #region functions
         public void ApplyValidationRules()
 
-        {                                             //add:  _localization[SharedResourcesKey.NotEmpty]
-
+        {
             RuleFor(x => x.FullName).NotNull().WithMessage("Full Name must not be null!")
                                 .NotEmpty().WithMessage("Full Name must not be empty!")
                               .MaximumLength(100).WithMessage("Name must be less than 100 characters!")
@@ -44,10 +42,7 @@ namespace API.Core.Features.User.Commands.Validators
 
         }
 
-        public void ApplyCustomeValidationRules()
-        {
 
-        }
         #endregion
     }
 }

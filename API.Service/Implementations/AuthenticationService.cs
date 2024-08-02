@@ -115,7 +115,6 @@ namespace API.Service.Implementations
             {
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-                //new Claim(nameof(UserClaimModel.PhoneNumber), user.PhoneNumber),
                 new Claim(nameof(UserClaimModel.Id), user.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.UserName)
 
@@ -132,8 +131,6 @@ namespace API.Service.Implementations
         }
         public async Task<JwtAuthResult> GetRefreshToken(User user, JwtSecurityToken token, string refreshToken, DateTime? expireTime)
         {
-            //read token to get the claims
-
 
             var (jwtSecurityToken, newToken) = await GenerateJwtToken(user);
 
@@ -146,7 +143,6 @@ namespace API.Service.Implementations
             refreshTokenResult.ExpireAt = (DateTime)expireTime;
             response.refreshToken = refreshTokenResult;
 
-            //generate refresh token
             return response;
         }
 
@@ -211,7 +207,6 @@ namespace API.Service.Implementations
                 return ("TokenIsNotExpired", null);
             }
 
-            //get the user
             var userId = jwtToken.Claims.FirstOrDefault(x => x.Type == nameof(UserClaimModel.Id)).Value;
             var userRefreshToken = _refreshTokenRepository.GetTableNoTrasking()
                                             .FirstOrDefault(x => x.Token == accessToken &&
@@ -222,7 +217,6 @@ namespace API.Service.Implementations
                 return ("RefreshTokenIsNotFound", null);
             }
 
-            //validations on token, refresh it
             if (userRefreshToken.ExpiryTime < DateTime.UtcNow)
             {
 
@@ -256,12 +250,10 @@ namespace API.Service.Implementations
                 Random random = new Random();
                 string randNum = random.Next(0, 1000000).ToString("06");
 
-                //update the code in db
                 user.Code = randNum;
                 var updatedResult = await _userManager.UpdateAsync(user);
                 if (!updatedResult.Succeeded) return "ErrorUpdatingTheUser";
 
-                //send the code to email
                 var result = await _emailService.SendEmail(email, "Code to reset your message: " + user.Code, "Reset Password");
 
                 await transaction.CommitAsync();
@@ -278,7 +270,6 @@ namespace API.Service.Implementations
 
         public async Task<string> ResestPasswordCode(string code, string email)
         {
-            //get user from db then decrypt its code and compare it with the entered one
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return "NotFound";
             var userCode = user.Code;

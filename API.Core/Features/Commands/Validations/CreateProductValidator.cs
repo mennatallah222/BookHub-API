@@ -43,8 +43,7 @@ namespace API.Core.Features.Commands.Validations
 
         public void ApplyCustomeValidationRules()
         {
-            RuleFor(x => x.Name)                                   //if it is true, print the message XXXXXXXXX
-                                                                   //so we reversed it, if it is false, print the message
+            RuleFor(x => x.Name)
                         .MustAsync(async (Key, CancellationToken) => !await _productsService.IsNameExist(Key))
                         .WithMessage("Product name already exists!");
         }

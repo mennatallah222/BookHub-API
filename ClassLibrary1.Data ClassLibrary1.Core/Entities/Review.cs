@@ -20,7 +20,7 @@ namespace ClassLibrary1.Data_ClassLibrary1.Core.Entities
         public User User { get; set; }
 
         [Required, Range(1, 5)]
-        public int Rating { get; set; } // e.g., 1 to 5 stars
+        public int Rating { get; set; }
         public string? Comment { get; set; }
         [Required]
         public DateTime ReviewDate { get; set; }

@@ -1,13 +1,14 @@
 ﻿using API.Core.Features.Authorization.Commands.Models;
 using API.Core.Features.Authorization.Queries.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AuthorizationController : ControllerBase
     {
         private readonly IMediator _mediator;

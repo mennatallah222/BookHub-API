@@ -68,13 +68,6 @@ namespace EcommerceAPI
 
             #endregion
 
-            /*
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-                options.JsonSerializerOptions.MaxDepth = 64; // Adjust the max depth as needed
-            });
-            */
 
             builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             builder.Services.AddTransient<IUrlHelper>(x =>
@@ -84,8 +77,6 @@ namespace EcommerceAPI
                 return factory.GetUrlHelper(actionContext);
             });
 
-            //    builder.Services.AddSingleton<IEncryptionProvider>(provider =>
-            //new GenerateEncryptionProvider("8a4dcaaec64d412380fe4b02193cd26f"));
 
 
             #region Localization

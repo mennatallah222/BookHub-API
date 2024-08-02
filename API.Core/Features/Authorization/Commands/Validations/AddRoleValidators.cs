@@ -30,7 +30,7 @@ namespace API.Core.Features.Authorization.Commands.Validations
         #region functions
         public void ApplyValidationRules()
 
-        {                                             //add:  _localization[SharedResourcesKey.NotEmpty]
+        {
 
             RuleFor(x => x.RoleName).NotEmpty().WithMessage(_localization[SharedResourceKeys.NotEmpty])
                                     .NotNull().WithMessage(_localization[SharedResourceKeys.NotNull])
@@ -41,8 +41,7 @@ namespace API.Core.Features.Authorization.Commands.Validations
 
         public void ApplyCustomeValidationRules()
         {
-            RuleFor(x => x.RoleName)                                   //if it is true, print the message XXXXXXXXX
-                                                                       //so we reversed it, if it is false, print the message
+            RuleFor(x => x.RoleName)
                         .MustAsync(async (Key, CancellationToken) => !await _authorizationService.IsNameExists(Key))
                         .WithMessage("Product name already exists!");
         }

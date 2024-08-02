@@ -33,7 +33,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPost("Add")]
-        // [Authorize(Roles = "Admin, Author")]
+        [Authorize(Roles = "Admin, Author")]
         public async Task<IActionResult> PostBook([FromForm] CreateBookCommand command)
         {
             var response = await _mediatR.Send(command);
@@ -42,7 +42,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPut("Update")]
-        // [Authorize(Roles = "Admin, Author")]
+        [Authorize(Roles = "Admin, Author")]
 
         public async Task<IActionResult> PutBook(int id, [FromBody] UpdateBookCommand command)
         {

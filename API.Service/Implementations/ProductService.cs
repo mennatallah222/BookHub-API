@@ -42,7 +42,7 @@ namespace API.Service.Implementations
             var myContext = _httpContextAccessor.HttpContext.Request;
             var myBaseUrl = myContext.Scheme + "://" + myContext.Host;
             var imageUrl = await _fileService.UploadImage("Books", file);
-            switch (imageUrl)//Stormlight Archive book 1 The Way of Kings
+            switch (imageUrl)
             {
                 case "NoImage": return "NoImage";
                 case "FailedToUploadTheImage": return "FailedToUploadTheImage";
@@ -99,12 +99,11 @@ namespace API.Service.Implementations
                 existingProduct.Image = p.Image;
                 existingProduct.Author = p.Author;
 
-                //clear existing BookGenres and add new ones
                 existingProduct.BookGenres.Clear();
                 foreach (var genre in genreNames)
                 {
                     var existingGenre = existingGenres.FirstOrDefault(g => g.Name == genre);
-                    if (existingGenre != null)//if the genre is already in the genres table, then add it to the book's genres
+                    if (existingGenre != null)
                     {
                         existingProduct.BookGenres.Add(new BookGenre
                         {
@@ -112,7 +111,7 @@ namespace API.Service.Implementations
                             Genre = existingGenre
                         });
                     }
-                    else //if the genre is NOT in the genres table, then add it to the table and to the book's genres
+                    else
                     {
                         var newGenre = new Category { Name = genre };
                         _dbContext.Categories.Add(newGenre);
@@ -123,8 +122,6 @@ namespace API.Service.Implementations
                         });
                     }
                 }
-
-                // Update other properties as needed
 
                 await _dbContext.SaveChangesAsync();
             }
@@ -194,7 +191,7 @@ namespace API.Service.Implementations
 
             await _repo.DeleteAsync(product);
 
-            return "Product deleted successfully.";
+            return "Product deleted successfully";
         }
 
 

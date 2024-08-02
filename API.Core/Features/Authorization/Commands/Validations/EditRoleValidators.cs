@@ -18,7 +18,6 @@ namespace API.Core.Features.Authorization.Commands.Validations
             _localization = localization;
 
             ApplyValidationRules();
-            ApplyCustomeValidationRules();
         }
         #endregion
 
@@ -26,8 +25,7 @@ namespace API.Core.Features.Authorization.Commands.Validations
         #region functions
         public void ApplyValidationRules()
 
-        {                                             //add:  _localization[SharedResourcesKey.NotEmpty]
-
+        {
             RuleFor(x => x.Id).NotEmpty().WithMessage(_localization[SharedResourceKeys.NotEmpty])
                                     .NotNull().WithMessage(_localization[SharedResourceKeys.NotNull])
                               ;
@@ -37,10 +35,7 @@ namespace API.Core.Features.Authorization.Commands.Validations
 
         }
 
-        public void ApplyCustomeValidationRules()
-        {
 
-        }
         #endregion
     }
 }

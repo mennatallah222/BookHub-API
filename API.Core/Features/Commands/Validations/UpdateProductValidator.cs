@@ -15,7 +15,6 @@ namespace API.Core.Features.Commands.Validations
         {
             _productsService = productsService;
             ApplyValidationRules();
-            ApplyCustomeValidationRules();
         }
         #endregion
 
@@ -36,10 +35,7 @@ namespace API.Core.Features.Commands.Validations
                                  .GreaterThanOrEqualTo(0).WithMessage("Quantity must be greater than or equal to 0");
         }
 
-        public void ApplyCustomeValidationRules()
-        {
 
-        }
         #endregion
 
     }

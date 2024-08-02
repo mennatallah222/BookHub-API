@@ -123,4 +123,3 @@ public class AuthenticationCommandHandler : Response_Handler,
 
 
 }
-//} < PackageReference Include = "EntityFrameworkCore.EncryptColumn" Version = "6.0.8" />

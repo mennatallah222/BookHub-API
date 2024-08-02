@@ -9,7 +9,6 @@ namespace API.Infrastructure
     {
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
         {
-            services.AddTransient<ICustomer, CustomerRepo>();
             services.AddTransient<IProductRepo, ProductRepo>();
             services.AddTransient<IOrderRepo, OrderRepo>();
             services.AddTransient<ICartRepo, CartRepo>();

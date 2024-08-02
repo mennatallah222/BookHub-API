@@ -39,14 +39,12 @@ namespace API.Service.Implementations
             var transact = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                // If email already exists
                 var existingUser = await _userManager.FindByEmailAsync(user.Email);
                 if (existingUser != null)
                 {
                     return "EmailExists";
                 }
 
-                // If username already exists
                 var username = await _userManager.FindByNameAsync(user.UserName);
                 if (username != null)
                 {
@@ -66,7 +64,6 @@ namespace API.Service.Implementations
 
 
 
-                // Create user
                 var createdUser = await _userManager.CreateAsync(user, password);
                 if (!createdUser.Succeeded)
                 {
@@ -83,14 +80,11 @@ namespace API.Service.Implementations
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
 
-                //send confirming email
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var requestAccessor = _contextAccessor.HttpContext.Request;
                 var returnedUrl = requestAccessor.Scheme + "://" + requestAccessor.Host + _urlHelper.Action("ConfirmEmail", "Authentication", new { userId = user.Id, code = code });
                 var message = $"To confirm email, click on: <a href='{returnedUrl}'> </a>";
-                // $"/Authentication/ConfirmEmail?userId={user.Id}&code={code}";
 
-                //message body
                 await _emailService.SendEmail(user.Email, returnedUrl, "Confrim Email");
 
                 await transact.CommitAsync();
