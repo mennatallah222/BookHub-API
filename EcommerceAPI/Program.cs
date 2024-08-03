@@ -104,12 +104,26 @@ namespace EcommerceAPI
             Console.WriteLine($"Current Culture: {currentCulture}, Current UI Culture: {currentUICulture}");
 
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
+
 
             #endregion
 
 
 
             var app = builder.Build();
+
+            app.UseCors("AllowAll");
+
 
             using (var scope = app.Services.CreateScope())
             {
