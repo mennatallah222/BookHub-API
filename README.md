@@ -4,7 +4,7 @@ an  online shopping and media for readers done using asp .net core 8 using clean
 
 ## Features
 
-- Books, Order, Customer, User, Cart, Review Management
+- Books, Order, Reader, User, Cart Management
 - Authentication and authorization using JWT and refresh token
 - Readers can send friend requests to other users
 - Users recieve notifications for friend requests(have status)
