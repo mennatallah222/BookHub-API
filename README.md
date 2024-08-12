@@ -1,19 +1,23 @@
 
 # BookHub
 an  online shopping and media for readers done using asp .net core 8 using clean architecture. It has order, product, cart, user management and used jwt tokens.
-## 🛠 Skills
-.Net 8
+
 ## Features
 
 - Books, Order, Customer, User, Cart, Review Management
-- Authentication and authorization using JWT
-- Admin must add the role then assign it to the user, both are different endpoints
+- Authentication and authorization using JWT and refresh token
 - Readers can send friend requests to other users
-- Users recieve notifications for friend requests, and they can show the requests that are still pending
+- Users recieve notifications for friend requests(have status)
 - User Authentication (Sign In, Password Reset, Email Confirmation)
 - User Role and Claim Management
 - Friend Request Handling
 - Order Processing
+- Email handling for sign up confirmation and reset password
+- Uploading files
+- Exception middleware
+- Fluent Validations
+- Generic Repository
+- Localization
 
 ## Screenshots
 ![1](https://github.com/user-attachments/assets/161f0d16-201f-42a7-a253-7e530a802cb0)
